@@ -72,60 +72,60 @@ public class MainClass {
         int line;
 
         for (int i = 0; i < SIZE; i++) {
-            line = 0;
+            line = 1;
             for (int j = 0; j < SIZE; j++) {
                 if (j != 0 && field[i][j - 1] == field[i][j] && field[i][j] != MARKER_EMPTY) {
                     line++;
                 } else {
-                    line = 0;
+                    line = 1;
                 }
-                if (line == WIN_LINE - 1) {
+                if (line == WIN_LINE) {
                     return true;
                 }
             }
         }
 
         for (int j = 0; j < SIZE; j++) {
-            line = 0;
+            line = 1;
             for (int i = 0; i < SIZE; i++) {
                 if (i != 0 && field[i - 1][j] == field[i][j] && field[i][j] != MARKER_EMPTY) {
                     line++;
                 } else {
-                    line = 0;
+                    line = 1;
                 }
-                if (line == WIN_LINE - 1) {
+                if (line == WIN_LINE) {
                     return true;
                 }
             }
         }
 
         for (int d = 0; d < 2 * SIZE - 1; d++) {
-            line = 0;
+            line = 1;
             for (int i = Math.max(0, d - SIZE + 1); i < Math.min(d + 1, SIZE); i++) {
                 int j = d - i;
 
                 if (i != 0 && j != SIZE - 1 && field[i][j] == field[i - 1][j + 1] && field[i][j] != MARKER_EMPTY) {
                     line++;
                 } else {
-                    line = 0;
+                    line = 1;
                 }
-                if (line == WIN_LINE - 1) {
+                if (line == WIN_LINE) {
                     return true;
                 }
             }
         }
 
         for (int d = 1 - SIZE; d < SIZE; d++) {
-            line = 0;
+            line = 1;
             for (int i = Math.max(0, -d); i < Math.min(SIZE - d, SIZE); i++) {
                 int j = d + i;
 
                 if (i != 0 && j != 0 && field[i][j] == field[i - 1][j - 1] && field[i][j] != MARKER_EMPTY) {
                     line++;
                 } else {
-                    line = 0;
+                    line = 1;
                 }
-                if (line == WIN_LINE - 1) {
+                if (line == WIN_LINE) {
                     return true;
                 }
             }
