@@ -25,15 +25,15 @@ public class MainClass {
 
         for (int i = 1; i <= 3; i++) {
             System.out.println("Attempt #" + i + ":");
-            int number = scanner.nextInt();
-            if (number == answer) {
+            int userSuggestion = scanner.nextInt();
+            if (userSuggestion == answer) {
                 System.out.println("Yes!");
-                System.out.println("X = " + number);
+                System.out.println("X = " + userSuggestion);
                 System.out.println("You won!");
                 return;
             } else {
                 System.out.println("No");
-                System.out.println("X" + (answer > number ? " > " : " < ") + number);
+                System.out.println("X" + (answer > userSuggestion ? " > " : " < ") + userSuggestion);
             }
         }
 
@@ -71,16 +71,16 @@ public class MainClass {
         System.out.println("Guess a word:");
 
         while (true) {
-            String word = (scanner.next()).toLowerCase();
+            String userSuggestion = (scanner.next()).toLowerCase();
             for (int i = 0; i < 20; i++) {
-                if (word.equals(answer)) {
+                if (userSuggestion.equals(answer)) {
                     System.out.print("You won!");
                     return;
                 }
-                if (i >= word.length() || i >= answer.length() || word.charAt(i) != answer.charAt(i)) {
+                if (i >= userSuggestion.length() || i >= answer.length() || userSuggestion.charAt(i) != answer.charAt(i)) {
                     System.out.print('.');
                 } else {
-                    System.out.print(word.charAt(i));
+                    System.out.print(userSuggestion.charAt(i));
                 }
             }
             System.out.println();
