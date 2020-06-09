@@ -1,14 +1,25 @@
 package ru.gb.lesson6;
 
+import java.util.Random;
+
 public class Animal {
+    private static int counter = 0;
+
     private String name;
     private int runLimit;
     private int swimLimit;
+    private double jumpHeight;
 
-    public Animal(String name, int runLimit, int swimLimit) {
+    public Animal(String name, int runLimit, int swimLimit, double jumpHeight) {
         this.name = name;
-        this.runLimit = runLimit;
-        this.swimLimit = swimLimit;
+
+        Random random = new Random();
+
+        this.runLimit = (int) (runLimit * (1 + random.nextGaussian() / 4));
+        this.swimLimit = (int) (swimLimit * (1 + random.nextGaussian() / 4));
+        this.jumpHeight = jumpHeight * (1 + random.nextGaussian() / 4);
+
+        System.out.println("Создано животных: " + ++counter);
     }
 
     public void run(int distance) {
@@ -24,6 +35,14 @@ public class Animal {
             System.out.println(name + " проплыл " + distance + " м.");
         } else {
             System.out.println(name + " не смог проплыть " + distance + " м., т.к. проплывает не более " + swimLimit + " м.");
+        }
+    }
+
+    public void jump(double height) {
+        if (height <= jumpHeight) {
+            System.out.println(name + " прыгнул на " + height + " м.");
+        } else {
+            System.out.println(name + " не смог прыгнуть " + height + " м., т.к. прыгает не более, чем на " + jumpHeight + " м.");
         }
     }
 

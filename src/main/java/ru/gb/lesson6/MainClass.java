@@ -2,15 +2,20 @@ package ru.gb.lesson6;
 
 public class MainClass {
     public static void main(String[] args) {
-        Cat cat = new Cat("Барсик");
-        Dog dog = new Dog("Барбос");
+        Animal[] animals = new Animal[] {
+                new Cat("Барсик"),
+                new Dog("Барбос"),
+                new Bird("Кеша"),
+                new Horse("Гроза")
+        };
 
-        cat.info();
-        cat.run(200);
-        cat.swim(200);
-        dog.info();
-        dog.run(200);
-        dog.swim(200);
+        for (Animal animal: animals) {
+            System.out.println();
+            animal.info();
+            animal.run(200);
+            animal.swim(200);
+            animal.jump(0.6);
+        }
     }
 }
 

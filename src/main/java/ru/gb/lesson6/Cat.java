@@ -4,7 +4,7 @@ public class Cat extends Animal {
     private static int counter = 0;
 
     public Cat(String name) {
-        super(name, 200, 0);
+        super(name, 200, 0, 2);
         System.out.println("Создано котов: " + ++counter);
     }
 
