@@ -1,4 +1,4 @@
-package ru.gb.lesson7;
+package ru.gb.java1.lesson7;
 
 public class MainClass {
     public static void main(String[] args) {
