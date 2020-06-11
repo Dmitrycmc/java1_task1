@@ -1,4 +1,4 @@
-package ru.gb.lesson4;
+package ru.gb.java1.lesson4;
 
 import java.util.Scanner;
 

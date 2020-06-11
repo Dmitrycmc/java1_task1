@@ -1,6 +1,4 @@
-package ru.gb.lesson6;
-
-import java.util.Random;
+package ru.gb.java1.lesson6;
 
 public class Dog extends Animal {
     private static int counter = 0;
