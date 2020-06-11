@@ -5,12 +5,17 @@ public class Horse extends Animal {
 
     public Horse(String name) {
         super(name, 1500, 100, 3);
-        System.out.println("Создано лошадей: " + ++counter);
+
+        counter++;
     }
 
     @Override
     public void info() {
         System.out.print("Лошадь ");
         super.info();
+    }
+
+    public static void printAmount() {
+        System.out.println("Создано лошадей: " + counter);
     }
 }

@@ -9,6 +9,12 @@ public class MainClass {
                 new Horse("Гроза")
         };
 
+        Animal.printAmount();
+        Bird.printAmount();
+        Cat.printAmount();
+        Dog.printAmount();
+        Horse.printAmount();
+
         for (Animal animal: animals) {
             System.out.println();
             animal.info();

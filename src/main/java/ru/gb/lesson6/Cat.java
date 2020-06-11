@@ -5,12 +5,17 @@ public class Cat extends Animal {
 
     public Cat(String name) {
         super(name, 200, 0, 2);
-        System.out.println("Создано котов: " + ++counter);
+
+        counter++;
     }
 
     @Override
     public void info() {
         System.out.print("Кот ");
         super.info();
+    }
+
+    public static void printAmount() {
+        System.out.println("Создано котов: " + counter);
     }
 }

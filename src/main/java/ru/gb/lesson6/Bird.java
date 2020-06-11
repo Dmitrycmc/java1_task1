@@ -5,12 +5,17 @@ public class Bird extends Animal {
 
     public Bird(String name) {
         super(name, 5, 0, 0.1);
-        System.out.println("Создано птиц: " + ++counter);
+
+        counter++;
     }
 
     @Override
     public void info() {
         System.out.print("Птица ");
         super.info();
+    }
+
+    public static void printAmount() {
+        System.out.println("Создано птиц: " + counter);
     }
 }

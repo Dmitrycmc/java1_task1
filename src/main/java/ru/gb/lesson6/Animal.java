@@ -19,7 +19,7 @@ public class Animal {
         this.swimLimit = (int) (swimLimit * (1 + random.nextGaussian() / 4));
         this.jumpHeight = jumpHeight * (1 + random.nextGaussian() / 4);
 
-        System.out.println("Создано животных: " + ++counter);
+        counter++;
     }
 
     public void run(int distance) {
@@ -48,6 +48,10 @@ public class Animal {
 
     public void info() {
         System.out.println(name);
+    }
+
+    public static void printAmount() {
+        System.out.println("Создано животных: " + counter);
     }
 }
 
