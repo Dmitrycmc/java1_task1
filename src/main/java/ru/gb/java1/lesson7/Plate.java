@@ -1,13 +1,13 @@
 package ru.gb.java1.lesson7;
 
-public class Plate {
+class Plate {
     private int food;
 
-    public Plate(int food) {
+    Plate(int food) {
         this.food = food;
     }
 
-    public boolean decreaseFood(int n) {
+    boolean decreaseFood(int n) {
         if (n <= food) {
             food -= n;
             return true;
@@ -15,11 +15,11 @@ public class Plate {
         return false;
     }
 
-    public void increaseFood(int n) {
+    void increaseFood(int n) {
         food += n;
     }
 
-    public void printInfo() {
+    void printInfo() {
         System.out.println("Plate: " + food);
     }
 }
