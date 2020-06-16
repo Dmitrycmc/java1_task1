@@ -10,7 +10,7 @@ public class Animal {
     private int swimLimit;
     private double jumpHeight;
 
-    public Animal(String name, int runLimit, int swimLimit, double jumpHeight) {
+    Animal(String name, int runLimit, int swimLimit, double jumpHeight) {
         this.name = name;
 
         Random random = new Random();
@@ -22,7 +22,7 @@ public class Animal {
         counter++;
     }
 
-    public void run(int distance) {
+    void run(int distance) {
         if (distance <= runLimit) {
             System.out.println(name + " пробежал " + distance + " м.");
         } else {
@@ -30,7 +30,7 @@ public class Animal {
         }
     }
 
-    public void swim(int distance) {
+    void swim(int distance) {
         if (distance <= swimLimit) {
             System.out.println(name + " проплыл " + distance + " м.");
         } else {
@@ -38,7 +38,7 @@ public class Animal {
         }
     }
 
-    public void jump(double height) {
+    void jump(double height) {
         if (height <= jumpHeight) {
             System.out.println(name + " прыгнул на " + height + " м.");
         } else {
@@ -46,11 +46,11 @@ public class Animal {
         }
     }
 
-    public void info() {
+    void info() {
         System.out.println(name);
     }
 
-    public static void printAmount() {
+    static void printAmount() {
         System.out.println("Создано животных: " + counter);
     }
 }
