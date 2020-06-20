@@ -22,13 +22,15 @@ class SettingsWindow extends JFrame {
     private JLabel fieldSizeLabel = new JLabel("Field size: " + MIN_FIELD_SIZE);
     private JSlider fieldSizeSlider = new JSlider(MIN_FIELD_SIZE, MAX_FIELD_SIZE, MIN_FIELD_SIZE);
     private JLabel winLineLabel = new JLabel("Win line: " + MIN_FIELD_SIZE);
-    private JSlider winLineSlider = new JSlider(MIN_FIELD_SIZE, MAX_FIELD_SIZE, MIN_FIELD_SIZE);
+    private JSlider winLineSlider = new JSlider(MIN_FIELD_SIZE, MIN_FIELD_SIZE, MIN_FIELD_SIZE);
 
     private JButton startButton = new JButton("Начать");
 
     SettingsWindow(final MainWindow mainWindow) {
         setTitle("Новая игра");
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         setBounds(300, 300, 400, 400);
+        setResizable(false);
 
         setLayout(new GridLayout(10, 1));
         add(gameModeLabel);
@@ -49,6 +51,7 @@ class SettingsWindow extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 GameMode gameMode = hvsaiRadio.isSelected() ? HvsAI : HvsH;
                 mainWindow.startGame(gameMode, fieldSizeSlider.getValue(), winLineSlider.getValue());
+                mainWindow.setEnabled(true);
                 setVisible(false);
             }
         });
