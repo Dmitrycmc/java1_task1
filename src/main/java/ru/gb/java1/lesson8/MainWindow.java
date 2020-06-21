@@ -48,5 +48,6 @@ class MainWindow extends JFrame {
 
     void startGame(GameMode gameMode, int fieldSize, int winLine) {
         gameField.startGame(gameMode, fieldSize, winLine);
+        gameField.revalidate();
     }
 }

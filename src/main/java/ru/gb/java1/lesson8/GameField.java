@@ -8,16 +8,14 @@ public class GameField extends JPanel {
 
     public void startGame(GameMode gameMode, int fieldSize, int winLine) {
         setLayout(new GridLayout(fieldSize, fieldSize));
-
+        removeAll();
         buttons = new JButton[fieldSize][fieldSize];
 
         for (JButton[] buttonsLine: buttons) {
             for (JButton button: buttonsLine) {
-                button = new JButton("button");
+                button = new JButton();
                 add(button);
             }
         }
-
-        // Эти кнопки не отображаются!
     }
 }
