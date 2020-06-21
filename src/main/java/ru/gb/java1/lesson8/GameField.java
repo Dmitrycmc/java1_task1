@@ -10,6 +10,7 @@ public class GameField extends JPanel {
     private int fieldSize;
     private int winLine;
     private GameMode gameMode;
+    private int activePlayer = 0;
 
     private static final char MARKER_O = 'O';
     private static final char MARKER_X = 'X';
@@ -195,6 +196,43 @@ public class GameField extends JPanel {
         JOptionPane.showMessageDialog(this, result);
     }
 
+    private void handleFieldClick(int i, int j) {
+        if (field[i][j] == MARKER_EMPTY) {
+            field[i][j] = gameMode == GameMode.HvsAI ? MARKER_X : activePlayer == 0 ? MARKER_X : MARKER_O;
+            refreshField();
+            turnsLeft--;
+            if (checkWin(field)) {
+                gameOver(gameMode == GameMode.HvsAI ? "You win" : "Player " + (activePlayer + 1) + " win!");
+                return;
+            }
+            if (turnsLeft == 0) {
+                gameOver("Draw");
+                return;
+            }
+
+            switch (gameMode) {
+                case HvsH:
+                    activePlayer = 1 - activePlayer;
+                    break;
+                case HvsAI:
+                    aiTurn();
+                    refreshField();
+                    turnsLeft--;
+                    if (checkWin(field)) {
+                        gameOver("You loose");
+                        return;
+                    }
+                    if (turnsLeft == 0) {
+                        gameOver("Draw");
+                        return;
+                    }
+                    break;
+                default:
+                    throw new RuntimeException("Unknown game mode " + gameMode);
+            }
+        }
+    }
+
     public void startGame(GameMode gameMode, final int fieldSize, int winLine) {
         this.fieldSize = fieldSize;
         this.winLine = winLine;
@@ -217,30 +255,7 @@ public class GameField extends JPanel {
                 buttons[i][j].addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        if (field[finalI][finalJ] == MARKER_EMPTY) {
-                            field[finalI][finalJ] = MARKER_X;
-                            refreshField();
-                            turnsLeft--;
-                            if (checkWin(field)) {
-                                gameOver("You win");
-                                return;
-                            }
-                            if (turnsLeft == 0) {
-                                gameOver("Draw");
-                                return;
-                            }
-                            aiTurn();
-                            refreshField();
-                            turnsLeft--;
-                            if (checkWin(field)) {
-                                gameOver("You loose");
-                                return;
-                            }
-                            if (turnsLeft == 0) {
-                                gameOver("Draw");
-                                return;
-                            }
-                        }
+                        handleFieldClick(finalI, finalJ);
                     }
                 });
             }
