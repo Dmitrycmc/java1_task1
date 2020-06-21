@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class GameField extends JPanel {
+class GameField extends JPanel {
     private JButton[][] buttons;
     private int fieldSize;
     private int winLine;
@@ -233,7 +233,7 @@ public class GameField extends JPanel {
         }
     }
 
-    public void startGame(GameMode gameMode, final int fieldSize, int winLine) {
+    void startGame(GameMode gameMode, final int fieldSize, int winLine) {
         this.fieldSize = fieldSize;
         this.winLine = winLine;
         this.gameMode = gameMode;
