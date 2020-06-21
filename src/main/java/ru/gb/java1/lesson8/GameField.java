@@ -169,8 +169,8 @@ public class GameField extends JPanel {
         }
 
         while (!isValidTurn(i0, j0)) {
-            i0 = (int)Math.floor(Math.random() * fieldSize);
-            j0 = (int)Math.floor(Math.random() * fieldSize);
+            i0 = (int) Math.floor(Math.random() * fieldSize);
+            j0 = (int) Math.floor(Math.random() * fieldSize);
         }
 
         field[i0][j0] = MARKER_O;
@@ -182,6 +182,17 @@ public class GameField extends JPanel {
                 buttons[i][j].setText("" + field[i][j]);
             }
         }
+    }
+
+    private void gameOver(String result) {
+        for (JButton[] buttonsLine : buttons) {
+            for (JButton button : buttonsLine) {
+                for (ActionListener al : button.getActionListeners()) {
+                    button.removeActionListener(al);
+                }
+            }
+        }
+        JOptionPane.showMessageDialog(this, result);
     }
 
     public void startGame(GameMode gameMode, final int fieldSize, int winLine) {
@@ -210,22 +221,22 @@ public class GameField extends JPanel {
                             refreshField();
                             turnsLeft--;
                             if (checkWin(field)) {
-                                System.out.println("You win");
+                                gameOver("You win");
                                 return;
                             }
                             if (turnsLeft == 0) {
-                                System.out.println("Draw");
+                                gameOver("Draw");
                                 return;
                             }
                             aiTurn();
                             refreshField();
                             turnsLeft--;
                             if (checkWin(field)) {
-                                System.out.println("You loose");
+                                gameOver("You loose");
                                 return;
                             }
                             if (turnsLeft == 0) {
-                                System.out.println("Draw");
+                                gameOver("Draw");
                                 return;
                             }
                         }
