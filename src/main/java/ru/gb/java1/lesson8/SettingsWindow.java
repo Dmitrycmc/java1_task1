@@ -12,7 +12,7 @@ import static ru.gb.java1.lesson8.GameMode.HvsH;
 
 class SettingsWindow extends JFrame {
     private final static int MIN_FIELD_SIZE = 3;
-    private final static int MAX_FIELD_SIZE = 10;
+    private final static int MAX_FIELD_SIZE = 8;
 
     private JLabel gameModeLabel = new JLabel("Game mode:");
     private JRadioButton hvsaiRadio = new JRadioButton("Human vs. AI");

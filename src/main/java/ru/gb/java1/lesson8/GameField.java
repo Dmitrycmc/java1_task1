@@ -210,6 +210,7 @@ public class GameField extends JPanel {
         for (int i = 0; i < fieldSize; i++) {
             for (int j = 0; j < fieldSize; j++) {
                 buttons[i][j] = new JButton();
+                buttons[i][j].setFont(new Font("Arial", Font.PLAIN, (int) (40 - (float) (fieldSize - 3) / 5 * (40 - 15))));
                 add(buttons[i][j]);
                 final int finalI = i;
                 final int finalJ = j;

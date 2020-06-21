@@ -9,7 +9,7 @@ class MainWindow extends JFrame {
     private JPanel buttonsPanel = new JPanel();
     private GameField gameField = new GameField();
 
-    private JButton startButton = new JButton("<html><body><b style='font-size: 1.5em'>Начать игру</b></body></html>");
+    private JButton startButton = new JButton("<html><body><b style='font-size: 1.5em'>Новая игра</b></body></html>");
     private JButton exitButton = new JButton("Выйти");
 
     private SettingsWindow settingsWindow = new SettingsWindow(this);
