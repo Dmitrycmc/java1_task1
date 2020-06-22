@@ -17,7 +17,7 @@ public class Controller {
         String chatHistory = chatTextArea.getText();
 
         if (message.length() > 0) {
-            chatTextArea.setText((chatHistory.length() > 0 ? chatHistory + "\n" : "") + message);
+            chatTextArea.setText(message + (chatHistory.length() > 0 ? "\n" + chatHistory : ""));
         }
 
         messageTextField.setText("");
