@@ -68,8 +68,9 @@ public class MainClass {
         }
     }
 
-    private static boolean checkWin(char[][] field) {
+    private static int findMaxLine(char[][] field, char marker) {
         int line;
+        int maxLine = 0;
 
         for (int i = 0; i < SIZE; i++) {
             line = 1;
@@ -79,8 +80,8 @@ public class MainClass {
                 } else {
                     line = 1;
                 }
-                if (line == WIN_LINE) {
-                    return true;
+                if (line > maxLine) {
+                    maxLine = line;
                 }
             }
         }
@@ -93,8 +94,8 @@ public class MainClass {
                 } else {
                     line = 1;
                 }
-                if (line == WIN_LINE) {
-                    return true;
+                if (line > maxLine) {
+                    maxLine = line;
                 }
             }
         }
@@ -109,8 +110,8 @@ public class MainClass {
                 } else {
                     line = 1;
                 }
-                if (line == WIN_LINE) {
-                    return true;
+                if (line > maxLine) {
+                    maxLine = line;
                 }
             }
         }
@@ -125,13 +126,17 @@ public class MainClass {
                 } else {
                     line = 1;
                 }
-                if (line == WIN_LINE) {
-                    return true;
+                if (line > maxLine) {
+                    maxLine = line;
                 }
             }
         }
 
-        return false;
+        return maxLine;
+    }
+
+    private static boolean checkWin(char[][] field) {
+        return findMaxLine(field, MARKER_O) == WIN_LINE || findMaxLine(field, MARKER_X) == WIN_LINE;
     }
 
     private static boolean isValidTurn(int i, int j) {
@@ -183,14 +188,43 @@ public class MainClass {
             }
         }
 
-        int i, j;
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                if (fieldCopy[i][j] == MARKER_EMPTY) {
+                    fieldCopy[i][j] = MARKER_X;
+                    if (checkWin(fieldCopy)) {
+                        field[i][j] = MARKER_O;
+                        return;
+                    }
+                    fieldCopy[i][j] = MARKER_EMPTY;
+                }
+            }
+        }
 
-        do {
-            i = (int)Math.floor(Math.random() * SIZE);
-            j = (int)Math.floor(Math.random() * SIZE);
-        } while (!isValidTurn(i, j));
+        int maxMaxLine = 0;
+        int i0 = 0, j0 = 0;
 
-        field[i][j] = MARKER_O;
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                if (fieldCopy[i][j] == MARKER_EMPTY) {
+                    fieldCopy[i][j] = MARKER_O;
+                    int maxLine = findMaxLine(fieldCopy, MARKER_O);
+                    if (maxLine > maxMaxLine) {
+                        maxMaxLine = maxLine;
+                        i0 = i;
+                        j0 = j;
+                    }
+                    fieldCopy[i][j] = MARKER_EMPTY;
+                }
+            }
+        }
+
+        while (!isValidTurn(i0, j0)) {
+            i0 = (int)Math.floor(Math.random() * SIZE);
+            j0 = (int)Math.floor(Math.random() * SIZE);
+        }
+
+        field[i0][j0] = MARKER_O;
     }
 }
 

@@ -7,9 +7,9 @@ import java.awt.event.ActionListener;
 
 class MainWindow extends JFrame {
     private JPanel buttonsPanel = new JPanel();
-    ;
+    private GameField gameField = new GameField();
 
-    private JButton startButton = new JButton("<html><body><b style='font-size: 1.5em'>Начать игру</b></body></html>");
+    private JButton startButton = new JButton("<html><body><b style='font-size: 1.5em'>Новая игра</b></body></html>");
     private JButton exitButton = new JButton("Выйти");
 
     private SettingsWindow settingsWindow = new SettingsWindow(this);
@@ -18,9 +18,11 @@ class MainWindow extends JFrame {
         setTitle("Крестики-нолики");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setBounds(300, 300, 400, 400);
+        setResizable(false);
 
         setLayout(new BorderLayout());
         add(buttonsPanel, BorderLayout.SOUTH);
+        add(gameField, BorderLayout.CENTER);
 
         buttonsPanel.setLayout(new GridLayout(1, 2));
         buttonsPanel.add(startButton);
@@ -30,6 +32,7 @@ class MainWindow extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 settingsWindow.setVisible(true);
+                setEnabled(false);
             }
         });
 
@@ -44,6 +47,7 @@ class MainWindow extends JFrame {
     }
 
     void startGame(GameMode gameMode, int fieldSize, int winLine) {
-        System.out.println(gameMode + " " + fieldSize + " " + winLine);
+        gameField.startGame(gameMode, fieldSize, winLine);
+        gameField.revalidate();
     }
 }
