@@ -6,11 +6,14 @@ public class MainClass {
     static final int SIZE = 10000000;
 
     public static void main(String[] args) throws InterruptedException {
-        method1();
-        method2();
+        float[] res1 = method1();
+        float[] res2 = method2();
+
+        boolean correct = Arrays.equals(res1, res2);
+        System.out.println(correct ? "Results are equals" : "Results are not equal");
     }
 
-    private static void method1() {
+    private static float[] method1() {
         float[] arr = new float[SIZE];
         Arrays.fill(arr, 1);
 
@@ -23,10 +26,12 @@ public class MainClass {
         long t1 = System.currentTimeMillis();
 
         long dt = t1 - t0;
-        System.out.println(dt);
+        System.out.println("Method1: " + dt + "ms");
+
+        return arr;
     }
 
-    private static void method2() throws InterruptedException {
+    private static float[] method2() throws InterruptedException {
         float[] arr = new float[SIZE];
         Arrays.fill(arr, 1);
 
@@ -57,7 +62,9 @@ public class MainClass {
         long t1 = System.currentTimeMillis();
 
         long dt = t1 - t0;
-        System.out.println(dt);
+        System.out.println("Method2: " + dt + "ms");
+
+        return arr;
     }
 }
 
