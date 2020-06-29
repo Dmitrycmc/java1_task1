@@ -5,6 +5,8 @@ import java.util.Arrays;
 public class MainClass {
     static final int SIZE = 10000000;
 
+    static ValueTransformer valueTransformer = (value, index) -> (float) (value * Math.sin(0.2f + index / 5) * Math.cos(0.2f + index / 5) * Math.cos(0.4f + index / 2));
+
     public static void main(String[] args) throws InterruptedException {
         float[] res1 = method1();
         float[] res2 = method2();
@@ -20,7 +22,7 @@ public class MainClass {
         long t0 = System.currentTimeMillis();
 
         for (int i = 0; i < SIZE; i++) {
-            arr[i] = (float) (arr[i] * Math.sin(0.2f + i / 5) * Math.cos(0.2f + i / 5) * Math.cos(0.4f + i / 2));
+            arr[i] = valueTransformer.transform(arr[i], i);
         }
 
         long t1 = System.currentTimeMillis();
@@ -38,18 +40,9 @@ public class MainClass {
         long t0 = System.currentTimeMillis();
 
         int halfSize = SIZE / 2;
-        float[] arr1 = new float[halfSize];
-        float[] arr2 = new float[SIZE - halfSize];
 
-        System.arraycopy(arr, 0, arr1, 0, halfSize);
-        System.arraycopy(arr, halfSize, arr2, 0, SIZE - halfSize);
-
-        ArrayTransformer transformer1 = new ArrayTransformer(arr1,
-                (v, i) -> (float) (v * Math.sin(0.2f + i / 5) * Math.cos(0.2f + i / 5) * Math.cos(0.4f + i / 2))
-        );
-        ArrayTransformer transformer2 = new ArrayTransformer(arr2,
-                (v, i) -> (float) (v * Math.sin(0.2f + (halfSize + i) / 5) * Math.cos(0.2f + (halfSize + i) / 5) * Math.cos(0.4f + (halfSize + i) / 2))
-        );
+        ArrayTransformer transformer1 = new ArrayTransformer(arr, 0, halfSize, valueTransformer);
+        ArrayTransformer transformer2 = new ArrayTransformer(arr, halfSize, SIZE - halfSize, valueTransformer);
 
         Thread thread1 = new Thread(transformer1);
         Thread thread2 = new Thread(transformer2);
@@ -59,9 +52,6 @@ public class MainClass {
 
         thread1.join();
         thread2.join();
-
-        System.arraycopy(arr1, 0, arr, 0, halfSize);
-        System.arraycopy(arr2, 0, arr, halfSize, SIZE - halfSize);
 
         long t1 = System.currentTimeMillis();
 
