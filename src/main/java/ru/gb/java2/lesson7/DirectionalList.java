@@ -7,5 +7,5 @@ public interface DirectionalList<T> {
     void removeAt(int index) throws Exception;
     Node<T> getFirst() throws Exception;
     Node<T> getAt(int index) throws Exception;
-    int size();
+    int getSize();
 }

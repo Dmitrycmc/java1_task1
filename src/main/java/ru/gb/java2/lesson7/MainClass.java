@@ -2,13 +2,13 @@ package ru.gb.java2.lesson7;
 
 public class MainClass {
     public static void main(String[] args) throws Exception {
-        OneDirectionalList<String> list = new OneDirectionalList<>();
+        TwoDirectionalList<String> list = new TwoDirectionalList<>();
         System.out.println(list);
         list.insertToStart("a");
         System.out.println(list);
         list.insertToStart("b");
         System.out.println(list);
-        list.insertToStart("c");
+        list.insertToEnd("c");
         System.out.println(list);
         list.insertAt("1", 1);
         System.out.println(list);
@@ -24,20 +24,20 @@ public class MainClass {
         System.out.println(list.getAt(3).getValue());
         System.out.println(list.getAt(6).getValue());
 
-        list.removeAt(6);
-        System.out.println(list);
-        list.removeAt(0);
-        System.out.println(list);
-        list.removeAt(3);
-        System.out.println(list);
-        list.remove("b");
-        System.out.println(list);
-        list.remove("a");
-        System.out.println(list);
-        list.remove("1");
-        System.out.println(list);
-        list.remove("1");
-        System.out.println(list);
+//        list.removeAt(6);
+//        System.out.println(list);
+//        list.removeAt(0);
+//        System.out.println(list);
+//        list.removeAt(3);
+//        System.out.println(list);
+//        list.remove("b");
+//        System.out.println(list);
+//        list.remove("a");
+//        System.out.println(list);
+//        list.remove("1");
+//        System.out.println(list);
+//        list.remove("1");
+//        System.out.println(list);
 
     }
 }

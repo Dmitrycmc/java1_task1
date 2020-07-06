@@ -1,7 +1,7 @@
 package ru.gb.java2.lesson7;
 
 public class OneDirectionalList<T> implements DirectionalList<T> {
-    private OneDirectionalNode<T> emptyRootNode = new OneDirectionalNode<>(null, null);
+    private OneDirectionalNode<T> emptyHeadNode = new OneDirectionalNode<>(null, null);
 
     @Override
     public Node<T> insertToStart(T value) throws Exception {
@@ -10,7 +10,7 @@ public class OneDirectionalList<T> implements DirectionalList<T> {
 
     @Override
     public Node<T> insertAt(T value, int index) throws Exception {
-        OneDirectionalNode<T> current = emptyRootNode;
+        OneDirectionalNode<T> current = emptyHeadNode;
         for (int i = 0; i < index; i++) {
             if (current.getNext() == null) {
                 throw new Exception();
@@ -22,7 +22,7 @@ public class OneDirectionalList<T> implements DirectionalList<T> {
 
     @Override
     public boolean remove(T value) {
-        OneDirectionalNode<T> current = emptyRootNode;
+        OneDirectionalNode<T> current = emptyHeadNode;
         while (current.next != null) {
             if (current.next.value.equals(value)) {
                 current.next = current.next.next;
@@ -35,7 +35,7 @@ public class OneDirectionalList<T> implements DirectionalList<T> {
 
     @Override
     public void removeAt(int index) throws Exception {
-        OneDirectionalNode<T> current = emptyRootNode;
+        OneDirectionalNode<T> current = emptyHeadNode;
         for (int i = 0; i < index; i++) {
             current = current.next;
             if (current == null) {
@@ -55,7 +55,7 @@ public class OneDirectionalList<T> implements DirectionalList<T> {
 
     @Override
     public Node<T> getAt(int index) throws Exception {
-        OneDirectionalNode<T> current = emptyRootNode;
+        OneDirectionalNode<T> current = emptyHeadNode;
         for (int i = 0; i < index; i++) {
             current = current.next;
             if (current == null) {
@@ -66,8 +66,8 @@ public class OneDirectionalList<T> implements DirectionalList<T> {
     }
 
     @Override
-    public int size() {
-        OneDirectionalNode<T> current = emptyRootNode;
+    public int getSize() {
+        OneDirectionalNode<T> current = emptyHeadNode;
         int cnt = 0;
         while (current.next != null) {
             cnt++;
@@ -79,8 +79,8 @@ public class OneDirectionalList<T> implements DirectionalList<T> {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Length = ").append(size()).append(" [ ");
-        OneDirectionalNode<T> current = emptyRootNode;
+        sb.append("Length = ").append(getSize()).append(" [ ");
+        OneDirectionalNode<T> current = emptyHeadNode;
         if (current.next != null) {
             current = current.next;
             sb.append(current.getValue());
