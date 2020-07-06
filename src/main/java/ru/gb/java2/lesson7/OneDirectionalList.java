@@ -83,13 +83,13 @@ public class OneDirectionalList<T> implements DirectionalList<T> {
         OneDirectionalNode<T> current = emptyHeadNode;
         if (current.next != null) {
             current = current.next;
-            sb.append(current.getValue());
+            sb.append(current.getValue()).append(" ");
         }
         while (current.next != null) {
             current = current.next;
-            sb.append(", ").append(current.getValue());
+            sb.append(", ").append(current.getValue()).append(" ");
         }
-        return sb.append(" ]").toString();
+        return sb.append("]").toString();
     }
 
     public class OneDirectionalNode<T> implements Node<T> {

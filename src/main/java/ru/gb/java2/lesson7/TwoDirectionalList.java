@@ -39,7 +39,7 @@ public class TwoDirectionalList<T> implements DirectionalList<T> {
             size++;
             return newNode;
         } else {
-            //revert by pass
+            //revers by pass
             TwoDirectionalNode<T> current = emptyTagNode;
 
             for (int i = size; i > index; i--) {
@@ -62,6 +62,8 @@ public class TwoDirectionalList<T> implements DirectionalList<T> {
         while (current.next != emptyTagNode) {
             if (current.next.value.equals(value)) {
                 current.next = current.next.next;
+                current.next.prev = current;
+                size--;
                 return true;
             }
             current = current.next;
@@ -69,20 +71,39 @@ public class TwoDirectionalList<T> implements DirectionalList<T> {
         return false;
     }
 
-    //todo: reimplement
     @Override
     public void removeAt(int index) throws Exception {
-        TwoDirectionalNode<T> current = emptyHeadNode;
-        for (int i = 0; i < index; i++) {
-            current = current.next;
-            if (current == null) {
+        if (index < size / 2) {
+            //straight by pass
+            TwoDirectionalNode<T> current = emptyHeadNode;
+            for (int i = 0; i < index; i++) {
+                current = current.next;
+                if (current == emptyTagNode) {
+                    throw new Exception();
+                }
+            }
+            if (current.next == emptyTagNode) {
                 throw new Exception();
             }
+            current.next = current.next.next;
+            current.next.prev = current;
+            size--;
+        } else {
+            //revers by pass
+            TwoDirectionalNode<T> current = emptyTagNode;
+            for (int i = size - 1; i > index; i--) {
+                current = current.prev;
+                if (current == emptyHeadNode) {
+                    throw new Exception();
+                }
+            }
+            if (current.prev == emptyHeadNode) {
+                throw new Exception();
+            }
+            current.prev = current.prev.prev;
+            current.prev.next = current;
+            size--;
         }
-        if (current.next == null) {
-            throw new Exception();
-        }
-        current.next = current.next.next;
     }
 
     @Override
@@ -94,17 +115,35 @@ public class TwoDirectionalList<T> implements DirectionalList<T> {
         return getAt(getSize() - 1);
     }
 
-    //todo: reimplement
     @Override
     public Node<T> getAt(int index) throws Exception {
-        TwoDirectionalNode<T> current = emptyHeadNode;
-        for (int i = 0; i < index; i++) {
-            current = current.next;
-            if (current == null) {
+        if (index < size / 2) {
+            //straight by pass
+            TwoDirectionalNode<T> current = emptyHeadNode;
+            for (int i = 0; i < index; i++) {
+                current = current.next;
+                if (current == emptyTagNode) {
+                    throw new Exception();
+                }
+            }
+            if (current.next == emptyTagNode) {
                 throw new Exception();
             }
+            return current.next;
+        } else {
+            //revers by pass
+            TwoDirectionalNode<T> current = emptyTagNode;
+            for (int i = size - 1; i > index; i--) {
+                current = current.prev;
+                if (current == emptyHeadNode) {
+                    throw new Exception();
+                }
+            }
+            if (current.prev == emptyHeadNode) {
+                throw new Exception();
+            }
+            return current.prev;
         }
-        return current.next;
     }
 
     @Override
@@ -119,13 +158,13 @@ public class TwoDirectionalList<T> implements DirectionalList<T> {
         TwoDirectionalNode<T> current = emptyHeadNode;
         if (current.next != emptyTagNode) {
             current = current.next;
-            sb.append(current.getValue());
+            sb.append(current.getValue()).append(" ");
         }
         while (current.next != emptyTagNode) {
             current = current.next;
-            sb.append(", ").append(current.getValue());
+            sb.append(", ").append(current.getValue()).append(" ");
         }
-        return sb.append(" ]").toString();
+        return sb.append("]").toString();
     }
 
     public class TwoDirectionalNode<T> implements Node<T> {
