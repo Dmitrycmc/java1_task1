@@ -13,16 +13,16 @@ public class TwoDirectionalList<T> implements DirectionalList<T> {
     }
 
     @Override
-    public Node<T> insertToStart(T value) throws Exception {
+    public TwoDirectionalNode insertToStart(T value) throws Exception {
         return insertAt(value, 0);
     }
 
-    public Node<T> insertToEnd(T value) throws Exception {
+    public TwoDirectionalNode insertToEnd(T value) throws Exception {
         return insertAt(value, getSize());
     }
 
     @Override
-    public Node<T> insertAt(T value, int index) throws Exception {
+    public TwoDirectionalNode insertAt(T value, int index) throws Exception {
         if (index < size / 2) {
             //straight by pass
             TwoDirectionalNode<T> current = emptyHeadNode;
@@ -107,16 +107,16 @@ public class TwoDirectionalList<T> implements DirectionalList<T> {
     }
 
     @Override
-    public Node<T> getFirst() throws Exception {
+    public TwoDirectionalNode getFirst() throws Exception {
         return getAt(0);
     }
 
-    public Node<T> getLast() throws Exception {
+    public TwoDirectionalNode getLast() throws Exception {
         return getAt(getSize() - 1);
     }
 
     @Override
-    public Node<T> getAt(int index) throws Exception {
+    public TwoDirectionalNode<T> getAt(int index) throws Exception {
         if (index < size / 2) {
             //straight by pass
             TwoDirectionalNode<T> current = emptyHeadNode;

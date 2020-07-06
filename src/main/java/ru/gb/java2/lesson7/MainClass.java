@@ -21,6 +21,8 @@ public class MainClass {
         System.out.println(list);
 
         System.out.println(list.getFirst().getValue());
+        TwoDirectionalList<String>.TwoDirectionalNode<String> a = list.getAt(3);
+        System.out.println(a.getPrev().getValue());
         System.out.println(list.getAt(3).getValue());
         System.out.println(list.getAt(6).getValue());
         System.out.println(list.getAt(7).getValue());

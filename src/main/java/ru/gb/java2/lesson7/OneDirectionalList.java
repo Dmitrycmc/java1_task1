@@ -5,12 +5,12 @@ public class OneDirectionalList<T> implements DirectionalList<T> {
     private int size = 0;
 
     @Override
-    public Node<T> insertToStart(T value) throws Exception {
+    public OneDirectionalNode insertToStart(T value) throws Exception {
         return insertAt(value, 0);
     }
 
     @Override
-    public Node<T> insertAt(T value, int index) throws Exception {
+    public OneDirectionalNode insertAt(T value, int index) throws Exception {
         OneDirectionalNode<T> current = emptyHeadNode;
         for (int i = 0; i < index; i++) {
             if (current.getNext() == null) {
@@ -52,12 +52,12 @@ public class OneDirectionalList<T> implements DirectionalList<T> {
     }
 
     @Override
-    public Node<T> getFirst() throws Exception {
+    public OneDirectionalNode getFirst() throws Exception {
         return getAt(0);
     }
 
     @Override
-    public Node<T> getAt(int index) throws Exception {
+    public OneDirectionalNode getAt(int index) throws Exception {
         OneDirectionalNode<T> current = emptyHeadNode;
         for (int i = 0; i < index; i++) {
             current = current.next;
