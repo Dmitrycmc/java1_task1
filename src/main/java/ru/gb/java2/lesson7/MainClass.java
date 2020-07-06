@@ -17,8 +17,12 @@ public class MainClass {
         list.insertAt("4", 4);
         System.out.println(list);
         list.insertAt("6", 6);
+        System.out.println(list.insertAt("6", 6).getValue());
         System.out.println(list);
 
+        System.out.println(list.getFirst().getValue());
+        System.out.println(list.getAt(3).getValue());
+        System.out.println(list.getAt(6).getValue());
 
         list.removeAt(6);
         System.out.println(list);
@@ -33,8 +37,6 @@ public class MainClass {
         list.remove("1");
         System.out.println(list);
         list.remove("1");
-        System.out.println(list);
-        list.removeAt(5);
         System.out.println(list);
 
     }

@@ -5,7 +5,7 @@ public interface DirectionalList<T> {
     Node<T> insertAt(T val, int index) throws Exception;
     boolean remove(T val);
     void removeAt(int index) throws Exception;
-    Node<T> getFirst();
-    Node<T> getAt(int index);
+    Node<T> getFirst() throws Exception;
+    Node<T> getAt(int index) throws Exception;
     int size();
 }

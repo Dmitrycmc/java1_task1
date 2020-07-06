@@ -49,23 +49,37 @@ public class OneDirectionalList<T> implements DirectionalList<T> {
     }
 
     @Override
-    public Node<T> getFirst() {
-        return emptyRootNode.next;
+    public Node<T> getFirst() throws Exception {
+        return getAt(0);
     }
 
     @Override
-    public Node<T> getAt(int index) {
-        return null;
+    public Node<T> getAt(int index) throws Exception {
+        OneDirectionalNode<T> current = emptyRootNode;
+        for (int i = 0; i < index; i++) {
+            current = current.next;
+            if (current == null) {
+                throw new Exception();
+            }
+        }
+        return current.next;
     }
 
     @Override
     public int size() {
-        return 0;
+        OneDirectionalNode<T> current = emptyRootNode;
+        int cnt = 0;
+        while (current.next != null) {
+            cnt++;
+            current = current.next;
+        }
+        return cnt;
     }
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder("[ ");
+        StringBuilder sb = new StringBuilder();
+        sb.append("Length = ").append(size()).append(" [ ");
         OneDirectionalNode<T> current = emptyRootNode;
         if (current.next != null) {
             current = current.next;
