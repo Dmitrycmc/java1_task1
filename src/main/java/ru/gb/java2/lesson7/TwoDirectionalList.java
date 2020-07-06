@@ -3,13 +3,27 @@ package ru.gb.java2.lesson7;
 public class TwoDirectionalList<T> implements DirectionalList<T> {
     private TwoDirectionalNode<T> emptyHeadNode;
     private TwoDirectionalNode<T> emptyTagNode;
-    private int size = 0;
+    private int size;
 
     public TwoDirectionalList() {
         emptyHeadNode = new TwoDirectionalNode<>(null, null, null);
         emptyTagNode = new TwoDirectionalNode<>(null, null, null);
         emptyHeadNode.next = emptyTagNode;
         emptyTagNode.prev = emptyHeadNode;
+        size = 0;
+    }
+
+    public TwoDirectionalList(T[] arr) {
+        emptyHeadNode = new TwoDirectionalNode<>(null, null, null);
+        emptyTagNode = new TwoDirectionalNode<>(null, null, null);
+        TwoDirectionalNode<T> current = emptyHeadNode;
+        for (int i = 0; i < arr.length; i++) {
+            current.next = new TwoDirectionalNode<>(arr[i], current, null);
+            current = current.next;
+        }
+        current.next = emptyTagNode;
+        emptyTagNode.prev = current;
+        size = arr.length;
     }
 
     @Override

@@ -1,8 +1,23 @@
 package ru.gb.java2.lesson7;
 
 public class OneDirectionalList<T> implements DirectionalList<T> {
-    private OneDirectionalNode<T> emptyHeadNode = new OneDirectionalNode<>(null, null);
-    private int size = 0;
+    private OneDirectionalNode<T> emptyHeadNode;
+    private int size;
+
+    public OneDirectionalList(T[] arr) {
+        emptyHeadNode = new OneDirectionalNode<>(null, null);
+        OneDirectionalNode<T> current = emptyHeadNode;
+        for (int i = 0; i < arr.length; i++) {
+            current.next = new OneDirectionalNode<>(arr[i], null);
+            current = current.next;
+        }
+        size = arr.length;
+    }
+
+    public OneDirectionalList() {
+        emptyHeadNode = new OneDirectionalNode<>(null, null);
+        size = 0;
+    }
 
     @Override
     public OneDirectionalNode insertToStart(T value) throws Exception {
