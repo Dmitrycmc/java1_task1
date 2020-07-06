@@ -1,10 +1,10 @@
 package ru.gb.java2.lesson7;
 
-public class OneDirectionalList<T> implements DirectionalList<T> {
+class OneDirectionalList<T> implements DirectionalList<T> {
     private OneDirectionalNode<T> emptyHeadNode;
     private int size;
 
-    public OneDirectionalList(T[] arr) {
+    OneDirectionalList(T[] arr) {
         emptyHeadNode = new OneDirectionalNode<>(null, null);
         OneDirectionalNode<T> current = emptyHeadNode;
         for (int i = 0; i < arr.length; i++) {
@@ -14,7 +14,7 @@ public class OneDirectionalList<T> implements DirectionalList<T> {
         size = arr.length;
     }
 
-    public OneDirectionalList() {
+    OneDirectionalList() {
         emptyHeadNode = new OneDirectionalNode<>(null, null);
         size = 0;
     }
@@ -108,7 +108,7 @@ public class OneDirectionalList<T> implements DirectionalList<T> {
         private T value;
         private OneDirectionalNode<T> next;
 
-        public OneDirectionalNode(T value, OneDirectionalNode<T> next) {
+        OneDirectionalNode(T value, OneDirectionalNode<T> next) {
             this.value = value;
             this.next = next;
 
@@ -119,7 +119,7 @@ public class OneDirectionalList<T> implements DirectionalList<T> {
             return value;
         }
 
-        public OneDirectionalNode<T> getNext() {
+        OneDirectionalNode<T> getNext() {
             return next;
         }
     }

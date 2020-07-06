@@ -1,11 +1,11 @@
 package ru.gb.java2.lesson7;
 
-public class TwoDirectionalList<T> implements DirectionalList<T> {
+class TwoDirectionalList<T> implements DirectionalList<T> {
     private TwoDirectionalNode<T> emptyHeadNode;
     private TwoDirectionalNode<T> emptyTagNode;
     private int size;
 
-    public TwoDirectionalList() {
+    TwoDirectionalList() {
         emptyHeadNode = new TwoDirectionalNode<>(null, null, null);
         emptyTagNode = new TwoDirectionalNode<>(null, null, null);
         emptyHeadNode.next = emptyTagNode;
@@ -13,7 +13,7 @@ public class TwoDirectionalList<T> implements DirectionalList<T> {
         size = 0;
     }
 
-    public TwoDirectionalList(T[] arr) {
+    TwoDirectionalList(T[] arr) {
         emptyHeadNode = new TwoDirectionalNode<>(null, null, null);
         emptyTagNode = new TwoDirectionalNode<>(null, null, null);
         TwoDirectionalNode<T> current = emptyHeadNode;
@@ -31,7 +31,7 @@ public class TwoDirectionalList<T> implements DirectionalList<T> {
         return insertAt(value, 0);
     }
 
-    public TwoDirectionalNode insertToEnd(T value) throws Exception {
+    TwoDirectionalNode insertToEnd(T value) throws Exception {
         return insertAt(value, getSize());
     }
 
@@ -186,7 +186,7 @@ public class TwoDirectionalList<T> implements DirectionalList<T> {
         private TwoDirectionalNode<T> next;
         private TwoDirectionalNode<T> prev;
 
-        public TwoDirectionalNode(T value, TwoDirectionalNode<T> prev, TwoDirectionalNode<T> next) {
+        TwoDirectionalNode(T value, TwoDirectionalNode<T> prev, TwoDirectionalNode<T> next) {
             this.value = value;
             this.next = next;
             this.prev = prev;
@@ -197,15 +197,15 @@ public class TwoDirectionalList<T> implements DirectionalList<T> {
             return value;
         }
 
-        public TwoDirectionalNode<T> getNext() {
+        TwoDirectionalNode<T> getNext() {
             return next;
         }
-        public TwoDirectionalNode<T> getPrev() {
+        TwoDirectionalNode<T> getPrev() {
             return prev;
         }
     }
 
-    public boolean validate() throws Exception {
+    boolean validate() throws Exception {
         TwoDirectionalNode[] arr = new TwoDirectionalNode[size];
         TwoDirectionalNode<T> current = emptyHeadNode.next;
         for (int i = 0; i < size; i++) {
