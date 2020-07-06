@@ -21,13 +21,31 @@ public class OneDirectionalList<T> implements DirectionalList<T> {
     }
 
     @Override
-    public boolean remove(T val) {
+    public boolean remove(T value) {
+        OneDirectionalNode<T> current = emptyRootNode;
+        while (current.next != null) {
+            if (current.next.value.equals(value)) {
+                current.next = current.next.next;
+                return true;
+            }
+            current = current.next;
+        }
         return false;
     }
 
     @Override
-    public boolean removeAt(T val) {
-        return false;
+    public void removeAt(int index) throws Exception {
+        OneDirectionalNode<T> current = emptyRootNode;
+        for (int i = 0; i < index; i++) {
+            current = current.next;
+            if (current == null) {
+                throw new Exception();
+            }
+        }
+        if (current.next == null) {
+            throw new Exception();
+        }
+        current.next = current.next.next;
     }
 
     @Override
@@ -36,7 +54,7 @@ public class OneDirectionalList<T> implements DirectionalList<T> {
     }
 
     @Override
-    public Node<T> getAt() {
+    public Node<T> getAt(int index) {
         return null;
     }
 
@@ -48,14 +66,14 @@ public class OneDirectionalList<T> implements DirectionalList<T> {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("[ ");
-        OneDirectionalNode<T> current = emptyRootNode.next;
-        if (current != null) {
+        OneDirectionalNode<T> current = emptyRootNode;
+        if (current.next != null) {
+            current = current.next;
             sb.append(current.getValue());
-            current = current.next;
         }
-        while (current != null) {
-            sb.append(", ").append(current.getValue());
+        while (current.next != null) {
             current = current.next;
+            sb.append(", ").append(current.getValue());
         }
         return sb.append(" ]").toString();
     }
