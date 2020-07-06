@@ -25,6 +25,8 @@ public class MainClass {
         System.out.println(list.getAt(6).getValue());
         System.out.println(list.getAt(7).getValue());
 
+        list.validate();
+
         list.removeAt(6);
         System.out.println(list);
         list.removeAt(0);
@@ -39,6 +41,8 @@ public class MainClass {
         System.out.println(list);
         list.remove("1");
         System.out.println(list);
+
+        list.validate();
     }
 }
 

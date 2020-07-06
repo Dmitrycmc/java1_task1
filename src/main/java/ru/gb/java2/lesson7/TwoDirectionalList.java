@@ -190,4 +190,35 @@ public class TwoDirectionalList<T> implements DirectionalList<T> {
             return prev;
         }
     }
+
+    public boolean validate() throws Exception {
+        TwoDirectionalNode[] arr = new TwoDirectionalNode[size];
+        TwoDirectionalNode<T> current = emptyHeadNode.next;
+        for (int i = 0; i < size; i++) {
+            if (current == emptyHeadNode || current == null) {
+                throw new Exception();
+            }
+            arr[i] = current;
+            current = current.next;
+        }
+        if (current != emptyTagNode) {
+            throw new Exception();
+        }
+
+        current = emptyTagNode.prev;
+        for (int i = size - 1; i >= 0; i--) {
+            if (current == emptyHeadNode || current == null) {
+                throw new Exception();
+            }
+            if (arr[i] != current) {
+                throw new Exception();
+            }
+            current = current.prev;
+        }
+        if (current != emptyHeadNode) {
+            throw new Exception();
+        }
+
+        return true;
+    }
 }

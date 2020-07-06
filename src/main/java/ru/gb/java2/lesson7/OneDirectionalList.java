@@ -2,6 +2,7 @@ package ru.gb.java2.lesson7;
 
 public class OneDirectionalList<T> implements DirectionalList<T> {
     private OneDirectionalNode<T> emptyHeadNode = new OneDirectionalNode<>(null, null);
+    private int size = 0;
 
     @Override
     public Node<T> insertToStart(T value) throws Exception {
@@ -17,6 +18,7 @@ public class OneDirectionalList<T> implements DirectionalList<T> {
             }
             current = current.getNext();
         }
+        size++;
         return current.next = new OneDirectionalNode<>(value, current.next);
     }
 
@@ -45,6 +47,7 @@ public class OneDirectionalList<T> implements DirectionalList<T> {
         if (current.next == null) {
             throw new Exception();
         }
+        size--;
         current.next = current.next.next;
     }
 
@@ -67,13 +70,7 @@ public class OneDirectionalList<T> implements DirectionalList<T> {
 
     @Override
     public int getSize() {
-        OneDirectionalNode<T> current = emptyHeadNode;
-        int cnt = 0;
-        while (current.next != null) {
-            cnt++;
-            current = current.next;
-        }
-        return cnt;
+        return size;
     }
 
     @Override
