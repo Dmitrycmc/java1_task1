@@ -24,7 +24,7 @@ public class ChatWindow extends JFrame {
     private void receive(String message) {
         String chatHistory = chatTextArea.getText();
         if (!message.equals("")) {
-            chatTextArea.setText(chatHistory + (chatHistory.equals("") ? "" : '\n') + message);
+            chatTextArea.setText(message + (chatHistory.equals("") ? "" : '\n') + chatHistory );
         }
     }
 

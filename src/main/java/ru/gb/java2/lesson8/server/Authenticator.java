@@ -6,11 +6,13 @@ import java.util.Arrays;
 public class Authenticator {
     public static ArrayList<User> users = new ArrayList<>(Arrays.asList(
             new User("Dmitry", "123456"),
+            new User("Oleg", "0000"),
+            new User("Masha", "1111"),
             new User("Alexander", "777")
     ));
 
     public static boolean auth(String login, String password) {
-        for (User user: users) {
+        for (User user : users) {
             if (user.login.equals(login) && user.password.equals(password)) {
                 return true;
             }

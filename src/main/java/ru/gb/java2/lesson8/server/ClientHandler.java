@@ -66,7 +66,16 @@ public class ClientHandler {
             LocalDateTime now = LocalDateTime.now();
             String time = dtf.format(now);
 
-            server.broadcast(String.format("(%s) %s: %s", time, getLogin(), msg));
+            if (msg.startsWith("/w ")) {
+                String[] words = msg.split("\\s");
+                String[] pureMessageWords = new String[words.length - 2];
+                System.arraycopy(words, 2, pureMessageWords, 0, words.length - 2);
+
+                String pureMessage = String.join(" ", pureMessageWords);
+                server.privateMessage(getLogin(), words[1], String.format("(%s) личное from %s to %s: %s", time, getLogin(), words[1], pureMessage));
+            } else {
+                server.broadcast(String.format("(%s) %s: %s", time, getLogin(), msg));
+            }
         }
     }
 

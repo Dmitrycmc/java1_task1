@@ -24,7 +24,7 @@ public class MainWindow extends JFrame {
 
     public void refreshClients() {
         clientsArea.setText("");
-        for (ClientHandler clientHandler: clientHandlers) {
+        for (ClientHandler clientHandler : clientHandlers) {
             clientsArea.setText(clientsArea.getText() + (clientsArea.getText().equals("") ? "" : '\n') + clientHandler.getLogin());
         }
     }

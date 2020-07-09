@@ -18,8 +18,15 @@ class Server {
     }
 
     void broadcast(String message) {
-        for (ClientHandler clientHandler: clientHandlers) {
+        for (ClientHandler clientHandler : clientHandlers) {
             clientHandler.send(message);
+        }
+    }
+
+    void privateMessage(String userLoginFrom, String userLoginTo, String message) {
+        for (ClientHandler clientHandler : clientHandlers) {
+            if (clientHandler.getLogin().equals(userLoginFrom) || clientHandler.getLogin().equals(userLoginTo))
+                clientHandler.send(message);
         }
     }
 
