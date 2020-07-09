@@ -9,7 +9,7 @@ class Client {
     private DataInputStream in;
     private DataOutputStream out;
 
-    public Client(String domain, int port) {
+    Client(String domain, int port) {
         start(domain, port);
     }
 
@@ -35,7 +35,7 @@ class Client {
         return message;
     }
 
-    public void start(String domain, int port) {
+    private void start(String domain, int port) {
         try {
             Socket socket = new Socket(domain, port);
             System.out.println("Соединение установлено!");

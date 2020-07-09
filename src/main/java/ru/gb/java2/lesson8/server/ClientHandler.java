@@ -6,14 +6,14 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class ClientHandler {
+class ClientHandler {
     private DataInputStream in;
     private DataOutputStream out;
     private Server server;
     private MainWindow mainWindow;
     private String login;
 
-    public ClientHandler(DataInputStream in, DataOutputStream out, Server server, MainWindow mainWindow) {
+    ClientHandler(DataInputStream in, DataOutputStream out, Server server, MainWindow mainWindow) {
         this.in = in;
         this.out = out;
         this.server = server;
@@ -29,7 +29,7 @@ public class ClientHandler {
         }
     }
 
-    public void handleClient() {
+    void handleClient() {
         try {
             authClient();
             mainWindow.refreshClients();
@@ -82,7 +82,7 @@ public class ClientHandler {
         }
     }
 
-    public String getLogin() {
+    String getLogin() {
         return login == null ? "Unauthorized" : login;
     }
 }

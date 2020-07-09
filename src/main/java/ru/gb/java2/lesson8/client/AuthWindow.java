@@ -3,11 +3,11 @@ package ru.gb.java2.lesson8.client;
 import javax.swing.*;
 import java.awt.*;
 
-public class AuthWindow extends JFrame {
+class AuthWindow extends JFrame {
     private Client client;
     private String login;
-    JTextField loginField;
-    JTextField passwordField;
+    private JTextField loginField;
+    private JTextField passwordField;
 
     private void submit() {
         login = loginField.getText();
@@ -16,7 +16,7 @@ public class AuthWindow extends JFrame {
         passwordField.setText("");
     }
 
-    public AuthWindow(Client client, ChatWindow chatWindow) {
+    AuthWindow(Client client, ChatWindow chatWindow) {
         this.client = client;
 
         setTitle("Вход");

@@ -3,15 +3,15 @@ package ru.gb.java2.lesson8.server;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Authenticator {
-    public static ArrayList<User> users = new ArrayList<>(Arrays.asList(
+class Authenticator {
+    private static ArrayList<User> users = new ArrayList<>(Arrays.asList(
             new User("Dmitry", "123456"),
             new User("Oleg", "0000"),
             new User("Masha", "1111"),
             new User("Alexander", "777")
     ));
 
-    public static boolean auth(String login, String password) {
+    static boolean auth(String login, String password) {
         for (User user : users) {
             if (user.login.equals(login) && user.password.equals(password)) {
                 return true;
@@ -24,7 +24,7 @@ public class Authenticator {
         private String login;
         private String password;
 
-        public User(String login, String password) {
+        User(String login, String password) {
             this.login = login;
             this.password = password;
         }

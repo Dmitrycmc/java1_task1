@@ -3,13 +3,13 @@ package ru.gb.java2.lesson8.client;
 import javax.swing.*;
 import java.awt.*;
 
-public class ChatWindow extends JFrame {
-    Client client;
-    JTextArea chatTextArea = new JTextArea();
-    JScrollPane scrollPane = new JScrollPane(chatTextArea);
-    JPanel messagePanel = new JPanel();
-    JTextField messageTextField = new JTextField("");
-    JButton sendButton = new JButton("Send");
+class ChatWindow extends JFrame {
+    private Client client;
+    private JTextArea chatTextArea = new JTextArea();
+    private JScrollPane scrollPane = new JScrollPane(chatTextArea);
+    private JPanel messagePanel = new JPanel();
+    private JTextField messageTextField = new JTextField("");
+    private JButton sendButton = new JButton("Send");
 
     private void submit() {
         String message = messageTextField.getText().trim();
@@ -26,7 +26,7 @@ public class ChatWindow extends JFrame {
         }
     }
 
-    public ChatWindow(Client client) {
+    ChatWindow(Client client) {
         this.client = client;
         setTitle("Чат");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);

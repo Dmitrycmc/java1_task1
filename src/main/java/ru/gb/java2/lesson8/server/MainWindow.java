@@ -3,11 +3,11 @@ package ru.gb.java2.lesson8.server;
 import javax.swing.*;
 import java.util.LinkedList;
 
-public class MainWindow extends JFrame {
+class MainWindow extends JFrame {
     private LinkedList<ClientHandler> clientHandlers;
     private JTextArea clientsArea;
 
-    public MainWindow(LinkedList<ClientHandler> clientHandlers) {
+    MainWindow(LinkedList<ClientHandler> clientHandlers) {
         this.clientHandlers = clientHandlers;
 
         setTitle("Сервер чата");
@@ -22,7 +22,7 @@ public class MainWindow extends JFrame {
         setVisible(true);
     }
 
-    public void refreshClients() {
+    void refreshClients() {
         clientsArea.setText("");
         for (ClientHandler clientHandler : clientHandlers) {
             clientsArea.setText(clientsArea.getText() + (clientsArea.getText().equals("") ? "" : '\n') + clientHandler.getLogin());

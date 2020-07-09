@@ -10,9 +10,9 @@ import java.util.LinkedList;
 class Server {
     private int port;
     private MainWindow mainWindow;
-    LinkedList<ClientHandler> clientHandlers = new LinkedList<>();
+    private LinkedList<ClientHandler> clientHandlers = new LinkedList<>();
 
-    public Server(int port) {
+    Server(int port) {
         this.port = port;
         start();
     }
