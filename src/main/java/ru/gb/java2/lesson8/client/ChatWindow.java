@@ -2,8 +2,6 @@ package ru.gb.java2.lesson8.client;
 
 import javax.swing.*;
 import java.awt.*;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 public class ChatWindow extends JFrame {
     Client client;
@@ -14,9 +12,9 @@ public class ChatWindow extends JFrame {
     JButton sendButton = new JButton("Send");
 
     private void submit() {
-        String msg = messageTextField.getText().trim();
-        if (!msg.equals("")) {
-            client.send(msg);
+        String message = messageTextField.getText().trim();
+        if (!message.equals("")) {
+            client.send(message);
             messageTextField.setText("");
         }
     }

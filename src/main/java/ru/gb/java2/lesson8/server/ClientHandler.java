@@ -41,12 +41,12 @@ public class ClientHandler {
     }
 
     private void authClient() throws IOException {
-        String msg;
+        String message;
         String[] words;
         while (true) {
-            msg = in.readUTF();
-            System.out.println("Получено сообщение: " + msg);
-            words = msg.split("\\s");
+            message = in.readUTF();
+            System.out.println("Получено сообщение: " + message);
+            words = message.split("\\s");
             if (Authenticator.auth(words[0], words[1])) {
                 login = words[0];
                 send("Success");
@@ -57,24 +57,27 @@ public class ClientHandler {
     }
 
     private void listen() throws IOException {
-        String msg;
+        String message;
         while (true) {
-            msg = in.readUTF();
-            System.out.println("Получено сообщение от " + getLogin() + ": " + msg);
+            message = in.readUTF();
+            System.out.println("Получено сообщение от " + getLogin() + ": " + message);
 
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
             LocalDateTime now = LocalDateTime.now();
             String time = dtf.format(now);
 
-            if (msg.startsWith("/w ")) {
-                String[] words = msg.split("\\s");
+            if (message.startsWith("/w ")) {
+                // private message
+                String[] words = message.split("\\s");
                 String[] pureMessageWords = new String[words.length - 2];
                 System.arraycopy(words, 2, pureMessageWords, 0, words.length - 2);
 
                 String pureMessage = String.join(" ", pureMessageWords);
-                server.privateMessage(getLogin(), words[1], String.format("(%s) личное from %s to %s: %s", time, getLogin(), words[1], pureMessage));
+                server.privateMessage(getLogin(), words[1],
+                        String.format("(%s) private from %s to %s: %s", time, getLogin(), words[1], pureMessage)
+                );
             } else {
-                server.broadcast(String.format("(%s) %s: %s", time, getLogin(), msg));
+                server.broadcast(String.format("(%s) %s: %s", time, getLogin(), message));
             }
         }
     }

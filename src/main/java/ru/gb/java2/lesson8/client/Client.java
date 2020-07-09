@@ -24,15 +24,15 @@ class Client {
     }
 
     String waitForAnswer() {
-        String msg = "";
+        String message = "";
         try {
-            msg = in.readUTF();
-            System.out.println("Получено сообщение: " + msg);
+            message = in.readUTF();
+            System.out.println("Получено сообщение: " + message);
         } catch (Exception e) {
             System.out.println("Соединение разорвано");
             System.exit(0);
         }
-        return msg;
+        return message;
     }
 
     public void start(String domain, int port) {
