@@ -1,4 +1,4 @@
-package ru.gb.java2.lesson8;
+package ru.gb.java2.lesson8.server;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -8,14 +8,15 @@ import java.net.Socket;
 import java.util.LinkedList;
 
 class Server {
-    private final static int PORT = 8554;
-    static LinkedList<ClientHandler> clientHandlers = new LinkedList<>();
+    private int port;
+    LinkedList<ClientHandler> clientHandlers = new LinkedList<>();
 
-    public static void main(String[] args) {
-        start(PORT);
+    public Server(int port) {
+        this.port = port;
+        start();
     }
 
-    public static void start(int port) {
+    public void start() {
         ServerSocket serverSocket = null;
         try {
             serverSocket = new ServerSocket(port);
@@ -28,7 +29,7 @@ class Server {
             try {
                 System.out.println("Ожидаем подключения...");
                 Socket socket = serverSocket.accept();
-                System.out.println("Клиент подключился");
+                System.out.println("Клиент подключился: " + socket);
                 DataInputStream in = new DataInputStream(socket.getInputStream());
                 DataOutputStream out = new DataOutputStream(socket.getOutputStream());
                 new Thread(() -> clientHandlers.add(new ClientHandler(in, out))).start();

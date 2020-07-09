@@ -1,4 +1,4 @@
-package ru.gb.java2.lesson8;
+package ru.gb.java2.lesson8.client;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -29,6 +29,7 @@ class Client {
             msg = in.readUTF();
         } catch (Exception e) {
             System.out.println("Соединение разорвано");
+            System.exit(0);
         }
         return msg;
     }
@@ -39,7 +40,7 @@ class Client {
             System.out.println("Соединение установлено!");
             in = new DataInputStream(socket.getInputStream());
             out = new DataOutputStream(socket.getOutputStream());
-            MainWindow mainWindow = new MainWindow(this);
+            ChatWindow chatWindow = new ChatWindow(this);
 
             // todo: handle chat
 

@@ -1,9 +1,9 @@
-package ru.gb.java2.lesson8;
+package ru.gb.java2.lesson8.client;
 
 import javax.swing.*;
 
-public class MainWindow extends JFrame {
-    public MainWindow(Client client) {
+public class ChatWindow extends JFrame {
+    public ChatWindow(Client client) {
         setTitle("Крестики-нолики");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setBounds(300, 300, 400, 400);

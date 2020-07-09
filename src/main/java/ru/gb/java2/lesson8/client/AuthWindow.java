@@ -1,4 +1,4 @@
-package ru.gb.java2.lesson8;
+package ru.gb.java2.lesson8.client;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,7 +14,7 @@ public class AuthWindow extends JFrame {
         passwordField.setText("");
     }
 
-    public AuthWindow(MainWindow mainWindow, Client client) {
+    public AuthWindow(ChatWindow chatWindow, Client client) {
         this.client = client;
 
         setTitle("Вход");
@@ -57,7 +57,7 @@ public class AuthWindow extends JFrame {
         } while (!answer.equals("Success"));
 
         setVisible(false);
-        mainWindow.setEnabled(true);
+        chatWindow.setEnabled(true);
         System.out.println("Аутенфикация прошла успешно!");
     }
 }

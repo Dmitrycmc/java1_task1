@@ -1,4 +1,4 @@
-package ru.gb.java2.lesson8;
+package ru.gb.java2.lesson8.server;
 
 import java.util.ArrayList;
 import java.util.Arrays;

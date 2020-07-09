@@ -1,4 +1,4 @@
-package ru.gb.java2.lesson8;
+package ru.gb.java2.lesson8.server;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -25,12 +25,17 @@ public class ClientHandler {
     }
 
     private void handleClient() {
-        authClient();
-        System.out.println("Клиент авторизовался");
-        // todo: handle chat
+        if (authClient()) {
+            System.out.println("Клиент авторизовался");
+            // todo: handle chat
+
+
+
+
+        }
     }
 
-    private void authClient() {
+    private boolean authClient() {
         try {
             String msg;
             String[] words;
@@ -39,12 +44,13 @@ public class ClientHandler {
                 words = msg.split("\\s");
                 if (Authenticator.auth(words[0], words[1])) {
                     send("Success");
-                    break;
+                    return true;
                 }
                 send("Invalid login or password");
             }
         } catch (Exception e) {
             System.out.println("Соединение разорвано");
+            return false;
         }
     }
 }
