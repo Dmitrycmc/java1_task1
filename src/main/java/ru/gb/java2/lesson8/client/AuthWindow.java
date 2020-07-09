@@ -14,7 +14,7 @@ public class AuthWindow extends JFrame {
         passwordField.setText("");
     }
 
-    public AuthWindow(ChatWindow chatWindow, Client client) {
+    public AuthWindow(Client client) {
         this.client = client;
 
         setTitle("Вход");
@@ -57,7 +57,5 @@ public class AuthWindow extends JFrame {
         } while (!answer.equals("Success"));
 
         setVisible(false);
-        chatWindow.setEnabled(true);
-        System.out.println("Аутенфикация прошла успешно!");
     }
 }

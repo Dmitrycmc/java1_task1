@@ -27,6 +27,7 @@ class Client {
         String msg = "";
         try {
             msg = in.readUTF();
+            System.out.println("Получено сообщение: " + msg);
         } catch (Exception e) {
             System.out.println("Соединение разорвано");
             System.exit(0);
@@ -40,12 +41,7 @@ class Client {
             System.out.println("Соединение установлено!");
             in = new DataInputStream(socket.getInputStream());
             out = new DataOutputStream(socket.getOutputStream());
-            ChatWindow chatWindow = new ChatWindow(this);
-
-            // todo: handle chat
-
-
-
+            new ChatWindow(this);
         } catch (IOException e) {
             System.out.println("Не удалось подключиться!");
             System.exit(0);

@@ -16,7 +16,13 @@ class Server {
         start();
     }
 
-    public void start() {
+    void broadcast(String message) {
+        for (ClientHandler clientHandler: clientHandlers) {
+            clientHandler.send(message);
+        }
+    }
+
+    private void start() {
         ServerSocket serverSocket = null;
         try {
             serverSocket = new ServerSocket(port);
@@ -32,7 +38,10 @@ class Server {
                 System.out.println("Клиент подключился: " + socket);
                 DataInputStream in = new DataInputStream(socket.getInputStream());
                 DataOutputStream out = new DataOutputStream(socket.getOutputStream());
-                new Thread(() -> clientHandlers.add(new ClientHandler(in, out))).start();
+
+                ClientHandler clientHandler = new ClientHandler(in, out, this);
+                clientHandler.handleClient();
+                clientHandlers.add(clientHandler);
             } catch (IOException e) {
                 e.printStackTrace();
             }
