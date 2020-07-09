@@ -57,7 +57,7 @@ public class ChatWindow extends JFrame {
         setVisible(true);
         setEnabled(false);
 
-        new AuthWindow(client);
+        new AuthWindow(client, this);
 
         setEnabled(true);
         System.out.println("Аутенфикация прошла успешно!");

@@ -23,10 +23,9 @@ public class ClientHandler {
     void send(String str) {
         try {
             out.writeUTF(str);
-            System.out.println("Отправлено сообщение: " + str);
+            System.out.println("Отправлено сообщение пользователю " + getLogin() + ": " + str);
         } catch (IOException e) {
             System.out.println("Соединение разорвано");
-            System.exit(0);
         }
     }
 
@@ -55,20 +54,19 @@ public class ClientHandler {
             }
             send("Invalid login or password");
         }
-
     }
 
     private void listen() throws IOException {
         String msg;
         while (true) {
             msg = in.readUTF();
-            System.out.println("Получено сообщение: " + msg);
+            System.out.println("Получено сообщение от " + getLogin() + ": " + msg);
 
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
             LocalDateTime now = LocalDateTime.now();
             String time = dtf.format(now);
 
-            server.broadcast(String.format("(%s) %s: %s", time, login, msg));
+            server.broadcast(String.format("(%s) %s: %s", time, getLogin(), msg));
         }
     }
 

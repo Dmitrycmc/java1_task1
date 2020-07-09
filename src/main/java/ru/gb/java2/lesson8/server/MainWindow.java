@@ -10,7 +10,7 @@ public class MainWindow extends JFrame {
     public MainWindow(LinkedList<ClientHandler> clientHandlers) {
         this.clientHandlers = clientHandlers;
 
-        setTitle("Чат");
+        setTitle("Сервер чата");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setBounds(300, 300, 400, 400);
         setResizable(false);

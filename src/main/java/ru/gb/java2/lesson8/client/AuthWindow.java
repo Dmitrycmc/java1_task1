@@ -5,16 +5,18 @@ import java.awt.*;
 
 public class AuthWindow extends JFrame {
     private Client client;
+    private String login;
     JTextField loginField;
     JTextField passwordField;
 
     private void submit() {
-        client.send(loginField.getText() + " " + passwordField.getText());
+        login = loginField.getText();
+        client.send(login + " " + passwordField.getText());
         loginField.setText("");
         passwordField.setText("");
     }
 
-    public AuthWindow(Client client) {
+    public AuthWindow(Client client, ChatWindow chatWindow) {
         this.client = client;
 
         setTitle("Вход");
@@ -56,6 +58,7 @@ public class AuthWindow extends JFrame {
             repaint();
         } while (!answer.equals("Success"));
 
+        chatWindow.setTitle("Чат: " + login);
         setVisible(false);
     }
 }
