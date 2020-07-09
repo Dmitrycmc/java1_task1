@@ -10,12 +10,14 @@ public class ClientHandler {
     private DataInputStream in;
     private DataOutputStream out;
     private Server server;
+    private MainWindow mainWindow;
     private String login;
 
-    public ClientHandler(DataInputStream in, DataOutputStream out, Server server) {
+    public ClientHandler(DataInputStream in, DataOutputStream out, Server server, MainWindow mainWindow) {
         this.in = in;
         this.out = out;
         this.server = server;
+        this.mainWindow = mainWindow;
     }
 
     void send(String str) {
@@ -29,15 +31,14 @@ public class ClientHandler {
     }
 
     public void handleClient() {
-        new Thread(() -> {
-            try {
-                authClient();
-                System.out.println("Клиент авторизовался");
-                listen();
-            } catch (IOException e) {
-                System.out.println("Соединение разорвано");
-            }
-        }).start();
+        try {
+            authClient();
+            mainWindow.refreshClients();
+            System.out.println("Клиент авторизовался");
+            listen();
+        } catch (IOException e) {
+            System.out.println("Соединение разорвано");
+        }
     }
 
     private void authClient() throws IOException {
@@ -69,5 +70,9 @@ public class ClientHandler {
 
             server.broadcast(String.format("(%s) %s: %s", time, login, msg));
         }
+    }
+
+    public String getLogin() {
+        return login == null ? "Unauthorized" : login;
     }
 }

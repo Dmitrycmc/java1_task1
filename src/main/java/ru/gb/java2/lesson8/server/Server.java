@@ -9,6 +9,7 @@ import java.util.LinkedList;
 
 class Server {
     private int port;
+    private MainWindow mainWindow;
     LinkedList<ClientHandler> clientHandlers = new LinkedList<>();
 
     public Server(int port) {
@@ -30,6 +31,7 @@ class Server {
             e.printStackTrace();
         }
         System.out.println("Сервер запущен");
+        mainWindow = new MainWindow(clientHandlers);
 
         while (true) {
             try {
@@ -39,9 +41,14 @@ class Server {
                 DataInputStream in = new DataInputStream(socket.getInputStream());
                 DataOutputStream out = new DataOutputStream(socket.getOutputStream());
 
-                ClientHandler clientHandler = new ClientHandler(in, out, this);
-                clientHandler.handleClient();
+                ClientHandler clientHandler = new ClientHandler(in, out, this, mainWindow);
+                new Thread(() -> {
+                    clientHandler.handleClient();
+                    clientHandlers.remove(clientHandler);
+                    mainWindow.refreshClients();
+                }).start();
                 clientHandlers.add(clientHandler);
+                mainWindow.refreshClients();
             } catch (IOException e) {
                 e.printStackTrace();
             }
