@@ -32,10 +32,19 @@ class Box<T extends Fruit> {
     }
 
     boolean compare(Box<? extends Fruit> anotherBox) {
+        if (anotherBox == null) {
+            throw new NullPointerException();
+        }
         return getWeight() == anotherBox.getWeight();
     }
 
     void moveTo(Box<T> anotherBox) {
+        if (anotherBox == null) {
+            throw new NullPointerException();
+        }
+        if (anotherBox == this) {
+            throw new Error("Moving from self is forbidden");
+        }
         anotherBox.add(fruits);
         this.fruits.clear();
     }

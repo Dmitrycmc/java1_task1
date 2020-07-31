@@ -62,6 +62,10 @@ public class MainClass {
         Box<Apple> appleBox2 = new Box<>();
         Box<Orange> orangeBox = new Box<>();
 
+        appleBox1.moveTo(appleBox2);
+        System.out.println(appleBox1.getWeight());
+        System.out.println(appleBox2.getWeight());
+
         System.out.println(appleBox1.compare(appleBox2));
         appleBox1.add(apples);
         System.out.println(appleBox1.getWeight());
