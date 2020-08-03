@@ -11,15 +11,17 @@ class AuthWindow extends JFrame {
 
     private void submit() {
         login = loginField.getText();
-        client.send(login + " " + passwordField.getText());
-        loginField.setText("");
-        passwordField.setText("");
+        if (login.length() > 0 && passwordField.getText().length() > 0) {
+            client.send(login + " " + passwordField.getText());
+            loginField.setText("");
+            passwordField.setText("");
+        }
     }
 
     AuthWindow(Client client, ChatWindow chatWindow) {
         this.client = client;
 
-        setTitle("Вход");
+        setTitle("Sign in");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setBounds(300, 300, 400, 160);
         setResizable(false);

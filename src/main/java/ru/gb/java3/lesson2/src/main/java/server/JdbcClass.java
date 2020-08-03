@@ -46,6 +46,7 @@ public class JdbcClass implements Closeable {
     }
 
     void updateUsername(String oldUsername, String newUsername) throws SQLException {
+        System.out.println(oldUsername + " " + newUsername);
         preparedStatementUsernameUpdate.setString(1, newUsername);
         preparedStatementUsernameUpdate.setString(2, oldUsername);
         preparedStatementUsernameUpdate.execute();

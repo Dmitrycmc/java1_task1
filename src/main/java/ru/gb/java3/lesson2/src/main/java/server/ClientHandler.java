@@ -59,7 +59,7 @@ class ClientHandler {
         }
     }
 
-    private void listen() throws IOException {
+    private void listen() throws IOException, SQLException {
         String message;
         while (true) {
             message = in.readUTF();
@@ -69,7 +69,13 @@ class ClientHandler {
             LocalDateTime now = LocalDateTime.now();
             String time = dtf.format(now);
 
-            if (message.startsWith("/w ")) {
+            if (message.startsWith("/changeLogin ")) {
+                // change nick
+                String[] words = message.split("\\s");
+                String newLogin = words[1];
+                jdbcClass.updateUsername(login, newLogin);
+                login = newLogin;
+            } else if (message.startsWith("/w ")) {
                 // private message
                 String[] words = message.split("\\s");
                 String[] pureMessageWords = new String[words.length - 2];
