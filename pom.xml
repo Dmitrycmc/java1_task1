@@ -19,6 +19,9 @@
             </plugin>
         </plugins>
     </build>
+    <modules>
+        <module>src/main/java/ru/gb/java_ee</module>
+    </modules>
 
 
 </project>
