@@ -6,6 +6,7 @@
 
     <groupId>ru.geekbrains.java_gb</groupId>
     <artifactId>java_gb</artifactId>
+    <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <build>
         <plugins>
