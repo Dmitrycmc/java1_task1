@@ -22,7 +22,6 @@
     </build>
     <modules>
         <module>src/main/java/ru/gb/java3/lesson2</module>
+        <module>src/main/java/ru/gb/java_ee</module>
     </modules>
-
-
 </project>
