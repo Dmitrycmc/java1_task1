@@ -6,11 +6,11 @@
         <artifactId>java_gb</artifactId>
         <groupId>ru.geekbrains.java_gb</groupId>
         <version>1.0-SNAPSHOT</version>
-        <relativePath>../../../../../../../pom.xml</relativePath>
+        <relativePath>../../../../../../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>java3-lesson2</artifactId>
+    <artifactId>ChatApp</artifactId>
 
     <dependencies>
         <!-- https://mvnrepository.com/artifact/org.xerial/sqlite-jdbc -->

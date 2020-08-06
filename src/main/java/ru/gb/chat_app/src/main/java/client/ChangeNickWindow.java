@@ -38,7 +38,7 @@ class ChangeNickWindow extends JFrame {
         loginField.addActionListener(e -> submit());
         add(loginField);
 
-        JButton sendButton = new JButton("Sign in");
+        JButton sendButton = new JButton("Change");
         sendButton.addActionListener(e -> submit());
         add(sendButton);
 

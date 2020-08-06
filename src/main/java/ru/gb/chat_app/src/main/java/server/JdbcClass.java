@@ -63,7 +63,7 @@ public class JdbcClass implements Closeable {
 
     private void connect() throws ClassNotFoundException, SQLException {
         Class.forName("org.sqlite.JDBC");
-        connection = DriverManager.getConnection("jdbc:sqlite:src\\main\\java\\ru\\gb\\java3\\lesson2\\src\\main\\resources\\main.db");
+        connection = DriverManager.getConnection("jdbc:sqlite:src\\main\\java\\ru\\gb\\chat_app\\src\\main\\resources\\main.db");
         statement = connection.createStatement();
     }
 
