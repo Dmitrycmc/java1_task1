@@ -3,6 +3,7 @@ package server;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -10,14 +11,16 @@ class ClientHandler {
     private DataInputStream in;
     private DataOutputStream out;
     private Server server;
+    private JdbcClass jdbcClass;
     private MainWindow mainWindow;
     private String login;
 
-    ClientHandler(DataInputStream in, DataOutputStream out, Server server, MainWindow mainWindow) {
+    ClientHandler(DataInputStream in, DataOutputStream out, Server server, MainWindow mainWindow, JdbcClass jdbcClass) {
         this.in = in;
         this.out = out;
         this.server = server;
         this.mainWindow = mainWindow;
+        this.jdbcClass = jdbcClass;
     }
 
     void send(String str) {
@@ -35,19 +38,19 @@ class ClientHandler {
             mainWindow.refreshClients();
             System.out.println("Клиент авторизовался");
             listen();
-        } catch (IOException e) {
+        } catch (IOException | SQLException e) {
             System.out.println("Соединение разорвано");
         }
     }
 
-    private void authClient() throws IOException {
+    private void authClient() throws IOException, SQLException {
         String message;
         String[] words;
         while (true) {
             message = in.readUTF();
             System.out.println("Получено сообщение: " + message);
             words = message.split("\\s");
-            if (Authenticator.auth(words[0], words[1])) {
+            if (jdbcClass.authUser(words[0], words[1])) {
                 login = words[0];
                 send("Success");
                 return;
@@ -56,7 +59,7 @@ class ClientHandler {
         }
     }
 
-    private void listen() throws IOException {
+    private void listen() throws IOException, SQLException {
         String message;
         while (true) {
             message = in.readUTF();
@@ -66,7 +69,13 @@ class ClientHandler {
             LocalDateTime now = LocalDateTime.now();
             String time = dtf.format(now);
 
-            if (message.startsWith("/w ")) {
+            if (message.startsWith("/changeLogin ")) {
+                // change nick
+                String[] words = message.split("\\s");
+                String newLogin = words[1];
+                jdbcClass.updateUsername(login, newLogin);
+                login = newLogin;
+            } else if (message.startsWith("/w ")) {
                 // private message
                 String[] words = message.split("\\s");
                 String[] pureMessageWords = new String[words.length - 2];

@@ -11,9 +11,11 @@ class Server {
     private int port;
     private MainWindow mainWindow;
     private LinkedList<ClientHandler> clientHandlers = new LinkedList<>();
+    private JdbcClass jdbcClass;
 
     Server(int port) {
         this.port = port;
+        jdbcClass = new JdbcClass();
         start();
     }
 
@@ -48,7 +50,7 @@ class Server {
                 DataInputStream in = new DataInputStream(socket.getInputStream());
                 DataOutputStream out = new DataOutputStream(socket.getOutputStream());
 
-                ClientHandler clientHandler = new ClientHandler(in, out, this, mainWindow);
+                ClientHandler clientHandler = new ClientHandler(in, out, this, mainWindow, jdbcClass);
                 new Thread(() -> {
                     clientHandler.handleClient();
                     clientHandlers.remove(clientHandler);

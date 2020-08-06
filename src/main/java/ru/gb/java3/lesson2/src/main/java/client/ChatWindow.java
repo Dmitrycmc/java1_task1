@@ -10,6 +10,10 @@ class ChatWindow extends JFrame {
     private JPanel messagePanel = new JPanel();
     private JTextField messageTextField = new JTextField("");
     private JButton sendButton = new JButton("Send");
+    JMenuBar menuBar = new JMenuBar();
+    JMenu settingsMenu = new JMenu ( "Settings" );
+    JMenuItem changeNickMenuItem = new JMenuItem ( "Change nick" );
+
 
     private void submit() {
         String message = messageTextField.getText().trim();
@@ -52,6 +56,11 @@ class ChatWindow extends JFrame {
         messagePanel.add(sendButton);
         sendButton.addActionListener(e -> submit());
 
+        changeNickMenuItem.addActionListener(e -> changeNick());
+        settingsMenu.add(changeNickMenuItem);
+        menuBar.add(settingsMenu);
+        add(menuBar, BorderLayout.NORTH);
+
         setVisible(true);
         setEnabled(false);
 
@@ -66,5 +75,10 @@ class ChatWindow extends JFrame {
                 receive(answer);
             }
         }).start();
+    }
+
+    private void changeNick() {
+        this.setEnabled(false);
+        new ChangeNickWindow(client, this);
     }
 }
