@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.LinkedList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 class Server {
     private int port;
@@ -42,6 +44,8 @@ class Server {
         System.out.println("Сервер запущен");
         mainWindow = new MainWindow(clientHandlers);
 
+        ExecutorService executorService = Executors.newCachedThreadPool();
+
         while (true) {
             try {
                 System.out.println("Ожидаем подключения...");
@@ -51,11 +55,11 @@ class Server {
                 DataOutputStream out = new DataOutputStream(socket.getOutputStream());
 
                 ClientHandler clientHandler = new ClientHandler(in, out, this, mainWindow, jdbcClass);
-                new Thread(() -> {
+                executorService.execute(() -> {
                     clientHandler.handleClient();
                     clientHandlers.remove(clientHandler);
                     mainWindow.refreshClients();
-                }).start();
+                });
                 clientHandlers.add(clientHandler);
                 mainWindow.refreshClients();
             } catch (IOException e) {
