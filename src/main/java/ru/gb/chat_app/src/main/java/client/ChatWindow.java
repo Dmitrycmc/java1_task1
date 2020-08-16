@@ -2,8 +2,12 @@ package client;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.*;
 
 class ChatWindow extends JFrame {
+    static final int LAST_MESSAGES = 100;
+    static final String FILE_NAME = "generated_files/chat-history.txt";
+
     private Client client;
     private JTextArea chatTextArea = new JTextArea();
     private JScrollPane scrollPane = new JScrollPane(chatTextArea);
@@ -14,6 +18,20 @@ class ChatWindow extends JFrame {
     JMenu settingsMenu = new JMenu ( "Settings" );
     JMenuItem changeNickMenuItem = new JMenuItem ( "Change nick" );
 
+    private int getFileLinesCount(String fileName) {
+        int cnt = 0;
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(fileName));
+            String line = br.readLine();
+            while (line != null) {
+                cnt++;
+                line = br.readLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return cnt;
+    }
 
     private void submit() {
         String message = messageTextField.getText().trim();
@@ -26,7 +44,16 @@ class ChatWindow extends JFrame {
     private void receive(String message) {
         String chatHistory = chatTextArea.getText();
         if (!message.equals("")) {
-            chatTextArea.setText(message + (chatHistory.equals("") ? "" : '\n') + chatHistory );
+            try {
+                PrintWriter ps = new PrintWriter(new FileOutputStream(
+                        new File(FILE_NAME),
+                        true));
+                ps.write(message + '\n');
+                ps.close();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            chatTextArea.setText( message + (chatHistory.equals("") ? "" : '\n') + chatHistory );
         }
     }
 
@@ -45,6 +72,24 @@ class ChatWindow extends JFrame {
         chatTextArea.setLineWrap(true);
         chatTextArea.setWrapStyleWord(true);
 
+        try {
+            int linesCount = getFileLinesCount(FILE_NAME);
+            int linesToSkip = linesCount > LAST_MESSAGES ? linesCount - LAST_MESSAGES : 0;
+            BufferedReader br = new BufferedReader(new FileReader(FILE_NAME));
+            StringBuilder sb = new StringBuilder();
+            String line = br.readLine();
+            while (line != null) {
+                if (linesToSkip == 0) {
+                    sb.insert(0, line + '\n');
+                } else {
+                    linesToSkip--;
+                }
+                line = br.readLine();
+            }
+            chatTextArea.setText(sb.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         add(messagePanel, BorderLayout.SOUTH);
         messagePanel.setLayout(new GridLayout(1, 2, 0, 5));
@@ -67,7 +112,7 @@ class ChatWindow extends JFrame {
         new AuthWindow(client, this);
 
         setEnabled(true);
-        System.out.println("Аутенфикация прошла успешно!");
+        System.out.println("Аутентификация прошла успешно!");
 
         new Thread(() -> {
             while (true) {
