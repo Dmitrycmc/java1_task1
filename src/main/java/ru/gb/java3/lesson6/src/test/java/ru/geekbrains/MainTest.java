@@ -39,4 +39,31 @@ class MainTest {
             MainClass.task2(null);
         });
     }
+
+    @Test
+    void task3Test1() {
+        Assertions.assertTrue(MainClass.task3(new int[]{1, 2, 3, 5}));
+    }
+
+    @Test
+    void task3Test2() {
+        Assertions.assertTrue(MainClass.task3(new int[]{0, 2, 3, 4}));
+    }
+
+    @Test
+    void task3Test3() {
+        Assertions.assertFalse(MainClass.task3(new int[]{3, 2, 3, 5}));
+    }
+
+    @Test
+    void task3Test4() {
+        Assertions.assertFalse(MainClass.task3(new int[]{}));
+    }
+
+    @Test
+    void task3Test5() {
+        Assertions.assertThrows(RuntimeException.class, () -> {
+        MainClass.task3(null);
+    });
+    }
 }

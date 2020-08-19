@@ -40,7 +40,16 @@ public class MainClass {
         Если в нем нет хоть одной четверки или единицы, то метод вернет false;
         Написать набор тестов для этого метода (по 3-4 варианта входных данных).
      */
-    static void task3(char c, int n) {
+    static boolean task3(int[] arr) {
+        if (arr == null) {
+            throw new RuntimeException("Passed null");
+        }
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] == 1 || arr[i] == 4) {
+                return true;
+            }
+        }
+        return false;
     }
 }
 
