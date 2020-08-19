@@ -58,6 +58,7 @@ public class JdbcClass implements Closeable {
         } catch (SQLException e) {
             e.printStackTrace();
             logger.error("Изменение неуспешно");
+            return oldUsername;
         }
         return newUsername;
     }
