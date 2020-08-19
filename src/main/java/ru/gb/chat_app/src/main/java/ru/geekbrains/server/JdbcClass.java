@@ -1,4 +1,4 @@
-package server;
+package ru.geekbrains.server;
 
 import java.io.Closeable;
 import java.sql.*;

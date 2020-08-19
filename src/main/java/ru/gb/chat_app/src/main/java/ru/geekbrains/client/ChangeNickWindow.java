@@ -1,4 +1,4 @@
-package client;
+package ru.geekbrains.client;
 
 import javax.swing.*;
 import java.awt.*;

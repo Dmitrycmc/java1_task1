@@ -1,4 +1,4 @@
-package client;
+package ru.geekbrains.client;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;

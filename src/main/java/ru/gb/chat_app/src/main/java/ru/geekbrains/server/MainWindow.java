@@ -1,4 +1,4 @@
-package server;
+package ru.geekbrains.server;
 
 import javax.swing.*;
 import java.util.LinkedList;

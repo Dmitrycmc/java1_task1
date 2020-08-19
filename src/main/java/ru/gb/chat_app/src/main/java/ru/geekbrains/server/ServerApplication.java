@@ -1,4 +1,4 @@
-package server;
+package ru.geekbrains.server;
 
 public class ServerApplication {
     public static void main(String[] args) {
