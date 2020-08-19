@@ -1,9 +1,12 @@
 package ru.geekbrains.server;
 
+import org.apache.logging.log4j.Logger;
+
 import java.io.Closeable;
 import java.sql.*;
 
 public class JdbcClass implements Closeable {
+    private final Logger logger;
     /*
         CREATE TABLE user (
             id       INTEGER PRIMARY KEY AUTOINCREMENT
@@ -25,7 +28,8 @@ public class JdbcClass implements Closeable {
         preparedStatementCheckExist = connection.prepareStatement("SELECT COUNT(*) FROM user WHERE username = ? AND password = ?");
     }
 
-    public JdbcClass() {
+    public JdbcClass(Logger logger) {
+        this.logger = logger;
         try {
             connect();
             initPreparedStatements();
@@ -45,11 +49,17 @@ public class JdbcClass implements Closeable {
         preparedStatementInsert.execute();
     }
 
-    void updateUsername(String oldUsername, String newUsername) throws SQLException {
-        System.out.println(oldUsername + " " + newUsername);
-        preparedStatementUsernameUpdate.setString(1, newUsername);
-        preparedStatementUsernameUpdate.setString(2, oldUsername);
-        preparedStatementUsernameUpdate.execute();
+    String updateUsername(String oldUsername, String newUsername) {
+        logger.trace("Изменение ника с" + oldUsername + " на " + newUsername);
+        try {
+            preparedStatementUsernameUpdate.setString(1, newUsername);
+            preparedStatementUsernameUpdate.setString(2, oldUsername);
+            preparedStatementUsernameUpdate.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            logger.error("Изменение неуспешно");
+        }
+        return newUsername;
     }
 
     boolean authUser(String username, String password) throws SQLException {
