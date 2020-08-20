@@ -23,5 +23,6 @@
     <modules>
         <module>src/main/java/ru/gb/chat_app</module>
         <module>src/main/java/ru/gb/java_ee</module>
+        <module>src/main/java/ru/gb/java3/lesson6</module>
     </modules>
 </project>

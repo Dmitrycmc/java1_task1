@@ -1,5 +1,8 @@
 package ru.geekbrains.server;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -14,10 +17,11 @@ class Server {
     private MainWindow mainWindow;
     private LinkedList<ClientHandler> clientHandlers = new LinkedList<>();
     private JdbcClass jdbcClass;
+    private final Logger logger = LogManager.getLogger(Server.class);
 
     Server(int port) {
         this.port = port;
-        jdbcClass = new JdbcClass();
+        jdbcClass = new JdbcClass(logger);
         start();
     }
 
@@ -41,20 +45,20 @@ class Server {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println("Сервер запущен");
+        logger.info("Сервер запущен");
         mainWindow = new MainWindow(clientHandlers);
 
         ExecutorService executorService = Executors.newCachedThreadPool();
 
         while (true) {
             try {
-                System.out.println("Ожидаем подключения...");
+                logger.info("Ожидаем подключения...");
                 Socket socket = serverSocket.accept();
-                System.out.println("Клиент подключился: " + socket);
+                logger.info("Клиент подключился: " + socket);
                 DataInputStream in = new DataInputStream(socket.getInputStream());
                 DataOutputStream out = new DataOutputStream(socket.getOutputStream());
 
-                ClientHandler clientHandler = new ClientHandler(in, out, this, mainWindow, jdbcClass);
+                ClientHandler clientHandler = new ClientHandler(in, out, this, mainWindow, jdbcClass, logger);
                 executorService.execute(() -> {
                     clientHandler.handleClient();
                     clientHandlers.remove(clientHandler);
@@ -64,6 +68,7 @@ class Server {
                 mainWindow.refreshClients();
             } catch (IOException e) {
                 e.printStackTrace();
+                logger.fatal("Выброшено исключение");
             }
         }
     }
