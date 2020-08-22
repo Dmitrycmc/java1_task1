@@ -31,7 +31,7 @@ public class TestClass {
             if (method.getAnnotation(Test.class) != null) {
                 int priority = method.getAnnotation(Test.class).priority();
                 if (priority < 1 || priority > 10) {
-                    throw new RuntimeException(method.getName() + "has invalid priority: " + priority);
+                    throw new RuntimeException(method.getName() + " has invalid priority: " + priority);
                 }
 
                 if (testMethods.get(priority) == null) {
