@@ -2,9 +2,10 @@
 <html>
     <head>
         <title>403</title>
+        <jsp:include page="./fragment/head.jsp" />
     </head>
     <body>
-        <jsp:include page="menu.jsp" />
+        <jsp:include page="fragment/menu.jsp" />
         <h1>403</h1>
     </body>
 </html>

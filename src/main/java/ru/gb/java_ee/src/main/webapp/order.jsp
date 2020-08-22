@@ -2,9 +2,12 @@
 <html>
     <head>
         <title>Оформить заказ</title>
+        <jsp:include page="./fragment/head.jsp" />
     </head>
     <body>
-        <jsp:include page="menu.jsp" />
+        <jsp:include page="fragment/menu.jsp" >
+            <jsp:param name="pageName" value="order" />
+        </jsp:include>
         <h1>Оформить заказ</h1>
     </body>
 </html>

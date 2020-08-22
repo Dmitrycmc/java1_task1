@@ -6,9 +6,12 @@
     <head>
         <title>Каталог</title>
         <% HashMap<Integer, Product> products = (HashMap<Integer, Product>) application.getAttribute("products"); %>
+        <jsp:include page="./fragment/head.jsp" />
     </head>
     <body>
-        <jsp:include page="menu.jsp" />
+        <jsp:include page="fragment/menu.jsp" >
+            <jsp:param name="pageName" value="catalog" />
+        </jsp:include>
         <h1>Каталог</h1>
         <ol>
             <%
