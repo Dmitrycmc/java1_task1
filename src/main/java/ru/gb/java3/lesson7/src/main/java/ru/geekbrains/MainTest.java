@@ -27,7 +27,7 @@ public class MainTest {
 
     @Test(priority = 3)
     void Test3() {
-        System.out.println("Test3, priority = 1");
+        System.out.println("Test3, priority = 3");
     }
 
     @Test(priority = 10)

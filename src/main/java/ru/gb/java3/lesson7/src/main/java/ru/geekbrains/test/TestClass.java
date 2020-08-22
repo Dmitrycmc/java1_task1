@@ -17,7 +17,7 @@ public class TestClass {
 
     public static void start(Class c) {
         Method[] methods = c.getDeclaredMethods();
-        HashMap<Integer, ArrayList<Method>> testMethods = new HashMap<>();
+        HashMap<Integer, ArrayList<Method>> priorityToMethodsArrayList = new HashMap<>();
         ArrayList<Method> beforeSuiteMethods = new ArrayList<>();
         ArrayList<Method> afterSuiteMethods = new ArrayList<>();
 
@@ -34,10 +34,10 @@ public class TestClass {
                     throw new RuntimeException(method.getName() + " has invalid priority: " + priority);
                 }
 
-                if (testMethods.get(priority) == null) {
-                    testMethods.put(priority, new ArrayList<>());
+                if (priorityToMethodsArrayList.get(priority) == null) {
+                    priorityToMethodsArrayList.put(priority, new ArrayList<>());
                 }
-                testMethods.get(priority).add(method);
+                priorityToMethodsArrayList.get(priority).add(method);
             }
         }
 
@@ -59,7 +59,7 @@ public class TestClass {
         }
 
         for (int priority = 10; priority >= 1; priority--) {
-            ArrayList<Method> currentMethods = testMethods.get(priority);
+            ArrayList<Method> currentMethods = priorityToMethodsArrayList.get(priority);
             if (currentMethods != null) {
                 for (Method method: currentMethods) {
                     method.setAccessible(true);
