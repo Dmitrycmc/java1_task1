@@ -1,4 +1,4 @@
-package ru.gb.java3.lesson4;
+package lesson4;
 
 /*
     1. Создать три потока, каждый из которых выводит

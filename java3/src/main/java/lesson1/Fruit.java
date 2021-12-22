@@ -1,4 +1,4 @@
-package ru.gb.java3.lesson1;
+package lesson1;
 
 abstract class Fruit {
     private float weight;

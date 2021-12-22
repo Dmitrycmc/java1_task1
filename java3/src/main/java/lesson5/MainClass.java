@@ -1,4 +1,4 @@
-package ru.gb.java3.lesson5;
+package lesson5;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.CyclicBarrier;

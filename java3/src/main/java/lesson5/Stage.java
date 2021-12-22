@@ -1,4 +1,4 @@
-package ru.gb.java3.lesson5;
+package lesson5;
 
 public abstract class Stage {
     protected int length;
