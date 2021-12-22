@@ -26,5 +26,6 @@
         <module>src/main/java/ru/gb/java3/lesson6</module>
         <module>src/main/java/ru/gb/java3/lesson7</module>
         <module>java1</module>
+        <module>java2</module>
     </modules>
 </project>
