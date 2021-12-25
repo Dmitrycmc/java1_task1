@@ -8,15 +8,15 @@ import com.badlogic.gdx.utils.ScreenUtils;
 
 public class BallGame extends ApplicationAdapter {
 	SpriteBatch batch;
-	Texture background;
 	Hero hero;
+	Background background;
 	Ball[] balls;
 
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		background = new Texture("space.png");
 		hero = new Hero();
+		background = new Background(this);
 		balls = new Ball[Constants.ballsNumber];
 		for (int i = 0; i < Constants.ballsNumber; i++) {
 			balls[i] = new Ball(i);
@@ -29,7 +29,7 @@ public class BallGame extends ApplicationAdapter {
 		update(dt);
 		ScreenUtils.clear(1, 1, 1, 1);
 		batch.begin();
-		batch.draw(background, 0, 0, Constants.width, Constants.height);
+		background.render(batch);
 		hero.render(batch);
 		for (int i = 0; i < Constants.ballsNumber; i++) {
 			balls[i].render(batch);
@@ -38,6 +38,7 @@ public class BallGame extends ApplicationAdapter {
 	}
 
 	public void update(float dt) {
+		background.update(dt);
 		hero.update(dt);
 		for (int i = 0; i < Constants.ballsNumber; i++) {
 			balls[i].update(dt);
@@ -54,7 +55,12 @@ public class BallGame extends ApplicationAdapter {
 	@Override
 	public void dispose () {
 		batch.dispose();
-		background.dispose();
+		background.getTextureCosmos().dispose();
+		background.getTextureStar().dispose();
 		Ball.texture.dispose();
 	}
+
+    public Hero getHero() {
+		return hero;
+    }
 }
