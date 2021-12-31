@@ -1,14 +1,17 @@
 package ru.gb.star.game;
 
 import com.badlogic.gdx.math.Vector2;
-import ru.gb.star.pool.Poolable;
+import ru.gb.star.pool.PoolItem;
 
-public class Bullet implements Poolable {
-    private boolean active = false;
+public class Bullet extends PoolItem {
     private Vector2 pos = new Vector2();
     private Vector2 vel = new Vector2();
 
     final static float RADIUS = 8;
+
+    public Bullet(BulletController bulletController) {
+        super(bulletController);
+    }
 
     public Vector2 getPos() {
         return pos.cpy();
@@ -21,7 +24,6 @@ public class Bullet implements Poolable {
     public void activate(float x, float y, float vx, float vy) {
         pos.set(x, y);
         vel.set(vx, vy);
-        active = true;
     }
 
     public void update(float dt) {
@@ -38,14 +40,5 @@ public class Bullet implements Poolable {
         if (pos.y > Constants.height + RADIUS) {
             deactivate();
         }
-    }
-
-    @Override
-    public boolean isActive() {
-        return active;
-    }
-
-    public void deactivate() {
-        active = false;
     }
 }

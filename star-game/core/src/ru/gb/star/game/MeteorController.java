@@ -19,7 +19,7 @@ public class MeteorController extends Pool<Meteor> {
 
     @Override
     protected Meteor newObject() {
-        return new Meteor();
+        return new Meteor(this);
     }
 
     public void render(SpriteBatch batch) {
@@ -45,7 +45,7 @@ public class MeteorController extends Pool<Meteor> {
             activeList.get(i).update(dt);
         }
 
-        for (int i = 0; i < freeList.size(); i++) {
+        for (int i = 0; i < inactiveList.size(); i++) {
             spawn();
         }
 
@@ -58,19 +58,17 @@ public class MeteorController extends Pool<Meteor> {
         }
 
         for (int i = 0; i < activeList.size() - 1; i++) {
-            for (int j = 0; j < gc.getBulletController().getActiveList().size(); j++) {
-                if (activeList.get(i).getPos().sub(gc.getBulletController().getActiveList().get(j).getPos()).len() < Meteor.RADIUS + Bullet.RADIUS) {
+            for (int j = 0; j < gc.getBulletController().getActiveElementsCount(); j++) {
+                if (activeList.get(i).getPos().sub(gc.getBulletController().getActiveElementAt(j).getPos()).len() < Meteor.RADIUS + Bullet.RADIUS) {
                     activeList.get(i).deactivate();
-                    gc.getBulletController().getActiveList().get(j).deactivate();
+                    gc.getBulletController().getActiveElementAt(j).deactivate();
                 }
             }
         }
-
-        checkPool();
     }
 
     public void spawn(float x, float y, float vx, float vy){
-        getActiveElement().activate(x, y, vx, vy);
+        getInactiveElement().activate(x, y, vx, vy);
     }
 
     public void spawn() {

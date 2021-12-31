@@ -11,7 +11,7 @@ public class BulletController extends Pool<Bullet> {
 
     @Override
     protected Bullet newObject() {
-        return new Bullet();
+        return new Bullet(this);
     }
 
     public void render(SpriteBatch batch) {
@@ -33,12 +33,10 @@ public class BulletController extends Pool<Bullet> {
         for (int i = 0; i < activeList.size(); i++) {
             activeList.get(i).update(dt);
         }
-
-        checkPool();
     }
 
     public void spawn(float x, float y, float vx, float vy){
-        getActiveElement().activate(x, y, vx, vy);
+        getInactiveElement().activate(x, y, vx, vy);
     }
 
     public void dispose() {
