@@ -27,7 +27,6 @@ public class BulletController extends Pool<Bullet> {
         }
     }
 
-    private float t = 0;
     public void update(float dt) {
         for (int i = 0; i < activeList.size(); i++) {
             activeList.get(i).update(dt);

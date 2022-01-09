@@ -39,16 +39,25 @@ public class Hero {
     }
 
     private float t = 0;
-
     public void update(float dt) {
         if (t > 0) {
             t -= dt;
         } else {
             if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
                 t = Constants.rearmTime;
-                gc.getBulletController().spawn(pos.x, pos.y,
-                        MathUtils.cosDeg(angle) * 500.0f + vel.x,
-                        MathUtils.sinDeg(angle) * 500.0f + vel.y);
+                gc.getBulletController().spawn(
+                    pos.x + MathUtils.cosDeg(angle + 90) * 20.0f,
+                    pos.y + MathUtils.sinDeg(angle + 90) * 20.0f,
+                    MathUtils.cosDeg(angle) * 500.0f + vel.x,
+                    MathUtils.sinDeg(angle) * 500.0f + vel.y
+                );
+
+                gc.getBulletController().spawn(
+                    pos.x + MathUtils.cosDeg(angle - 90) * 20.0f,
+                    pos.y + MathUtils.sinDeg(angle - 90) * 20.0f,
+                    MathUtils.cosDeg(angle) * 500.0f + vel.x,
+                    MathUtils.sinDeg(angle) * 500.0f + vel.y
+                );
             }
         }
 

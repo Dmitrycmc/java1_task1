@@ -1,5 +1,6 @@
 package ru.gb.star.game;
 
+import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import ru.gb.star.pool.Pool;
@@ -8,8 +9,11 @@ import ru.gb.star.pool.PoolItem;
 public class Meteor extends PoolItem {
     private Vector2 pos = new Vector2();
     private Vector2 vel = new Vector2();
-    private float angle = MathUtils.random(0, 360f);
-    private float angleSpeed = MathUtils.random(-360f, 360f);
+    private float angle;
+    private float angleSpeed;
+    private int hpMax = 4;
+    private int hp;
+    private Circle hitArea = new Circle();
 
     final static float RADIUS = 60;
 
@@ -29,8 +33,15 @@ public class Meteor extends PoolItem {
         return angle;
     }
 
-    public float getAngleSpeed() {
-        return angleSpeed;
+    public Circle getHitArea() {
+        return hitArea;
+    }
+
+    public void takeDamage(int dmg) {
+        hp -= dmg;
+        if (hp <= 0) {
+            deactivate();
+        }
     }
 
     void setPos(Vector2 pos) {
@@ -44,6 +55,11 @@ public class Meteor extends PoolItem {
     public void activate(float x, float y, float vx, float vy) {
         pos.set(x, y);
         vel.set(vx, vy);
+        angle = MathUtils.random(0, 360f);
+        angleSpeed = MathUtils.random(-360f, 360f);
+        hitArea.setPosition(pos);
+        hitArea.setRadius(RADIUS);
+        hp = hpMax;
     }
 
     public void update(float dt) {
