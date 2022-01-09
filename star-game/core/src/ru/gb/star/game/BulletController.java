@@ -16,13 +16,13 @@ public class BulletController extends Pool<Bullet> {
     public void render(SpriteBatch batch) {
         for (int i = 0; i < activeList.size(); i++) {
             Bullet b = activeList.get(i);
-            final float textureScale = 32f / 16f;
-            batch.draw(
-                bulletTexture,
-                b.getPos().x - Bullet.RADIUS * textureScale,
-                b.getPos().y - Bullet.RADIUS * textureScale,
-                2 * Bullet.RADIUS * textureScale,
-                2 * Bullet.RADIUS * textureScale
+
+            batch.draw(bulletTexture,
+                b.getPos().x - Bullet.RADIUS, b.getPos().y - Bullet.RADIUS,
+                Bullet.RADIUS, Bullet.RADIUS,
+                2 * Bullet.RADIUS, 2 * Bullet.RADIUS,
+                2, 2,
+                0f
             );
         }
     }

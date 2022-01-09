@@ -29,20 +29,23 @@ public class MeteorController extends Pool<Meteor> {
             Meteor b = activeList.get(i);
             batch.draw(meteorTexture,
                 b.getPos().x - Meteor.RADIUS, b.getPos().y - Meteor.RADIUS,
-                2 * Meteor.RADIUS, 2 * Meteor.RADIUS
+                    Meteor.RADIUS, Meteor.RADIUS,
+                    2 * Meteor.RADIUS, 2 * Meteor.RADIUS,
+                    1.1f, 1.1f,
+                    b.getAngle()
             );
         }
     }
 
     public static void handleCollision(Meteor a, Meteor b) {
-        Vector2 centersDifference = a.getPos().cpy().sub(b.getPos()).nor();
-        float distance = a.getPos().cpy().sub(b.getPos()).len();
+        Vector2 centersDifference = a.getPos().sub(b.getPos()).nor();
+        float distance = a.getPos().sub(b.getPos()).len();
         float pr1 = centersDifference.cpy().dot(a.getVel());
         float pr2 = centersDifference.cpy().dot(b.getVel());
-        a.setVel(a.getVel().add(centersDifference.cpy().scl(-1f * pr1 + (1f - Constants.reflectionLoss) * pr2)));
-        b.setVel(b.getVel().add(centersDifference.cpy().scl(-1f * pr2 + (1f - Constants.reflectionLoss) * pr1)));
-        a.setPos(a.getPos().add(centersDifference.cpy().scl((2f * Meteor.RADIUS - distance) / 2)));
-        b.setPos(b.getPos().sub(centersDifference.cpy().scl((2f * Meteor.RADIUS - distance) / 2)));
+        a.setVel(a.getVel().mulAdd(centersDifference, -1f * pr1 + (1f - Constants.reflectionLoss) * pr2));
+        b.setVel(b.getVel().mulAdd(centersDifference, -1f * pr2 + (1f - Constants.reflectionLoss) * pr1));
+        a.setPos(a.getPos().mulAdd(centersDifference, (2f * Meteor.RADIUS - distance) / 2));
+        b.setPos(b.getPos().mulAdd(centersDifference, -(2f * Meteor.RADIUS - distance) / 2));
     }
 
     public void update(float dt){
