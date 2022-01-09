@@ -37,7 +37,7 @@ public class Assets {
         switch (type) {
             case GAME:
                 assetManager.load("images/game.pack", TextureAtlas.class);
-                //createStandardFont(32);
+                createStandardFont(32);
                 assetManager.finishLoading();
                 textureAtlas = assetManager.get("images/game.pack", TextureAtlas.class);
                 break;

@@ -11,7 +11,7 @@ public class Meteor extends PoolItem {
     private Vector2 vel = new Vector2();
     private float angle;
     private float angleSpeed;
-    private int hpMax = 4;
+    private int hpMax = 40;
     private int hp;
     private Circle hitArea = new Circle();
 
@@ -37,11 +37,13 @@ public class Meteor extends PoolItem {
         return hitArea;
     }
 
-    public void takeDamage(int dmg) {
+    public boolean takeDamage(int dmg) {
         hp -= dmg;
         if (hp <= 0) {
             deactivate();
+            return true;
         }
+        return false;
     }
 
     void setPos(Vector2 pos) {

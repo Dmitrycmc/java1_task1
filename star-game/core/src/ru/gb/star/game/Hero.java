@@ -19,9 +19,19 @@ public class Hero {
     private Vector2 vel = new Vector2(0, 0);
     private float angle = 0f;
     private Vector2 lastDisplacement = new Vector2(0, 0);
+    private int score = 0;
+    private int scoreView = 0;
 
     public Vector2 getLastDisplacement() {
         return lastDisplacement;
+    }
+
+    public int getScore() {
+        return scoreView;
+    }
+
+    public void addScore(int ds) {
+        score += ds;
     }
 
     public Hero(GameController gc) {
@@ -40,6 +50,13 @@ public class Hero {
 
     private float t = 0;
     public void update(float dt) {
+        if (scoreView < score) {
+            scoreView += 500 * dt;
+            if (scoreView > score) {
+                scoreView = score;
+            }
+        }
+
         if (t > 0) {
             t -= dt;
         } else {

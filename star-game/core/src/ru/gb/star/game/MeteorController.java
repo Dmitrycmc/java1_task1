@@ -68,7 +68,9 @@ public class MeteorController extends Pool<Meteor> {
         for (int i = 0; i < activeList.size() - 1; i++) {
             for (int j = 0; j < gc.getBulletController().getActiveElementsCount(); j++) {
                 if (activeList.get(i).getPos().sub(gc.getBulletController().getActiveElementAt(j).getPos()).len() < Meteor.RADIUS + Bullet.RADIUS) {
-                    activeList.get(i).takeDamage(10);
+                    if (activeList.get(i).takeDamage(10)) {
+                        gc.getHero().addScore(100);
+                    }
                     gc.getBulletController().getActiveElementAt(j).deactivate();
                 }
             }
