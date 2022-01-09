@@ -70,8 +70,8 @@ public class MeteorController extends Pool<Meteor> {
         }
 
         for (int i = 0; i < activeList.size() - 1; i++) {
+            Meteor meteor1 = getActiveElementAt(i);
             for (int j = i + 1; j < activeList.size(); j++) {
-                Meteor meteor1 = getActiveElementAt(i);
                 Meteor meteor2 = getActiveElementAt(j);
 
                 if (meteor1.getHitArea().overlaps(meteor2.getHitArea())) {
@@ -99,6 +99,7 @@ public class MeteorController extends Pool<Meteor> {
 
                     if (meteor.takeDamage(10)) {
                         spawnChildren(meteor);
+                        gc.getBenefitController().tryToSpawn(meteor.getPos().x, meteor.getPos().y);
                         meteor.deactivate();
                         gc.getHero().addScore(100);
                     }

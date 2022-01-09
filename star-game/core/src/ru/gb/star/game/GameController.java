@@ -10,6 +10,7 @@ public class GameController {
     private Background background;
     private BulletController bulletController;
     private MeteorController meteorController;
+    private BenefitController benefitController;
     private ParticleController particleController;
     private Hero hero;
     private BitmapFont font32;
@@ -27,6 +28,10 @@ public class GameController {
         return meteorController;
     }
 
+    public BenefitController getBenefitController() {
+        return benefitController;
+    }
+
     public ParticleController getParticleController() {
         return particleController;
     }
@@ -39,6 +44,7 @@ public class GameController {
         background = new Background(this);
         bulletController = new BulletController(this);
         meteorController = new MeteorController(this);
+        benefitController = new BenefitController(this);
         particleController = new ParticleController();
         hero = new Hero(this);
         font32 = Assets.getInstance().getFont();
@@ -50,12 +56,13 @@ public class GameController {
         background.render(batch);
         bulletController.render(batch);
         meteorController.render(batch);
+        benefitController.render(batch);
         particleController.render(batch);
         hero.render(batch);
         sb.setLength(0);
         sb.append("Score: ").append(hero.getScore()).append("\n")
                 .append("Health: ").append(hero.getHp()).append(" / ").append(Hero.MAX_HP).append("\n")
-                .append("Health: ").append(hero.getCurrentWeapon().getCurBullets()).append(" / ").append(hero.getCurrentWeapon().getMaxBullets());
+                .append("Weapon: ").append(hero.getCurrentWeapon().getCurBullets()).append(" / ").append(hero.getCurrentWeapon().getMaxBullets());
         font32.draw(batch, sb, Constants.scoreMargin, Constants.height - Constants.scoreMargin);
         batch.end();
     }
@@ -64,11 +71,13 @@ public class GameController {
         background.update(dt);
         bulletController.update(dt);
         meteorController.update(dt);
+        benefitController.update(dt);
         particleController.update(dt);
         hero.update(dt);
     }
 
     public void dispose() {
         background.dispose();
+        benefitController.dispose();
     }
 }
