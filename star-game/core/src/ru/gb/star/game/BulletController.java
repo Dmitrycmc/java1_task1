@@ -1,13 +1,12 @@
 package ru.gb.star.game;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import ru.gb.star.pool.Pool;
+import ru.gb.star.screen.utils.Assets;
 
 public class BulletController extends Pool<Bullet> {
-    Texture bulletTexture = new Texture("bullet.png");
+    TextureRegion bulletTexture = Assets.getInstance().getAtlas().findRegion("bullet");
 
     @Override
     protected Bullet newObject() {
@@ -40,6 +39,6 @@ public class BulletController extends Pool<Bullet> {
     }
 
     public void dispose() {
-        bulletTexture.dispose();
+
     }
 }

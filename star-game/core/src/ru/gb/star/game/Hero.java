@@ -4,15 +4,17 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import ru.gb.star.screen.utils.Assets;
 
 public class Hero {
     GameController gc;
 
     public static float RADIUS = 32;
 
-    private Texture texture = new Texture("ship.png");
+    private TextureRegion texture = Assets.getInstance().getAtlas().findRegion("ship");
     private Vector2 pos = new Vector2(Constants.width / 2, Constants.height / 2);
     private Vector2 vel = new Vector2(0, 0);
     private float angle = 0f;
@@ -27,9 +29,13 @@ public class Hero {
     }
 
     public void render(SpriteBatch batch) {
-        batch.draw(texture, pos.x - RADIUS, pos.y - RADIUS, RADIUS, RADIUS,
-                2 * RADIUS, 2 * RADIUS, 1, 1,
-                angle, 0, 0, 64, 64, false, false);
+        batch.draw(texture,
+            pos.x - RADIUS, pos.y - RADIUS,
+            RADIUS, RADIUS,
+            2 * RADIUS, 2 * RADIUS,
+            1, 1,
+            angle
+        );
     }
 
     private float t = 0;
@@ -85,6 +91,6 @@ public class Hero {
     }
 
     public void dispose() {
-        texture.dispose();
+
     }
 }

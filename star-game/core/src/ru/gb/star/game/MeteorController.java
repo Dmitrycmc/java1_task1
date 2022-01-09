@@ -2,13 +2,15 @@ package ru.gb.star.game;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import ru.gb.star.pool.Pool;
+import ru.gb.star.screen.utils.Assets;
 
 public class MeteorController extends Pool<Meteor> {
     private GameController gc;
-    Texture meteorTexture = new Texture("asteroid.png");
+    TextureRegion meteorTexture = Assets.getInstance().getAtlas().findRegion("asteroid");
 
     public MeteorController(GameController gc) {
         this.gc = gc;
@@ -25,7 +27,10 @@ public class MeteorController extends Pool<Meteor> {
     public void render(SpriteBatch batch) {
         for (int i = 0; i < activeList.size(); i++) {
             Meteor b = activeList.get(i);
-            batch.draw(meteorTexture, b.getPos().x - Meteor.RADIUS, b.getPos().y - Meteor.RADIUS, 2 * Meteor.RADIUS, 2 * Meteor.RADIUS);
+            batch.draw(meteorTexture,
+                b.getPos().x - Meteor.RADIUS, b.getPos().y - Meteor.RADIUS,
+                2 * Meteor.RADIUS, 2 * Meteor.RADIUS
+            );
         }
     }
 
@@ -86,6 +91,6 @@ public class MeteorController extends Pool<Meteor> {
     }
 
     public void dispose() {
-        meteorTexture.dispose();
+
     }
 }
