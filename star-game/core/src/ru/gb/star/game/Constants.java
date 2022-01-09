@@ -12,6 +12,4 @@ public class Constants {
     static public float reflectionLoss = 0.3f;
 
     static public int meteorsNumber = 30;
-
-    static public float rearmTime = 0.2f;
 }

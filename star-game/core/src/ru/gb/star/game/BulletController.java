@@ -7,6 +7,11 @@ import ru.gb.star.screen.utils.Assets;
 
 public class BulletController extends Pool<Bullet> {
     TextureRegion bulletTexture = Assets.getInstance().getAtlas().findRegion("bullet");
+    GameController gc;
+
+    public BulletController(GameController gc) {
+        this.gc = gc;
+    }
 
     @Override
     protected Bullet newObject() {
@@ -15,7 +20,7 @@ public class BulletController extends Pool<Bullet> {
 
     public void render(SpriteBatch batch) {
         for (int i = 0; i < activeList.size(); i++) {
-            Bullet b = activeList.get(i);
+            Bullet b = getActiveElementAt(i);
 
             batch.draw(bulletTexture,
                 b.getPos().x - Bullet.RADIUS, b.getPos().y - Bullet.RADIUS,
@@ -29,15 +34,11 @@ public class BulletController extends Pool<Bullet> {
 
     public void update(float dt) {
         for (int i = 0; i < activeList.size(); i++) {
-            activeList.get(i).update(dt);
+            getActiveElementAt(i).update(dt);
         }
     }
 
     public void spawn(float x, float y, float vx, float vy){
         getInactiveElement().activate(x, y, vx, vy);
-    }
-
-    public void dispose() {
-
     }
 }

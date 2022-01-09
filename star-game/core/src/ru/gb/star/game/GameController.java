@@ -10,6 +10,7 @@ public class GameController {
     private Background background;
     private BulletController bulletController;
     private MeteorController meteorController;
+    private ParticleController particleController;
     private Hero hero;
     private BitmapFont font32;
     private StringBuilder sb = new StringBuilder();
@@ -26,14 +27,19 @@ public class GameController {
         return meteorController;
     }
 
+    public ParticleController getParticleController() {
+        return particleController;
+    }
+
     public Hero getHero() {
         return hero;
     }
 
     public GameController() {
         background = new Background(this);
-        bulletController = new BulletController();
+        bulletController = new BulletController(this);
         meteorController = new MeteorController(this);
+        particleController = new ParticleController();
         hero = new Hero(this);
         font32 = Assets.getInstance().getFont();
     }
@@ -44,10 +50,12 @@ public class GameController {
         background.render(batch);
         bulletController.render(batch);
         meteorController.render(batch);
+        particleController.render(batch);
         hero.render(batch);
         sb.setLength(0);
         sb.append("Score: ").append(hero.getScore()).append("\n")
-                .append("Health: ").append(hero.getHp()).append(" / ").append(Hero.MAX_HP);
+                .append("Health: ").append(hero.getHp()).append(" / ").append(Hero.MAX_HP).append("\n")
+                .append("Health: ").append(hero.getCurrentWeapon().getCurBullets()).append(" / ").append(hero.getCurrentWeapon().getMaxBullets());
         font32.draw(batch, sb, Constants.scoreMargin, Constants.height - Constants.scoreMargin);
         batch.end();
     }
@@ -56,13 +64,11 @@ public class GameController {
         background.update(dt);
         bulletController.update(dt);
         meteorController.update(dt);
+        particleController.update(dt);
         hero.update(dt);
     }
 
     public void dispose() {
         background.dispose();
-        bulletController.dispose();
-        meteorController.dispose();
-        hero.dispose();
     }
 }
