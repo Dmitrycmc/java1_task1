@@ -11,6 +11,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>lesson1</module>
+        <module>lesson3</module>
     </modules>
 
     <artifactId>spring1</artifactId>
