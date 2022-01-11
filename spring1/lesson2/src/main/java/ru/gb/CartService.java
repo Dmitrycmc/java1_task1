@@ -12,25 +12,25 @@ public class CartService {
     ProductRepository productRepository;
     Cart cart;
 
+    public ProductRepository getProductRepository() {
+        return productRepository;
+    }
+
+    public Cart getCart() {
+        return cart;
+    }
+
+    public void add(int id) {
+        cart.add(Math.abs(id));
+    }
+
+    public void sub(int id) throws Exception {
+        cart.sub(Math.abs(id));
+    }
+
     @Autowired
     public CartService(ProductRepository productRepository, Cart cart) {
         this.productRepository = productRepository;
         this.cart = cart;
-    }
-
-    public void start() {
-        System.out.println(productRepository.getAll().stream());
-        Scanner scanner = new Scanner(System.in);
-        while (true) {
-            System.out.println("Введите id товара, который хотите добавить в корзину, если хотите убрать - введите со знаком минус:");
-            int id = scanner.nextInt();
-            if (id > 0) {
-                cart.add(Math.abs(id));
-            } else {
-                cart.sub(Math.abs(id));
-            }
-            System.out.println(cart.getProducts());
-        }
-
     }
 }

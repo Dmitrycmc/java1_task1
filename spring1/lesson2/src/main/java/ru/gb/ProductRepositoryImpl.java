@@ -1,6 +1,5 @@
 package ru.gb;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -10,7 +9,6 @@ import java.util.List;
 public class ProductRepositoryImpl implements ProductRepository {
     private final ArrayList<Product> products;
 
-    @Autowired
     public ProductRepositoryImpl() {
         products = new ArrayList<>();
         Product product1 = new Product("Хлеб", 30);

@@ -1,6 +1,5 @@
 package ru.gb;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -12,7 +11,6 @@ import java.util.Map;
 public class CartImpl implements Cart {
     private final HashMap<Integer, Integer> data;
 
-    @Autowired
     public CartImpl() {
         data = new HashMap<>();
     }
@@ -27,11 +25,11 @@ public class CartImpl implements Cart {
     }
 
     @Override
-    public void sub(int id) {
+    public void sub(int id) throws Exception {
         if (data.containsKey(id) && data.get(id) > 0) {
             data.put(id, data.get(id) - 1);
         } else {
-            throw new Error("Not enough");
+            throw new Exception("Not enough");
         }
     }
 
