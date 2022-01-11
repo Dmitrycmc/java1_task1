@@ -19,9 +19,6 @@ public class Main {
                 String command = scanner.nextLine();
                 int numberCommand = Integer.parseInt(command);
                 int id = Math.abs(numberCommand);
-                if (cartService.getProductRepository().getById(id) == null) {
-                    throw new Exception("Not exist");
-                }
                 int sign = (int)Math.signum(numberCommand);
                 if (sign > 0) {
                     cartService.add(id);

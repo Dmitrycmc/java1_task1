@@ -20,11 +20,19 @@ public class CartService {
         return cart;
     }
 
+    private void checkProductExist(int id) {
+        if (productRepository.getById(id) == null) {
+            throw new IllegalArgumentException("Product is not exist");
+        }
+    }
+
     public void add(int id) {
+        checkProductExist(id);
         cart.add(Math.abs(id));
     }
 
     public void sub(int id) throws Exception {
+        checkProductExist(id);
         cart.sub(Math.abs(id));
     }
 
