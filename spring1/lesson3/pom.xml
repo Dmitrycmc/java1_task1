@@ -70,7 +70,7 @@
                 <configuration>
                     <!--url>http://89.108.98.117:8080/manager/text</url-->
                     <url>http://localhost:8080/manager/text</url>
-                    <path>/mvc</path>
+                    <path>/spring-mvc</path>
                     <username>admin</username>
                     <password>admin</password>
                 </configuration>
