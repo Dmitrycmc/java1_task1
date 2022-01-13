@@ -109,7 +109,7 @@ public class MeteorController extends Pool<Meteor> {
 
         float baseAngle = MathUtils.random(0, 120);
         float r = (float) (Math.sqrt(3) * meteor.getRadius() / (2 + Math.sqrt(3)));
-        float v = MathUtils.random(0, 120f);
+        float v = MathUtils.random(100f, 200f);
         for (int i = 0; i < 3; i++) {
             float angle = baseAngle + i * 120;
 

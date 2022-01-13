@@ -47,7 +47,7 @@ public class GameController {
         hero.render(batch);
         sb.setLength(0);
         sb.append("Score: ").append(hero.getScore()).append("\n")
-                .append("Health: ").append(hero.getHp());
+                .append("Health: ").append(hero.getHp()).append(" / ").append(Hero.MAX_HP);
         font32.draw(batch, sb, Constants.scoreMargin, Constants.height - Constants.scoreMargin);
         batch.end();
     }
