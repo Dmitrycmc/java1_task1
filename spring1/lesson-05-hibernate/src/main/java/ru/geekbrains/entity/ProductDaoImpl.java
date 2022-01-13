@@ -8,60 +8,56 @@ import java.util.Optional;
 public class ProductDaoImpl implements ProductDao {
     EntityManagerFactory emFactory;
 
+    private interface MyInterface<T> {
+        T doTx(EntityManager em);
+    }
+
+    private <T> T execInTx(MyInterface<T> i) {
+        EntityManager em = emFactory.createEntityManager();
+        em.getTransaction().begin();
+        T result = i.doTx(em);
+        em.getTransaction().commit();
+        em.close();
+        return result;
+    }
+
+    private <T> T exec(MyInterface<T> i) {
+        EntityManager em = emFactory.createEntityManager();
+        T result = i.doTx(em);
+        em.close();
+        return result;
+    }
+
     public ProductDaoImpl(EntityManagerFactory emFactory) {
         this.emFactory = emFactory;
     }
 
     @Override
     public List<Product> findAll() {
-        EntityManager em = emFactory.createEntityManager();
-
-        List<Product> result = em.createQuery("select p from Product p", Product.class).getResultList();
-        em.close();
-        return result;
+        return exec(em -> em.createQuery("select p from Product p", Product.class).getResultList());
     }
 
     @Override
     public Optional<Product> findById(long id) {
-        System.out.println(id);
-        EntityManager em = emFactory.createEntityManager();
-
-        Product p = em.find(Product.class, id);
-
-        em.close();
+        Product p = exec(em -> em.find(Product.class, id));
 
         return Optional.ofNullable(p);
     }
 
     @Override
     public void save(Product product) {
-        EntityManager em = emFactory.createEntityManager();
-
         if (product.getId() != null && findById(product.getId()).isPresent()) {
-            em.getTransaction().begin();
-            em.merge(product);
-            em.getTransaction().commit();
+            execInTx(em -> em.merge(product));
         } else {
-            em.getTransaction().begin();
-            em.persist(product);
-            em.getTransaction().commit();
+            execInTx(em -> {em.persist(product); return product;});
         }
-
-        em.close();
     }
 
     @Override
     public void delete(long id) {
-        EntityManager em = emFactory.createEntityManager();
-
-        em.getTransaction().begin();
-
-        em.createQuery("delete from Product where id = :id")
-                .setParameter("id", id)
-                .executeUpdate();
-
-        em.getTransaction().commit();
-
-        em.close();
+        execInTx(em -> em.createQuery("delete from Product where id = :id")
+            .setParameter("id", id)
+            .executeUpdate()
+        );
     }
 }
