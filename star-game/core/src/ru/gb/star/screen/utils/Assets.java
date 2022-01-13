@@ -39,6 +39,9 @@ public class Assets {
                 createStandardFont(72);
                 createStandardFont(24);
                 break;
+            case GAME_OVER:
+                createStandardFont(108);
+                break;
         }
     }
 

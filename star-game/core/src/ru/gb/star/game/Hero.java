@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import ru.gb.star.screen.ScreenManager;
 import ru.gb.star.screen.utils.Assets;
 
 public class Hero implements Collidable{
@@ -88,6 +89,10 @@ public class Hero implements Collidable{
 
     private float t = 0;
     public void update(float dt) {
+        if (hp <= 0) {
+            ScreenManager.get().changeScreen(ScreenManager.ScreenType.GAME_OVER);
+        }
+
         if (scoreView < score) {
             scoreView += 500 * dt;
             if (scoreView > score) {
