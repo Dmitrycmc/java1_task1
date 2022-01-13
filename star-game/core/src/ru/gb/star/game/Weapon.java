@@ -33,6 +33,11 @@ public class Weapon {
         return curBullets;
     }
 
+    public boolean addWeapons(int val) {
+        curBullets = Math.min(maxBullets, curBullets + val);
+        return curBullets <= 0;
+    }
+
     public Weapon(GameController gc, String title, float firePeriod, int damage,
                   float bulletSpeed, int maxBullets, Vector3[] slots) {
         this.gc = gc;
@@ -57,6 +62,20 @@ public class Weapon {
                 vy = hero.getVel().y + bulletSpeed * MathUtils.sinDeg(hero.getAngle() + slots[i].z);
                 gc.getBulletController().spawn(x, y, vx, vy);
             }
+        }
+    }
+
+    public void powerUp() {
+        switch (MathUtils.random(0, 4)) {
+            case 0:
+                this.bulletSpeed *= 2;
+                break;
+            case 1:
+                this.damage *= 2;
+                break;
+            case 2:
+                this.firePeriod /= 2;
+                break;
         }
     }
 }

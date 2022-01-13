@@ -49,9 +49,13 @@ public class Hero implements Collidable{
         return currentWeapon;
     }
 
-    public boolean takeDamage(int dmg) {
-        hp -= dmg;
-        return hp <= 0;
+    public boolean takeDamage(int val) {
+        hp = Math.max(0, hp - val);
+        return hp == 0;
+    }
+
+    public void takeHeal(int val) {
+        hp = Math.min(MAX_HP, hp + val);
     }
 
     public Circle getHitBox() {
