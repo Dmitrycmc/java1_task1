@@ -2,12 +2,12 @@ package ru.gb.star.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import ru.gb.star.screen.utils.Assets;
 
 public class Hero implements Collidable{
@@ -15,9 +15,14 @@ public class Hero implements Collidable{
 
     public static float RADIUS = 32;
     public static float MASS = 100;
-    static public int MAX_HP = 10000;
+    static public int MAX_HP = 100;
 
     private TextureRegion texture = Assets.getInstance().getAtlas().findRegion("ship");
+
+    public float getAngle() {
+        return angle;
+    }
+
     private Vector2 pos = new Vector2(Constants.width / 2, Constants.height / 2);
     private Vector2 vel = new Vector2(0, 0);
     private float angle = 0f;
@@ -26,6 +31,7 @@ public class Hero implements Collidable{
     private int scoreView = 0;
     private int hp = MAX_HP;
     private Circle hitBox = new Circle(pos, RADIUS);
+    private Weapon currentWeapon;
 
     public Vector2 getLastDisplacement() {
         return lastDisplacement;
@@ -37,6 +43,10 @@ public class Hero implements Collidable{
 
     public int getHp() {
         return hp;
+    }
+
+    public Weapon getCurrentWeapon() {
+        return currentWeapon;
     }
 
     public boolean takeDamage(int dmg) {
@@ -54,6 +64,12 @@ public class Hero implements Collidable{
 
     public Hero(GameController gc) {
         this.gc = gc;
+        currentWeapon = new Weapon(gc, "Plasmatic", 0.2f, 1, 600.0f, 300,
+                new Vector3[]{
+                        new Vector3(28, 0, 0),
+                        new Vector3(28, 90, 20),
+                        new Vector3(28, -90, -20)
+                });
     }
 
     public void render(SpriteBatch batch) {
@@ -79,36 +95,75 @@ public class Hero implements Collidable{
             t -= dt;
         } else {
             if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
-                t = Constants.rearmTime;
-                gc.getBulletController().spawn(
-                    pos.x + MathUtils.cosDeg(angle + 90) * 5f / 8f * RADIUS,
-                    pos.y + MathUtils.sinDeg(angle + 90) * 5f / 8f * RADIUS,
-                    MathUtils.cosDeg(angle) * 500.0f + vel.x,
-                    MathUtils.sinDeg(angle) * 500.0f + vel.y
-                );
-
-                gc.getBulletController().spawn(
-                    pos.x + MathUtils.cosDeg(angle - 90) * 20.0f,
-                    pos.y + MathUtils.sinDeg(angle - 90) * 20.0f,
-                    MathUtils.cosDeg(angle) * 500.0f + vel.x,
-                    MathUtils.sinDeg(angle) * 500.0f + vel.y
-                );
+                t = currentWeapon.getFirePeriod();
+                currentWeapon.fire();
             }
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.A)) {
             angle += 180.0f * dt;
+
+            float bx = pos.x + MathUtils.cosDeg(angle + 90) * 20;
+            float by = pos.y + MathUtils.sinDeg(angle + 90) * 20;
+            for (int i = 0; i < 2; i++) {
+                gc.getParticleController().setup(bx + MathUtils.random(-4, 4), by + MathUtils.random(-4, 4),
+                        vel.x * 0.1f + MathUtils.random(-20, 20), vel.y * 0.1f + MathUtils.random(-20, 20),
+                        0.4f, 1.2f, 0.2f,
+                        1.0f, 0.5f, 0, 1,
+                        1, 1, 1, 0);
+            }
         }
         if (Gdx.input.isKeyPressed(Input.Keys.D)) {
             angle -= 180.0f * dt;
+
+            float bx = pos.x + MathUtils.cosDeg(angle - 90) * 20;
+            float by = pos.y + MathUtils.sinDeg(angle - 90) * 20;
+            for (int i = 0; i < 2; i++) {
+                gc.getParticleController().setup(bx + MathUtils.random(-4, 4), by + MathUtils.random(-4, 4),
+                        vel.x * 0.1f + MathUtils.random(-20, 20), vel.y * 0.1f + MathUtils.random(-20, 20),
+                        0.4f, 1.2f, 0.2f,
+                        1.0f, 0.5f, 0, 1,
+                        1, 1, 1, 0);
+            }
         }
         if (Gdx.input.isKeyPressed(Input.Keys.W)) {
             vel.x += MathUtils.cosDeg(angle) * 240.0f * dt;
             vel.y += MathUtils.sinDeg(angle) * 240.0f * dt;
+
+            float bx = pos.x + MathUtils.cosDeg(angle + 180) * 20;
+            float by = pos.y + MathUtils.sinDeg(angle + 180) * 20;
+            for (int i = 0; i < 3; i++) {
+                gc.getParticleController().setup(bx + MathUtils.random(-4, 4), by + MathUtils.random(-4, 4),
+                        vel.x * -0.3f + MathUtils.random(-20, 20), vel.y * -0.3f + MathUtils.random(-20, 20),
+                        0.5f, 1.2f, 0.2f,
+                        1.0f, 0.5f, 0, 1,
+                        1, 1, 1, 0);
+            }
+
             lastDisplacement.set(MathUtils.cosDeg(angle) * 240.0f * dt, MathUtils.sinDeg(angle) * 240.0f * dt);
         } else if (Gdx.input.isKeyPressed(Input.Keys.S)) {
             vel.x -= MathUtils.cosDeg(angle) * 240.0f * dt;
             vel.y -= MathUtils.sinDeg(angle) * 240.0f * dt;
+
+            float bx = pos.x + MathUtils.cosDeg(angle + 90) * 20;
+            float by = pos.y + MathUtils.sinDeg(angle + 90) * 20;
+            for (int i = 0; i < 2; i++) {
+                gc.getParticleController().setup(bx + MathUtils.random(-4, 4), by + MathUtils.random(-4, 4),
+                        vel.x * 0.1f + MathUtils.random(-20, 20), vel.y * 0.1f + MathUtils.random(-20, 20),
+                        0.4f, 1.2f, 0.2f,
+                        1.0f, 0.5f, 0, 1,
+                        1, 1, 1, 0);
+            }
+            bx = pos.x + MathUtils.cosDeg(angle - 90) * 20;
+            by = pos.y + MathUtils.sinDeg(angle - 90) * 20;
+            for (int i = 0; i < 2; i++) {
+                gc.getParticleController().setup(bx + MathUtils.random(-4, 4), by + MathUtils.random(-4, 4),
+                        vel.x * 0.1f + MathUtils.random(-20, 20), vel.y * 0.1f + MathUtils.random(-20, 20),
+                        0.4f, 1.2f, 0.2f,
+                        1.0f, 0.5f, 0, 1,
+                        1, 1, 1, 0);
+            }
+
             lastDisplacement.set(-1 * MathUtils.cosDeg(angle) * 240.0f * dt, -1 * MathUtils.sinDeg(angle) * 240.0f * dt);
         } else {
             lastDisplacement.set(0, 0);
@@ -134,10 +189,6 @@ public class Hero implements Collidable{
         }
 
         hitBox.setPosition(pos);
-    }
-
-    public void dispose() {
-
     }
 
     public Vector2 getPos() {

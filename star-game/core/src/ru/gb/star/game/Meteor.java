@@ -1,5 +1,7 @@
 package ru.gb.star.game;
 
+import com.badlogic.gdx.ai.utils.random.FloatDistribution;
+import com.badlogic.gdx.ai.utils.random.TriangularFloatDistribution;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
@@ -61,7 +63,8 @@ public class Meteor extends PoolItem implements Collidable {
     }
 
     public void activate(float x, float y, float vx, float vy) {
-        activate(x, y, vx, vy, MathUtils.random(0.8f, 2));
+        FloatDistribution a = new TriangularFloatDistribution(0.2f, 1.6f, 0.7f);
+        activate(x, y, vx, vy, a.nextFloat());
     }
 
     public void activate(float x, float y, float vx, float vy, float scale) {

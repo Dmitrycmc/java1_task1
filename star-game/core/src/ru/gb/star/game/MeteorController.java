@@ -25,7 +25,7 @@ public class MeteorController extends Pool<Meteor> {
 
     public void render(SpriteBatch batch) {
         for (int i = 0; i < activeList.size(); i++) {
-            Meteor b = activeList.get(i);
+            Meteor b = getActiveElementAt(i);
             batch.draw(meteorTexture,
                 b.getPos().x - b.getRadius(), b.getPos().y - b.getRadius(),
                     b.getRadius(), b.getRadius(),
@@ -62,7 +62,7 @@ public class MeteorController extends Pool<Meteor> {
 
     public void update(float dt){
         for (int i = 0; i < activeList.size(); i++) {
-            activeList.get(i).update(dt);
+            getActiveElementAt(i).update(dt);
         }
 
         for (int i = 0; i < inactiveList.size(); i++) {
@@ -71,8 +71,8 @@ public class MeteorController extends Pool<Meteor> {
 
         for (int i = 0; i < activeList.size() - 1; i++) {
             for (int j = i + 1; j < activeList.size(); j++) {
-                Meteor meteor1 = activeList.get(i);
-                Meteor meteor2 = activeList.get(j);
+                Meteor meteor1 = getActiveElementAt(i);
+                Meteor meteor2 = getActiveElementAt(j);
 
                 if (meteor1.getHitArea().overlaps(meteor2.getHitArea())) {
                     handleCollision(meteor1, meteor2);
@@ -81,9 +81,9 @@ public class MeteorController extends Pool<Meteor> {
         }
 
         for (int i = 0; i < activeList.size() - 1; i++) {
-            Meteor meteor = activeList.get(i);
+            Meteor meteor = getActiveElementAt(i);
             if (gc.getHero().getHitBox().overlaps(meteor.getHitArea())) {
-                gc.getHero().takeDamage((int) gc.getHero().getVel().sub(meteor.getVel()).len());
+                gc.getHero().takeDamage((int) gc.getHero().getVel().sub(meteor.getVel()).len() / 100);
                 handleCollision(meteor, gc.getHero());
             }
 
@@ -91,6 +91,12 @@ public class MeteorController extends Pool<Meteor> {
                 Bullet bullet = gc.getBulletController().getActiveElementAt(j);
 
                 if (meteor.getHitArea().contains(bullet.getPos())) {
+                    gc.getParticleController().setup(bullet.getPos().x +MathUtils.random(-4, 4), bullet.getPos().y + MathUtils.random(-4, 4),
+                            bullet.getVel().x * -0.3f + MathUtils.random(-30, 30), bullet.getVel().y * -0.3f + MathUtils.random(-30, 30),
+                            0.2f, 2.2f, 1.5f,
+                            1.0f, 1.0f, 1.0f, 1,
+                            0, 0, 1, 0);
+
                     if (meteor.takeDamage(10)) {
                         spawnChildren(meteor);
                         meteor.deactivate();
@@ -109,7 +115,7 @@ public class MeteorController extends Pool<Meteor> {
 
         float baseAngle = MathUtils.random(0, 120);
         float r = (float) (Math.sqrt(3) * meteor.getRadius() / (2 + Math.sqrt(3)));
-        float v = MathUtils.random(0, 120f);
+        float v = MathUtils.random(100f, 200f);
         for (int i = 0; i < 3; i++) {
             float angle = baseAngle + i * 120;
 
@@ -135,9 +141,5 @@ public class MeteorController extends Pool<Meteor> {
         Vector2 vel = new Vector2(MathUtils.random(-1f * Constants.pixelsPerMeter, 1f * Constants.pixelsPerMeter), MathUtils.random(-1f * Constants.pixelsPerMeter, 1f * Constants.pixelsPerMeter));
 
         getInactiveElement().activate(pos.x, pos.y, vel.x, vel.y);
-    }
-
-    public void dispose() {
-
     }
 }
