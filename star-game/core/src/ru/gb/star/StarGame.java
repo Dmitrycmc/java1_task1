@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import ru.gb.star.screen.GameScreen;
+import ru.gb.star.screen.ScreenManager;
 
 public class StarGame extends Game {
 	private SpriteBatch batch;
@@ -13,8 +14,8 @@ public class StarGame extends Game {
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		gameScreen = new GameScreen(batch);
-		setScreen(gameScreen);
+		ScreenManager.get().init(this, batch);
+		ScreenManager.get().changeScreen(ScreenManager.ScreenType.MENU);
 	}
 
 	@Override
@@ -26,6 +27,5 @@ public class StarGame extends Game {
 	@Override
 	public void dispose () {
 		batch.dispose();
-		gameScreen.dispose();
 	}
 }

@@ -47,7 +47,7 @@ public class GameController {
         benefitController = new BenefitController(this);
         particleController = new ParticleController();
         hero = new Hero(this);
-        font32 = Assets.getInstance().getFont();
+        font32 = Assets.get().getFont(32);
     }
 
     public void render(SpriteBatch batch) {
@@ -62,7 +62,7 @@ public class GameController {
         sb.setLength(0);
         sb.append("Score: ").append(hero.getScore()).append("\n")
                 .append("Health: ").append(hero.getHp()).append(" / ").append(Hero.MAX_HP).append("\n")
-                .append("Weapon: ").append(hero.getCurrentWeapon().getCurBullets()).append(" / ").append(hero.getCurrentWeapon().getMaxBullets());
+                .append("Health: ").append(hero.getCurrentWeapon().getCurBullets()).append(" / ").append(hero.getCurrentWeapon().getMaxBullets());
         font32.draw(batch, sb, Constants.scoreMargin, Constants.height - Constants.scoreMargin);
         batch.end();
     }
