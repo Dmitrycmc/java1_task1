@@ -4,22 +4,34 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import ru.gb.star.screen.utils.Assets;
 
 public class Hero {
     GameController gc;
 
     public static float RADIUS = 32;
 
-    private Texture texture = new Texture("ship.png");
+    private TextureRegion texture = Assets.getInstance().getAtlas().findRegion("ship");
     private Vector2 pos = new Vector2(Constants.width / 2, Constants.height / 2);
     private Vector2 vel = new Vector2(0, 0);
     private float angle = 0f;
     private Vector2 lastDisplacement = new Vector2(0, 0);
+    private int score = 0;
+    private int scoreView = 0;
 
     public Vector2 getLastDisplacement() {
         return lastDisplacement;
+    }
+
+    public int getScore() {
+        return scoreView;
+    }
+
+    public void addScore(int ds) {
+        score += ds;
     }
 
     public Hero(GameController gc) {
@@ -27,22 +39,42 @@ public class Hero {
     }
 
     public void render(SpriteBatch batch) {
-        batch.draw(texture, pos.x - RADIUS, pos.y - RADIUS, RADIUS, RADIUS,
-                2 * RADIUS, 2 * RADIUS, 1, 1,
-                angle, 0, 0, 64, 64, false, false);
+        batch.draw(texture,
+            pos.x - RADIUS, pos.y - RADIUS,
+            RADIUS, RADIUS,
+            2 * RADIUS, 2 * RADIUS,
+            1, 1,
+            angle
+        );
     }
 
     private float t = 0;
-
     public void update(float dt) {
+        if (scoreView < score) {
+            scoreView += 500 * dt;
+            if (scoreView > score) {
+                scoreView = score;
+            }
+        }
+
         if (t > 0) {
             t -= dt;
         } else {
             if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
                 t = Constants.rearmTime;
-                gc.getBulletController().spawn(pos.x, pos.y,
-                        MathUtils.cosDeg(angle) * 500.0f + vel.x,
-                        MathUtils.sinDeg(angle) * 500.0f + vel.y);
+                gc.getBulletController().spawn(
+                    pos.x + MathUtils.cosDeg(angle + 90) * 20.0f,
+                    pos.y + MathUtils.sinDeg(angle + 90) * 20.0f,
+                    MathUtils.cosDeg(angle) * 500.0f + vel.x,
+                    MathUtils.sinDeg(angle) * 500.0f + vel.y
+                );
+
+                gc.getBulletController().spawn(
+                    pos.x + MathUtils.cosDeg(angle - 90) * 20.0f,
+                    pos.y + MathUtils.sinDeg(angle - 90) * 20.0f,
+                    MathUtils.cosDeg(angle) * 500.0f + vel.x,
+                    MathUtils.sinDeg(angle) * 500.0f + vel.y
+                );
             }
         }
 
@@ -85,6 +117,6 @@ public class Hero {
     }
 
     public void dispose() {
-        texture.dispose();
+
     }
 }

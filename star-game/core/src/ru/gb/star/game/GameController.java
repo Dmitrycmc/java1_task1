@@ -1,13 +1,18 @@
 package ru.gb.star.game;
 
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.StringBuilder;
+import ru.gb.star.screen.utils.Assets;
 
 public class GameController {
     private Background background;
     private BulletController bulletController;
     private MeteorController meteorController;
     private Hero hero;
+    private BitmapFont font32;
+    private StringBuilder sb = new StringBuilder();
 
     public Background getBackground() {
         return background;
@@ -30,6 +35,7 @@ public class GameController {
         bulletController = new BulletController();
         meteorController = new MeteorController(this);
         hero = new Hero(this);
+        font32 = Assets.getInstance().getAssetManager().get("fonts/font32.ttf", BitmapFont.class);
     }
 
     public void render(SpriteBatch batch) {
@@ -39,6 +45,9 @@ public class GameController {
         bulletController.render(batch);
         meteorController.render(batch);
         hero.render(batch);
+        sb.setLength(0);
+        sb.append("Score: ").append(hero.getScore());
+        font32.draw(batch, sb, 20, 700);
         batch.end();
     }
 

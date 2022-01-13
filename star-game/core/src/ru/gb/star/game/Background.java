@@ -2,9 +2,10 @@ package ru.gb.star.game;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import ru.gb.star.StarGame;
+import ru.gb.star.screen.utils.Assets;
 
 public class Background {
     private class Star {
@@ -33,21 +34,13 @@ public class Background {
     private final int STAR_COUNT = 1000;
     private GameController gc;
     private Texture textureCosmos;
-    private Texture textureStar;
+    private TextureRegion textureStar;
     private Star[] stars;
-
-    public Texture getTextureCosmos() {
-        return textureCosmos;
-    }
-
-    public Texture getTextureStar() {
-        return textureStar;
-    }
 
     public Background(GameController gc) {
         this.gc = gc;
-        this.textureCosmos = new Texture("space.png");
-        this.textureStar = new Texture("star16.png");
+        this.textureCosmos = new Texture("images/space.png");
+        this.textureStar = Assets.getInstance().getAtlas().findRegion("star16");
         this.stars = new Star[STAR_COUNT];
         for (int i = 0; i < stars.length; i++) {
             stars[i] = new Star();
@@ -57,12 +50,22 @@ public class Background {
     public void render(SpriteBatch batch) {
         batch.draw(textureCosmos, 0, 0);
         for (int i = 0; i < stars.length; i++) {
-            batch.draw(textureStar, stars[i].position.x - 8, stars[i].position.y - 8, 8, 8, 16, 16,
-                    stars[i].scale, stars[i].scale, 0, 0, 0, 16, 16, false, false);
+            batch.draw(textureStar,
+                stars[i].position.x - 8, stars[i].position.y - 8,
+                8, 8,
+                16, 16,
+                stars[i].scale, stars[i].scale,
+                0
+            );
 
             if (MathUtils.random(0, 300) < 1) {
-                batch.draw(textureStar, stars[i].position.x - 8, stars[i].position.y - 8, 8, 8, 16, 16,
-                        stars[i].scale * 2, stars[i].scale * 2, 0, 0, 0, 16, 16, false, false);
+                batch.draw(textureStar,
+                    stars[i].position.x - 8, stars[i].position.y - 8,
+                    8, 8,
+                    16, 16,
+                    stars[i].scale * 2, stars[i].scale * 2,
+                    0
+                );
             }
         }
     }
@@ -75,6 +78,5 @@ public class Background {
 
     public void dispose() {
         textureCosmos.dispose();
-        textureStar.dispose();
     }
 }

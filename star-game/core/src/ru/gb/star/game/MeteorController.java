@@ -2,13 +2,15 @@ package ru.gb.star.game;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import ru.gb.star.pool.Pool;
+import ru.gb.star.screen.utils.Assets;
 
 public class MeteorController extends Pool<Meteor> {
     private GameController gc;
-    Texture meteorTexture = new Texture("asteroid.png");
+    TextureRegion meteorTexture = Assets.getInstance().getAtlas().findRegion("asteroid");
 
     public MeteorController(GameController gc) {
         this.gc = gc;
@@ -25,19 +27,25 @@ public class MeteorController extends Pool<Meteor> {
     public void render(SpriteBatch batch) {
         for (int i = 0; i < activeList.size(); i++) {
             Meteor b = activeList.get(i);
-            batch.draw(meteorTexture, b.getPos().x - Meteor.RADIUS, b.getPos().y - Meteor.RADIUS, 2 * Meteor.RADIUS, 2 * Meteor.RADIUS);
+            batch.draw(meteorTexture,
+                b.getPos().x - Meteor.RADIUS, b.getPos().y - Meteor.RADIUS,
+                    Meteor.RADIUS, Meteor.RADIUS,
+                    2 * Meteor.RADIUS, 2 * Meteor.RADIUS,
+                    1.1f, 1.1f,
+                    b.getAngle()
+            );
         }
     }
 
     public static void handleCollision(Meteor a, Meteor b) {
-        Vector2 centersDifference = a.getPos().cpy().sub(b.getPos()).nor();
-        float distance = a.getPos().cpy().sub(b.getPos()).len();
+        Vector2 centersDifference = a.getPos().sub(b.getPos()).nor();
+        float distance = a.getPos().sub(b.getPos()).len();
         float pr1 = centersDifference.cpy().dot(a.getVel());
         float pr2 = centersDifference.cpy().dot(b.getVel());
-        a.setVel(a.getVel().add(centersDifference.cpy().scl(-1f * pr1 + (1f - Constants.reflectionLoss) * pr2)));
-        b.setVel(b.getVel().add(centersDifference.cpy().scl(-1f * pr2 + (1f - Constants.reflectionLoss) * pr1)));
-        a.setPos(a.getPos().add(centersDifference.cpy().scl((2f * Meteor.RADIUS - distance) / 2)));
-        b.setPos(b.getPos().sub(centersDifference.cpy().scl((2f * Meteor.RADIUS - distance) / 2)));
+        a.setVel(a.getVel().mulAdd(centersDifference, -1f * pr1 + (1f - Constants.reflectionLoss) * pr2));
+        b.setVel(b.getVel().mulAdd(centersDifference, -1f * pr2 + (1f - Constants.reflectionLoss) * pr1));
+        a.setPos(a.getPos().mulAdd(centersDifference, (2f * Meteor.RADIUS - distance) / 2));
+        b.setPos(b.getPos().mulAdd(centersDifference, -(2f * Meteor.RADIUS - distance) / 2));
     }
 
     public void update(float dt){
@@ -60,7 +68,9 @@ public class MeteorController extends Pool<Meteor> {
         for (int i = 0; i < activeList.size() - 1; i++) {
             for (int j = 0; j < gc.getBulletController().getActiveElementsCount(); j++) {
                 if (activeList.get(i).getPos().sub(gc.getBulletController().getActiveElementAt(j).getPos()).len() < Meteor.RADIUS + Bullet.RADIUS) {
-                    activeList.get(i).deactivate();
+                    if (activeList.get(i).takeDamage(10)) {
+                        gc.getHero().addScore(100);
+                    }
                     gc.getBulletController().getActiveElementAt(j).deactivate();
                 }
             }
@@ -86,6 +96,6 @@ public class MeteorController extends Pool<Meteor> {
     }
 
     public void dispose() {
-        meteorTexture.dispose();
+
     }
 }
