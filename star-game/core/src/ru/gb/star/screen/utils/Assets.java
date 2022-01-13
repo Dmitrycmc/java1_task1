@@ -20,13 +20,14 @@ public class Assets {
 
     private AssetManager assetManager;
     private TextureAtlas textureAtlas;
+    private BitmapFont font;
 
     public TextureAtlas getAtlas() {
         return textureAtlas;
     }
 
-    public AssetManager getAssetManager() {
-        return assetManager;
+    public BitmapFont getFont() {
+        return font;
     }
 
     private Assets() {
@@ -39,7 +40,9 @@ public class Assets {
                 assetManager.load("images/game.pack", TextureAtlas.class);
                 createStandardFont(32);
                 assetManager.finishLoading();
+
                 textureAtlas = assetManager.get("images/game.pack", TextureAtlas.class);
+                font = assetManager.get("fonts/font-32.ttf", BitmapFont.class);
                 break;
         }
     }
@@ -55,7 +58,7 @@ public class Assets {
         fontParameter.fontParameters.shadowOffsetX = 1;
         fontParameter.fontParameters.shadowOffsetY = 1;
         fontParameter.fontParameters.shadowColor = Color.DARK_GRAY;
-        assetManager.load("fonts/font" + size + ".ttf", BitmapFont.class, fontParameter);
+        assetManager.load("fonts/font-" + size + ".ttf", BitmapFont.class, fontParameter);
     }
 
     public void clear() {

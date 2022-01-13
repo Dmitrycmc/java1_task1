@@ -6,16 +6,18 @@ import com.badlogic.gdx.math.Vector2;
 import ru.gb.star.pool.Pool;
 import ru.gb.star.pool.PoolItem;
 
-public class Meteor extends PoolItem {
+public class Meteor extends PoolItem implements Collidable {
     private Vector2 pos = new Vector2();
     private Vector2 vel = new Vector2();
     private float angle;
     private float angleSpeed;
-    private int hpMax = 40;
+    private float radius;
+    private float mass;
     private int hp;
-    private Circle hitArea = new Circle();
+    private Circle hitArea;
 
-    final static float RADIUS = 60;
+    final static float BASE_RADIUS = 60;
+    final static float BASE_MASS = 200;
 
     public Meteor(Pool pool) {
         super(pool);
@@ -33,52 +35,66 @@ public class Meteor extends PoolItem {
         return angle;
     }
 
+    public float getRadius() {
+        return radius;
+    }
+
+    public float getMass() {
+        return mass;
+    }
+
     public Circle getHitArea() {
         return hitArea;
     }
 
     public boolean takeDamage(int dmg) {
         hp -= dmg;
-        if (hp <= 0) {
-            deactivate();
-            return true;
-        }
-        return false;
+        return hp <= 0;
     }
 
-    void setPos(Vector2 pos) {
+    public void setPos(Vector2 pos) {
         this.pos = pos;
     }
 
-    void setVel(Vector2 vel) {
+    public void setVel(Vector2 vel) {
         this.vel = vel;
     }
 
     public void activate(float x, float y, float vx, float vy) {
-        pos.set(x, y);
-        vel.set(vx, vy);
+        activate(x, y, vx, vy, MathUtils.random(0.8f, 2));
+    }
+
+    public void activate(float x, float y, float vx, float vy, float scale) {
+
         angle = MathUtils.random(0, 360f);
         angleSpeed = MathUtils.random(-360f, 360f);
-        hitArea.setPosition(pos);
-        hitArea.setRadius(RADIUS);
-        hp = hpMax;
+
+        pos.set(x, y);
+        vel.set(vx, vy);
+        radius = BASE_RADIUS * scale;
+        mass = BASE_MASS * scale * scale * scale;
+        hitArea = new Circle(pos, radius);
+
+        hp = (int) (40 * scale);
     }
 
     public void update(float dt) {
         pos.mulAdd(vel, dt);
 
-        if (pos.x < -Constants.width - Meteor.RADIUS) {
+        if (pos.x < -Constants.width - getRadius()) {
             deactivate();
         }
-        if (pos.y < -Constants.height - RADIUS) {
+        if (pos.y < -Constants.height - getRadius()) {
             deactivate();
         }
-        if (pos.x > 2 * Constants.width + RADIUS) {
+        if (pos.x > 2 * Constants.width + getRadius()) {
             deactivate();
         }
-        if (pos.y > 2 * Constants.height + RADIUS) {
+        if (pos.y > 2 * Constants.height + getRadius()) {
             deactivate();
         }
+
+        hitArea.setPosition(pos);
 
         angle += angleSpeed * dt;
     }

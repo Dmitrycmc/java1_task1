@@ -35,7 +35,7 @@ public class GameController {
         bulletController = new BulletController();
         meteorController = new MeteorController(this);
         hero = new Hero(this);
-        font32 = Assets.getInstance().getAssetManager().get("fonts/font32.ttf", BitmapFont.class);
+        font32 = Assets.getInstance().getFont();
     }
 
     public void render(SpriteBatch batch) {
@@ -46,8 +46,9 @@ public class GameController {
         meteorController.render(batch);
         hero.render(batch);
         sb.setLength(0);
-        sb.append("Score: ").append(hero.getScore());
-        font32.draw(batch, sb, 20, 700);
+        sb.append("Score: ").append(hero.getScore()).append("\n")
+                .append("Health: ").append(hero.getHp());
+        font32.draw(batch, sb, Constants.scoreMargin, Constants.height - Constants.scoreMargin);
         batch.end();
     }
 
