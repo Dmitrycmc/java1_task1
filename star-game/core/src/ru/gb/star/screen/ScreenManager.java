@@ -9,7 +9,7 @@ import ru.gb.star.screen.utils.Assets;
 
 public class ScreenManager {
     public enum ScreenType{
-        GAME, MENU
+        GAME, MENU, GAME_OVER
     }
     public static final int SCREEN_WIDTH = 1280;
     public static final int SCREEN_HEIGHT = 720;
@@ -19,6 +19,7 @@ public class ScreenManager {
     private LoadingScreen loadingScreen;
     private GameScreen gameScreen;
     private MenuScreen menuScreen;
+    private GameOverScreen gameOverScreen;
     private Screen targetScreen;
     private Viewport viewport;
 
@@ -41,6 +42,7 @@ public class ScreenManager {
         this.viewport = new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT);
         this.gameScreen = new GameScreen(batch);
         this.menuScreen = new MenuScreen(batch);
+        this.gameOverScreen = new GameOverScreen(batch);
         this.loadingScreen = new LoadingScreen(batch);
     }
 
@@ -60,13 +62,15 @@ public class ScreenManager {
         switch (type) {
             case GAME:
                 targetScreen = gameScreen;
-                Assets.get().loadAssets(ScreenType.GAME);
                 break;
             case MENU:
                 targetScreen = menuScreen;
-                Assets.get().loadAssets(ScreenType.MENU);
+                break;
+            case GAME_OVER:
+                targetScreen = gameOverScreen;
                 break;
         }
+        Assets.get().loadAssets(type);
     }
 
     public void goToTarget() {

@@ -46,6 +46,9 @@ public class ParticleController extends Pool<Particle> {
     }
 
     public void render(SpriteBatch batch) {
+        int dstBlendFunction = batch.getBlendDstFunc();
+        int srcBlendFunction = batch.getBlendSrcFunc();
+
         batch.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         for (int i = 0; i < activeList.size(); i++) {
             Particle o = getActiveElementAt(i);
@@ -70,7 +73,7 @@ public class ParticleController extends Pool<Particle> {
             batch.draw(oneParticle, o.getPosition().x - 8, o.getPosition().y - 8,
                     8, 8, 16, 16, scale, scale, 0);
         }
-        batch.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+        batch.setBlendFunction(srcBlendFunction, dstBlendFunction);
         batch.setColor(1.0f, 1.0f, 1.0f, 1.0f);
     }
 
