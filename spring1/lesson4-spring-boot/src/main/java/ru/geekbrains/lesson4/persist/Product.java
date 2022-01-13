@@ -1,15 +1,19 @@
 package ru.geekbrains.lesson4.persist;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 public class Product {
 
     private Long id;
 
+    @NotBlank(message = "Введите имя")
     private String name;
 
     private String description;
 
+    @NotNull(message = "Введите цену")
     private BigDecimal price;
 
     public Product() {

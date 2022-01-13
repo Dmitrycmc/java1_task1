@@ -4,9 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.lesson4.persist.Product;
 import ru.geekbrains.lesson4.persist.ProductRepository;
+
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/product")
@@ -39,7 +42,10 @@ public class ProductController {
     }
 
     @PostMapping
-    public String save(Product product) {
+    public String save(@Valid Product product, BindingResult result) {
+        if (result.hasErrors()) {
+            return "product_form";
+        }
         productRepository.save(product);
         return "redirect:/product";
     }
