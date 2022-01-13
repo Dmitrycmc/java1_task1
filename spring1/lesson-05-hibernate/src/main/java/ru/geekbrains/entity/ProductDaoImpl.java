@@ -15,10 +15,16 @@ public class ProductDaoImpl implements ProductDao {
     private <T> T execInTx(MyInterface<T> i) {
         EntityManager em = emFactory.createEntityManager();
         em.getTransaction().begin();
-        T result = i.doTx(em);
-        em.getTransaction().commit();
-        em.close();
-        return result;
+        try {
+            T result = i.doTx(em);
+            em.getTransaction().commit();
+            return result;
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+        } finally {
+            em.close();
+        }
+        return null;
     }
 
     private <T> T exec(MyInterface<T> i) {
