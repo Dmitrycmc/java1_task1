@@ -5,14 +5,17 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import ru.gb.star.screen.utils.Assets;
 
-public class Hero {
+public class Hero implements Collidable{
     GameController gc;
 
     public static float RADIUS = 32;
+    public static float MASS = 100;
+    static public int MAX_HP = 10000;
 
     private TextureRegion texture = Assets.getInstance().getAtlas().findRegion("ship");
     private Vector2 pos = new Vector2(Constants.width / 2, Constants.height / 2);
@@ -21,6 +24,8 @@ public class Hero {
     private Vector2 lastDisplacement = new Vector2(0, 0);
     private int score = 0;
     private int scoreView = 0;
+    private int hp = MAX_HP;
+    private Circle hitBox = new Circle(pos, RADIUS);
 
     public Vector2 getLastDisplacement() {
         return lastDisplacement;
@@ -28,6 +33,19 @@ public class Hero {
 
     public int getScore() {
         return scoreView;
+    }
+
+    public int getHp() {
+        return hp;
+    }
+
+    public boolean takeDamage(int dmg) {
+        hp -= dmg;
+        return hp <= 0;
+    }
+
+    public Circle getHitBox() {
+        return hitBox;
     }
 
     public void addScore(int ds) {
@@ -63,8 +81,8 @@ public class Hero {
             if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
                 t = Constants.rearmTime;
                 gc.getBulletController().spawn(
-                    pos.x + MathUtils.cosDeg(angle + 90) * 20.0f,
-                    pos.y + MathUtils.sinDeg(angle + 90) * 20.0f,
+                    pos.x + MathUtils.cosDeg(angle + 90) * 5f / 8f * RADIUS,
+                    pos.y + MathUtils.sinDeg(angle + 90) * 5f / 8f * RADIUS,
                     MathUtils.cosDeg(angle) * 500.0f + vel.x,
                     MathUtils.sinDeg(angle) * 500.0f + vel.y
                 );
@@ -114,9 +132,35 @@ public class Hero {
             vel.y *= -(1 - Constants.reflectionLoss);
             pos.y = Constants.height - RADIUS;
         }
+
+        hitBox.setPosition(pos);
     }
 
     public void dispose() {
 
+    }
+
+    public Vector2 getPos() {
+        return pos;
+    }
+
+    public Vector2 getVel() {
+        return vel;
+    }
+
+    public void setPos(Vector2 pos) {
+        pos.set(pos);
+    }
+
+    public void setVel(Vector2 vel) {
+        vel.set(vel);
+    }
+
+    public float getMass() {
+        return MASS;
+    }
+
+    public float getRadius() {
+        return RADIUS;
     }
 }

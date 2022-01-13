@@ -1,6 +1,5 @@
 package ru.gb.star.game;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
@@ -28,24 +27,37 @@ public class MeteorController extends Pool<Meteor> {
         for (int i = 0; i < activeList.size(); i++) {
             Meteor b = activeList.get(i);
             batch.draw(meteorTexture,
-                b.getPos().x - Meteor.RADIUS, b.getPos().y - Meteor.RADIUS,
-                    Meteor.RADIUS, Meteor.RADIUS,
-                    2 * Meteor.RADIUS, 2 * Meteor.RADIUS,
+                b.getPos().x - b.getRadius(), b.getPos().y - b.getRadius(),
+                    b.getRadius(), b.getRadius(),
+                    2 * b.getRadius(), 2 * b.getRadius(),
                     1.1f, 1.1f,
                     b.getAngle()
             );
         }
     }
 
-    public static void handleCollision(Meteor a, Meteor b) {
-        Vector2 centersDifference = a.getPos().sub(b.getPos()).nor();
-        float distance = a.getPos().sub(b.getPos()).len();
-        float pr1 = centersDifference.cpy().dot(a.getVel());
-        float pr2 = centersDifference.cpy().dot(b.getVel());
-        a.setVel(a.getVel().mulAdd(centersDifference, -1f * pr1 + (1f - Constants.reflectionLoss) * pr2));
-        b.setVel(b.getVel().mulAdd(centersDifference, -1f * pr2 + (1f - Constants.reflectionLoss) * pr1));
-        a.setPos(a.getPos().mulAdd(centersDifference, (2f * Meteor.RADIUS - distance) / 2));
-        b.setPos(b.getPos().mulAdd(centersDifference, -(2f * Meteor.RADIUS - distance) / 2));
+    public static void handleCollision(Collidable meteor1, Collidable meteor2) {
+        Vector2 centersDifference = meteor1.getPos().sub(meteor2.getPos()).nor();
+        float distance = meteor1.getPos().sub(meteor2.getPos()).len();
+
+        float m1 = meteor1.getMass();
+        float m2 = meteor2.getMass();
+        // Projections on centersDifference
+        float v1 = centersDifference.dot(meteor1.getVel());
+        float v2 = centersDifference.dot(meteor2.getVel());
+
+        meteor1.setVel(meteor1.getVel().mulAdd(centersDifference,
+                -1 * v1 + (1 - Constants.reflectionLoss) * ((m1 - m2) * v1 + 2 * m2 * v2) / (m1 + m2))
+        );
+        meteor2.setVel(meteor2.getVel().mulAdd(centersDifference,
+                -1 * v2 + (1 - Constants.reflectionLoss) * ((m2 - m1) * v2 + 2 * m1 * v1) / (m1 + m2))
+        );
+        meteor1.setPos(meteor1.getPos().mulAdd(centersDifference,
+                (meteor1.getRadius() + meteor2.getRadius() - distance) / 2)
+        );
+        meteor2.setPos(meteor2.getPos().mulAdd(centersDifference,
+                -(meteor1.getRadius() + meteor2.getRadius() - distance) / 2)
+        );
     }
 
     public void update(float dt){
@@ -59,26 +71,56 @@ public class MeteorController extends Pool<Meteor> {
 
         for (int i = 0; i < activeList.size() - 1; i++) {
             for (int j = i + 1; j < activeList.size(); j++) {
-                if (activeList.get(i).getPos().sub(activeList.get(j).getPos()).len() < 2 * Meteor.RADIUS) {
-                    handleCollision(activeList.get(i), activeList.get(j));
+                Meteor meteor1 = activeList.get(i);
+                Meteor meteor2 = activeList.get(j);
+
+                if (meteor1.getHitArea().overlaps(meteor2.getHitArea())) {
+                    handleCollision(meteor1, meteor2);
                 }
             }
         }
 
         for (int i = 0; i < activeList.size() - 1; i++) {
+            Meteor meteor = activeList.get(i);
+            if (gc.getHero().getHitBox().overlaps(meteor.getHitArea())) {
+                gc.getHero().takeDamage((int) gc.getHero().getVel().sub(meteor.getVel()).len());
+                handleCollision(meteor, gc.getHero());
+            }
+
             for (int j = 0; j < gc.getBulletController().getActiveElementsCount(); j++) {
-                if (activeList.get(i).getPos().sub(gc.getBulletController().getActiveElementAt(j).getPos()).len() < Meteor.RADIUS + Bullet.RADIUS) {
-                    if (activeList.get(i).takeDamage(10)) {
+                Bullet bullet = gc.getBulletController().getActiveElementAt(j);
+
+                if (meteor.getHitArea().contains(bullet.getPos())) {
+                    if (meteor.takeDamage(10)) {
+                        spawnChildren(meteor);
+                        meteor.deactivate();
                         gc.getHero().addScore(100);
                     }
-                    gc.getBulletController().getActiveElementAt(j).deactivate();
+                    bullet.deactivate();
                 }
             }
         }
     }
 
-    public void spawn(float x, float y, float vx, float vy){
-        getInactiveElement().activate(x, y, vx, vy);
+    public void spawnChildren(Meteor meteor) {
+        if (meteor.getRadius() / Meteor.BASE_RADIUS < 0.5f) {
+            return;
+        }
+
+        float baseAngle = MathUtils.random(0, 120);
+        float r = (float) (Math.sqrt(3) * meteor.getRadius() / (2 + Math.sqrt(3)));
+        float v = MathUtils.random(0, 120f);
+        for (int i = 0; i < 3; i++) {
+            float angle = baseAngle + i * 120;
+
+            getInactiveElement().activate(
+                    meteor.getPos().x + MathUtils.cosDeg(angle) * (meteor.getRadius() - r),
+                    meteor.getPos().y + MathUtils.sinDeg(angle) * (meteor.getRadius() - r),
+                    meteor.getVel().x + MathUtils.cosDeg(angle) * v,
+                    meteor.getVel().y + MathUtils.sinDeg(angle) * v,
+                    r / Meteor.BASE_RADIUS
+            );
+        }
     }
 
     public void spawn() {
@@ -89,10 +131,10 @@ public class MeteorController extends Pool<Meteor> {
         int screenRow = screenNumber / 3 - 1;
         int screenCol = screenNumber % 3 - 1;
 
-        Vector2 pos = new Vector2(MathUtils.random(0, Constants.width - Meteor.RADIUS) + Constants.width * screenCol, MathUtils.random(0, Constants.height - Meteor.RADIUS) + Constants.height * screenRow);
+        Vector2 pos = new Vector2(MathUtils.random(0, Constants.width - Meteor.BASE_RADIUS) + Constants.width * screenCol, MathUtils.random(0, Constants.height - Meteor.BASE_RADIUS) + Constants.height * screenRow);
         Vector2 vel = new Vector2(MathUtils.random(-1f * Constants.pixelsPerMeter, 1f * Constants.pixelsPerMeter), MathUtils.random(-1f * Constants.pixelsPerMeter, 1f * Constants.pixelsPerMeter));
 
-        spawn(pos.x, pos.y, vel.x, vel.y);
+        getInactiveElement().activate(pos.x, pos.y, vel.x, vel.y);
     }
 
     public void dispose() {
