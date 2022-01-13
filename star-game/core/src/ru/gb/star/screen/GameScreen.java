@@ -5,16 +5,15 @@ import ru.gb.star.game.GameController;
 import ru.gb.star.screen.utils.Assets;
 
 public class GameScreen extends AbstractScreen{
-    private SpriteBatch batch;
     private GameController gc;
 
     public GameScreen(SpriteBatch batch) {
-        this.batch = batch;
+        super(batch);
     }
 
     @Override
     public void show() {
-        Assets.getInstance().loadAssets(ScreenManager.ScreenType.GAME);
+        Assets.get().loadAssets(ScreenManager.ScreenType.GAME);
         this.gc = new GameController();
     }
 
@@ -27,5 +26,6 @@ public class GameScreen extends AbstractScreen{
     @Override
     public void dispose() {
         gc.dispose();
+        System.out.println("Game screen dispose");
     }
 }

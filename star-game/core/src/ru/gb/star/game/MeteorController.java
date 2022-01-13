@@ -9,7 +9,7 @@ import ru.gb.star.screen.utils.Assets;
 
 public class MeteorController extends Pool<Meteor> {
     private GameController gc;
-    TextureRegion meteorTexture = Assets.getInstance().getAtlas().findRegion("asteroid");
+    TextureRegion meteorTexture = Assets.get().getTextureAtlas().findRegion("asteroid");
 
     public MeteorController(GameController gc) {
         this.gc = gc;

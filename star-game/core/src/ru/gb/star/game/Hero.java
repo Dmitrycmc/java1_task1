@@ -17,7 +17,7 @@ public class Hero implements Collidable{
     public static float MASS = 100;
     static public int MAX_HP = 100;
 
-    private TextureRegion texture = Assets.getInstance().getAtlas().findRegion("ship");
+    private TextureRegion texture = Assets.get().getTextureAtlas().findRegion("ship");
 
     public float getAngle() {
         return angle;

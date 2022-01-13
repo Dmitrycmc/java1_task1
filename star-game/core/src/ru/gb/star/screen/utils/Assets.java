@@ -14,24 +14,18 @@ import ru.gb.star.screen.ScreenManager;
 public class Assets {
     private static final Assets instance = new Assets();
 
-    public static Assets getInstance() {
+    private Assets() {
+        assetManager = new AssetManager();
+    }
+
+    public static Assets get() {
         return instance;
     }
 
     private AssetManager assetManager;
-    private TextureAtlas textureAtlas;
-    private BitmapFont font;
 
-    public TextureAtlas getAtlas() {
-        return textureAtlas;
-    }
-
-    public BitmapFont getFont() {
-        return font;
-    }
-
-    private Assets() {
-        assetManager = new AssetManager();
+    public AssetManager getAssetManager() {
+        return assetManager;
     }
 
     public void loadAssets(ScreenManager.ScreenType type) {
@@ -39,12 +33,21 @@ public class Assets {
             case GAME:
                 assetManager.load("images/game.pack", TextureAtlas.class);
                 createStandardFont(32);
-                assetManager.finishLoading();
-
-                textureAtlas = assetManager.get("images/game.pack", TextureAtlas.class);
-                font = assetManager.get("fonts/font-32.ttf", BitmapFont.class);
+                break;
+            case MENU:
+                assetManager.load("images/game.pack", TextureAtlas.class);
+                createStandardFont(72);
+                createStandardFont(24);
                 break;
         }
+    }
+
+    public TextureAtlas getTextureAtlas() {
+        return assetManager.get("images/game.pack", TextureAtlas.class);
+    }
+
+    public BitmapFont getFont(int size) {
+        return assetManager.get("fonts/font-" + size + ".ttf", BitmapFont.class);
     }
 
     private void createStandardFont(int size) {

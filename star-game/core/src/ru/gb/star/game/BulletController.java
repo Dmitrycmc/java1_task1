@@ -6,7 +6,7 @@ import ru.gb.star.pool.Pool;
 import ru.gb.star.screen.utils.Assets;
 
 public class BulletController extends Pool<Bullet> {
-    TextureRegion bulletTexture = Assets.getInstance().getAtlas().findRegion("bullet");
+    TextureRegion bulletTexture = Assets.get().getTextureAtlas().findRegion("bullet");
     GameController gc;
 
     public BulletController(GameController gc) {

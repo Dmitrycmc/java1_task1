@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import ru.gb.star.pool.Pool;
 
+import javax.management.MBeanInfo;
+
 public class BenefitController extends Pool<Benefit> {
     GameController gc;
     Texture textureAid = new Texture("images/aid.png");
@@ -72,6 +74,7 @@ public class BenefitController extends Pool<Benefit> {
                     default:
                         hero.getCurrentWeapon().addWeapons(50);
                 }
+                gc.getParticleController().getEffectBuilder().takePowerUpEffect(benefit.getPos().x, benefit.getPos().y);
                 benefit.deactivate();
             }
         }
