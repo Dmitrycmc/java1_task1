@@ -34,7 +34,7 @@ public class ProductController {
 
     @GetMapping("/new")
     public String create(Model model) {
-        // TODO model.addAttribute("product", ?????);
+        model.addAttribute("product", new Product());
         return "product_form";
     }
 

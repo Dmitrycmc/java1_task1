@@ -3,6 +3,7 @@ package ru.geekbrains.persist;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.PostConstruct;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -19,9 +20,9 @@ public class ProductRepositoryImpl implements ProductRepository {
 
     @PostConstruct
     public void init() {
-        this.save(new Product(1L, "Product 1"));
-        this.save(new Product(2L, "Product 2"));
-        this.save(new Product(3L, "Product 3"));
+        this.save(new Product("Product 1", new BigDecimal(45)));
+        this.save(new Product("Product 2", new BigDecimal(120)));
+        this.save(new Product("Product 3", new BigDecimal(999), "Description"));
     }
 
     @Override
