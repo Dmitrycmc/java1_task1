@@ -1,9 +1,9 @@
 package ru.geekbrains;
 
 import org.hibernate.cfg.Configuration;
-import ru.geekbrains.entity.Product;
-import ru.geekbrains.entity.ProductDao;
-import ru.geekbrains.entity.ProductDaoImpl;
+import ru.geekbrains.entity.product.Product;
+import ru.geekbrains.entity.product.ProductDao;
+import ru.geekbrains.entity.product.ProductDaoImpl;
 
 import javax.persistence.EntityManagerFactory;
 import java.math.BigDecimal;

@@ -1,4 +1,4 @@
-package ru.geekbrains.entity;
+package ru.geekbrains.entity.customer_product;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -7,7 +7,7 @@ import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
-public class ProductDaoImpl implements ProductDao {
+public class CustomerProductDaoImpl implements CustomerProductDao {
     EntityManagerFactory emFactory;
 
     private void execInTx(Consumer<EntityManager> i) {
@@ -30,24 +30,24 @@ public class ProductDaoImpl implements ProductDao {
         return result;
     }
 
-    public ProductDaoImpl(EntityManagerFactory emFactory) {
+    public CustomerProductDaoImpl(EntityManagerFactory emFactory) {
         this.emFactory = emFactory;
     }
 
     @Override
-    public List<Product> findAll() {
-        return exec(em -> em.createQuery("select p from Product p", Product.class).getResultList());
+    public List<CustomerProduct> findAll() {
+        return exec(em -> em.createQuery("select p from Customer p", CustomerProduct.class).getResultList());
     }
 
     @Override
-    public Optional<Product> findById(long id) {
-        Product p = exec(em -> em.find(Product.class, id));
+    public Optional<CustomerProduct> findById(long id) {
+        CustomerProduct p = exec(em -> em.find(CustomerProduct.class, id));
 
         return Optional.ofNullable(p);
     }
 
     @Override
-    public void save(Product product) {
+    public void save(CustomerProduct product) {
         if (product.getId() != null && findById(product.getId()).isPresent()) {
             execInTx(em -> em.merge(product));
         } else {
@@ -57,7 +57,7 @@ public class ProductDaoImpl implements ProductDao {
 
     @Override
     public void delete(long id) {
-        execInTx(em -> em.createQuery("delete from Product where id = :id")
+        execInTx(em -> em.createQuery("delete from Customer where id = :id")
             .setParameter("id", id)
             .executeUpdate()
         );

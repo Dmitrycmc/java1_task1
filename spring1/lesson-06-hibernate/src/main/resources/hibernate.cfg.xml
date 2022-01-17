@@ -15,7 +15,9 @@
         <property name="format_sql">true</property>
         <property name="current_session_context_class">thread</property>
 
-        <mapping class="ru.geekbrains.entity.Product"/>
+        <mapping class="ru.geekbrains.entity.product.Product"/>
+        <mapping class="ru.geekbrains.entity.customer.Customer"/>
+        <mapping class="ru.geekbrains.entity.customer_product.CustomerProduct"/>
     </session-factory>
 </hibernate-configuration>
 

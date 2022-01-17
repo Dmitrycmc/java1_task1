@@ -1,4 +1,4 @@
-package ru.geekbrains.entity;
+package ru.geekbrains.entity.product;
 
 import java.util.List;
 import java.util.Optional;

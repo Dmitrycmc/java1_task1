@@ -1,4 +1,4 @@
-package ru.geekbrains.entity;
+package ru.geekbrains.entity.customer;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import java.math.BigDecimal;
 
 @Entity
-public class Product {
+public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,18 +22,18 @@ public class Product {
     @Column(nullable = false)
     private BigDecimal price;
 
-    public Product(String name, String description, BigDecimal price) {
+    public Customer(String name, String description, BigDecimal price) {
         this.name = name;
         this.description = description;
         this.price = price;
     }
 
-    public Product(String name, BigDecimal price) {
+    public Customer(String name, BigDecimal price) {
         this.name = name;
         this.price = price;
     }
 
-    public Product() {
+    public Customer() {
     }
 
     public void setId(Long id) {
