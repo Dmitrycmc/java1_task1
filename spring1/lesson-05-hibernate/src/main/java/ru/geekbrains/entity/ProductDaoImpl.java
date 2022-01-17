@@ -4,32 +4,28 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 public class ProductDaoImpl implements ProductDao {
     EntityManagerFactory emFactory;
 
-    private interface MyInterface<T> {
-        T doTx(EntityManager em);
-    }
-
-    private <T> T execInTx(MyInterface<T> i) {
+    private void execInTx(Consumer<EntityManager> i) {
         EntityManager em = emFactory.createEntityManager();
         em.getTransaction().begin();
         try {
-            T result = i.doTx(em);
+            i.accept(em);
             em.getTransaction().commit();
-            return result;
         } catch (Exception e) {
             em.getTransaction().rollback();
         } finally {
             em.close();
         }
-        return null;
     }
 
-    private <T> T exec(MyInterface<T> i) {
+    private <T> T exec(Function<EntityManager, T> i) {
         EntityManager em = emFactory.createEntityManager();
-        T result = i.doTx(em);
+        T result = i.apply(em);
         em.close();
         return result;
     }
@@ -55,7 +51,7 @@ public class ProductDaoImpl implements ProductDao {
         if (product.getId() != null && findById(product.getId()).isPresent()) {
             execInTx(em -> em.merge(product));
         } else {
-            execInTx(em -> {em.persist(product); return product;});
+            execInTx(em -> em.persist(product));
         }
     }
 
