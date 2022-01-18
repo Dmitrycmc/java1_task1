@@ -1,11 +1,13 @@
 package ru.geekbrains.entity.product;
 
+import org.springframework.stereotype.Component;
 import ru.geekbrains.entity.Dao;
 
 import javax.persistence.EntityManagerFactory;
 import java.util.List;
 import java.util.Optional;
 
+@Component
 public class ProductDaoImpl extends Dao implements ProductDao {
     public ProductDaoImpl(EntityManagerFactory emFactory) {
         super(emFactory);

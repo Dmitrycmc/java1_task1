@@ -1,10 +1,14 @@
 package ru.geekbrains.entity;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+@Component
 public class Dao {
     EntityManagerFactory emFactory;
 
@@ -28,6 +32,7 @@ public class Dao {
         return result;
     }
 
+    @Autowired
     public Dao(EntityManagerFactory emFactory) {
         this.emFactory = emFactory;
     }
