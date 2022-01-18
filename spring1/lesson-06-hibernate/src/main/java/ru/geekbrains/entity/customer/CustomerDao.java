@@ -16,4 +16,6 @@ public interface CustomerDao {
     void delete(long id);
 
     void savePurchases(Customer customer, Product[] products);
+
+    List<Product> getCustomerProducts(Customer customer);
 }

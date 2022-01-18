@@ -8,6 +8,8 @@ import ru.geekbrains.entity.product.Product;
 import ru.geekbrains.entity.product.ProductDao;
 
 import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.Optional;
 
 @Service
 public class CustomerService {
@@ -21,16 +23,16 @@ public class CustomerService {
     }
 
     public void go() {
-        Product bread = new Product("Хлеб", new BigDecimal(30));
-        Product milk = new Product("Молоко", new BigDecimal(70));
-        Product cake = new Product("Торт", "Вкусный торт", new BigDecimal(300));
-        productDao.save(bread);
-        productDao.save(milk);
-        productDao.save(cake);
+        Optional<Customer> me = customerDao.findById(1);
 
-        Customer me = new Customer("Me");
-        customerDao.save(me);
+        if (me.isPresent()) {
+            System.out.println(customerDao.getCustomerProducts(me.get()));
+        }
 
-        customerDao.savePurchases(me, new Product[]{milk, bread});
+        Optional<Product> bread = productDao.findById(1);
+
+        if (me.isPresent()) {
+            System.out.println(productDao.getProductCustomers(bread.get()));
+        }
     }
 }

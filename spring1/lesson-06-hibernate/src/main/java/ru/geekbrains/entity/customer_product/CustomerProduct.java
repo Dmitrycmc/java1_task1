@@ -53,4 +53,14 @@ public class CustomerProduct {
 
     public CustomerProduct() {
     }
+
+    @Override
+    public String toString() {
+        return "CustomerProduct{" +
+                "id=" + id +
+                ", customer=" + customer +
+                ", product=" + product +
+                ", txPrice=" + txPrice +
+                '}';
+    }
 }

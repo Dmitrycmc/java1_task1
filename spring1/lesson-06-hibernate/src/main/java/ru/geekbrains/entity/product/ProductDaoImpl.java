@@ -2,6 +2,7 @@ package ru.geekbrains.entity.product;
 
 import org.springframework.stereotype.Component;
 import ru.geekbrains.entity.Dao;
+import ru.geekbrains.entity.customer.Customer;
 
 import javax.persistence.EntityManagerFactory;
 import java.util.List;
@@ -40,5 +41,10 @@ public class ProductDaoImpl extends Dao implements ProductDao {
             .setParameter("id", id)
             .executeUpdate()
         );
+    }
+
+    @Override
+    public List<Customer> getProductCustomers(Product product) {
+        return exec(em -> em.createQuery("select c from CustomerProduct cp inner join cp.customer c where cp.product.id = :id", Customer.class).setParameter("id", product.getId()).getResultList());
     }
 }

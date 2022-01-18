@@ -40,4 +40,12 @@ public class Customer {
 
     public Customer() {
     }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }
