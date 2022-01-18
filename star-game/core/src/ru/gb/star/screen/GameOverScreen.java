@@ -25,7 +25,7 @@ public class GameOverScreen extends AbstractScreen {
 
     public void update(float dt) {
         background.update(dt);
-        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             ScreenManager.get().changeScreen(ScreenManager.ScreenType.MENU);
         }
     }
