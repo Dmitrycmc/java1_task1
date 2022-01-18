@@ -14,19 +14,34 @@ public class Background {
         float scale;
 
         public Star() {
-            this.position = new Vector2(MathUtils.random(-200, Constants.width + 200),
-                    MathUtils.random(-200, Constants.height + 200));
-            this.velocity = new Vector2(MathUtils.random(-40, -5), 0);
-            this.scale = Math.abs(velocity.x) / 40f * 0.8f;
+            scale = MathUtils.random(0.1f, 1);
+            position = new Vector2(MathUtils.random(-8, Constants.width + 8),
+                    MathUtils.random(-8, Constants.height + 8));
+            velocity = new Vector2(40 * scale, 0);
         }
 
         public void update(float dt) {
-            position.x += (velocity.x - gc.getHero().getLastDisplacement().x * 15) * dt;
-            position.y += (velocity.y - gc.getHero().getLastDisplacement().y * 15) * dt;
+            if (gc != null) {
+                position.mulAdd(velocity.cpy().sub(gc.getHero().getVel()), scale * scale * dt / 5);
+            } else {
+                position.mulAdd(velocity, scale * dt / 5);
+            }
 
-            if (position.x < -200) {
-                position.x = Constants.width + 200;
-                position.y = MathUtils.random(-200, Constants.height + 200);
+            if (position.x < -8) {
+                position.x = Constants.width + 8;
+                position.y = MathUtils.random(-8, Constants.height + 8);
+            }
+            if (position.x > Constants.width + 8) {
+                position.x = -8;
+                position.y = MathUtils.random(-8, Constants.height + 8);
+            }
+            if (position.y < -8) {
+                position.y = Constants.height + 8;
+                position.x = MathUtils.random(-8, Constants.width + 8);
+            }
+            if (position.y > Constants.height + 8) {
+                position.y = -8;
+                position.x = MathUtils.random(-8, Constants.width + 8);
             }
         }
     }

@@ -11,12 +11,12 @@ import com.badlogic.gdx.math.Vector3;
 import ru.gb.star.screen.ScreenManager;
 import ru.gb.star.screen.utils.Assets;
 
-public class Hero implements Collidable{
+public class Hero implements Collidable {
     GameController gc;
 
     public static float RADIUS = 32;
-    public static float MASS = 100;
-    static public int MAX_HP = 100;
+    public static float MASS = 1000;
+    static public int MAX_HP = 10;
 
     private TextureRegion texture = Assets.get().getTextureAtlas().findRegion("ship");
 
@@ -27,16 +27,11 @@ public class Hero implements Collidable{
     private Vector2 pos = new Vector2(Constants.width / 2, Constants.height / 2);
     private Vector2 vel = new Vector2(0, 0);
     private float angle = 0f;
-    private Vector2 lastDisplacement = new Vector2(0, 0);
     private int score = 0;
     private int scoreView = 0;
     private int hp = MAX_HP;
     private Circle hitBox = new Circle(pos, RADIUS);
     private Weapon currentWeapon;
-
-    public Vector2 getLastDisplacement() {
-        return lastDisplacement;
-    }
 
     public int getScore() {
         return scoreView;
@@ -149,7 +144,6 @@ public class Hero implements Collidable{
                         1, 1, 1, 0);
             }
 
-            lastDisplacement.set(MathUtils.cosDeg(angle) * 240.0f * dt, MathUtils.sinDeg(angle) * 240.0f * dt);
         } else if (Gdx.input.isKeyPressed(Input.Keys.S)) {
             vel.x -= MathUtils.cosDeg(angle) * 240.0f * dt;
             vel.y -= MathUtils.sinDeg(angle) * 240.0f * dt;
@@ -173,9 +167,6 @@ public class Hero implements Collidable{
                         1, 1, 1, 0);
             }
 
-            lastDisplacement.set(-1 * MathUtils.cosDeg(angle) * 240.0f * dt, -1 * MathUtils.sinDeg(angle) * 240.0f * dt);
-        } else {
-            lastDisplacement.set(0, 0);
         }
 
         pos.mulAdd(vel, dt);
