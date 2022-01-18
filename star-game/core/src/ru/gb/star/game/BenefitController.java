@@ -3,9 +3,8 @@ package ru.gb.star.game;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
 import ru.gb.star.pool.Pool;
-
-import javax.management.MBeanInfo;
 
 public class BenefitController extends Pool<Benefit> {
     GameController gc;
@@ -62,7 +61,15 @@ public class BenefitController extends Pool<Benefit> {
         Hero hero = gc.getHero();
         for (int i = 0; i < activeList.size(); i++) {
             Benefit benefit = getActiveElementAt(i);
-            if (benefit.getHitBox().overlaps(hero.getHitBox())) {
+
+            Vector2 diff = hero.getPos().cpy().sub(benefit.getPos());
+            float distance = diff.len();
+
+            if (distance < 150) {
+                Vector2 acc = diff.cpy().nor().scl(5000 / (distance * distance));
+                benefit.getPos().mulAdd(acc, dt *500);
+            }
+            if (distance < Benefit.RADIUS + Hero.RADIUS) {
                 switch (benefit.getType()) {
                     case POWER_UP:
                         hero.getCurrentWeapon().powerUp();
