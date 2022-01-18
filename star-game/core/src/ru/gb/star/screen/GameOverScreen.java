@@ -43,6 +43,5 @@ public class GameOverScreen extends AbstractScreen {
     @Override
     public void dispose() {
         background.dispose();
-        System.out.println("game over dispose");
     }
 }
