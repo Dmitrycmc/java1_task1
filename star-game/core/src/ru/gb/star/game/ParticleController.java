@@ -17,13 +17,28 @@ public class ParticleController extends Pool<Particle> {
             }
         }
 
-        public void takePowerUpEffect(float x, float y) {
+        public void takePowerUpEffect(Benefit benefit) {
             for (int i = 0; i < 16; i++) {
                 float angle = 6.28f / 16.0f * i;
-                setup(x, y, (float) Math.cos(angle) * 100, (float) Math.sin(angle) * 100,
-                        0.8f,3.0f, 2.5f,
-                        0,1,0,1,
-                        1,1,0,0.5f);
+                switch (benefit.getType()) {
+                    case AID:
+                        setup(benefit.getPos().x, benefit.getPos().y, (float) Math.cos(angle) * 100, (float) Math.sin(angle) * 100,
+                                0.8f,3.0f, 2.5f,
+                                0.0f,0.7f,0.2f,1,
+                                0.0f,0.7f,0.2f,0);
+                        break;
+                    case WEAPONS:
+                        setup(benefit.getPos().x, benefit.getPos().y, (float) Math.cos(angle) * 100, (float) Math.sin(angle) * 100,
+                                0.8f,3.0f, 2.5f,
+                                0.9f,0.5f,0.0f,1,
+                                0.9f,0.5f,0.0f,0);
+                        break;
+                    case POWER_UP:
+                        setup(benefit.getPos().x, benefit.getPos().y, (float) Math.cos(angle) * 100, (float) Math.sin(angle) * 100,
+                                0.8f,3.0f, 2.5f,
+                                0.0f,0.2f,0.7f,1,
+                                0.0f,0.2f,0.7f,0);
+                }
             }
         }
     }

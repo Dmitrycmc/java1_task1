@@ -74,7 +74,7 @@ public class BenefitController extends Pool<Benefit> {
                     default:
                         hero.getCurrentWeapon().addWeapons(50);
                 }
-                gc.getParticleController().getEffectBuilder().takePowerUpEffect(benefit.getPos().x, benefit.getPos().y);
+                gc.getParticleController().getEffectBuilder().takePowerUpEffect(benefit);
                 benefit.deactivate();
             }
         }

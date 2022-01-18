@@ -16,7 +16,7 @@ public class Hero implements Collidable {
 
     public static float RADIUS = 32;
     public static float MASS = 1000;
-    static public int MAX_HP = 10;
+    static public int MAX_HP = 100;
 
     private TextureRegion texture = Assets.get().getTextureAtlas().findRegion("ship");
 
