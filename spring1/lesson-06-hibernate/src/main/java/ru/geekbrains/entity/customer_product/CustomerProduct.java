@@ -27,10 +27,10 @@ public class CustomerProduct {
     private Product product;
 
     @Column
-    private BigDecimal txPrice;
+    private BigDecimal price;
 
-    public BigDecimal getTxPrice() {
-        return txPrice;
+    public BigDecimal getprice() {
+        return price;
     }
 
     public Customer getCustomer() {
@@ -48,7 +48,7 @@ public class CustomerProduct {
     public CustomerProduct(Customer customer, Product product) {
         this.customer = customer;
         this.product = product;
-        this.txPrice = product.getPrice();
+        this.price = product.getPrice();
     }
 
     public CustomerProduct() {
@@ -60,7 +60,7 @@ public class CustomerProduct {
                 "id=" + id +
                 ", customer=" + customer +
                 ", product=" + product +
-                ", txPrice=" + txPrice +
+                ", price=" + price +
                 '}';
     }
 }

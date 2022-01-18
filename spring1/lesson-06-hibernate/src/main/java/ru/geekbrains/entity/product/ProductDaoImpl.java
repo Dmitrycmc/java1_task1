@@ -45,6 +45,6 @@ public class ProductDaoImpl extends Dao implements ProductDao {
 
     @Override
     public List<Customer> getProductCustomers(Product product) {
-        return exec(em -> em.createQuery("select c from CustomerProduct cp inner join cp.customer c where cp.product.id = :id", Customer.class).setParameter("id", product.getId()).getResultList());
+        return exec(em -> em.createQuery("select distinct c from CustomerProduct cp inner join cp.customer c where cp.product.id = :id", Customer.class).setParameter("id", product.getId()).getResultList());
     }
 }

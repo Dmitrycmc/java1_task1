@@ -11,6 +11,6 @@ public class Main {
 
         CustomerService customerService = context.getBean("customerService", CustomerService.class);
 
-        customerService.go();
+        customerService.start();
     }
 }

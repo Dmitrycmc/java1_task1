@@ -30,7 +30,8 @@ public class Product {
     @OneToMany(mappedBy = "product")
     Set<CustomerProduct> customerProducts;
 
-    public Product(String name, String description, BigDecimal price) {
+    public Product(Long id, String name, String description, BigDecimal price) {
+        this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
