@@ -1,7 +1,11 @@
 package ru.geekbrains.entity.customer;
 
+import ru.geekbrains.entity.customer_product.CustomerProduct;
+import ru.geekbrains.entity.product.Product;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
@@ -61,5 +65,12 @@ public class CustomerDaoImpl implements CustomerDao {
             .setParameter("id", id)
             .executeUpdate()
         );
+    }
+
+    @Override
+    public void savePurchases(Customer customer, Product[] products) {
+        execInTx(em -> {
+            Arrays.stream(products).forEach(product -> em.persist(new CustomerProduct(customer, product)));
+        });
     }
 }

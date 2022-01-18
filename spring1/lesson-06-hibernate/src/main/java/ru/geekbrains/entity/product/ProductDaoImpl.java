@@ -36,7 +36,7 @@ public class ProductDaoImpl implements ProductDao {
 
     @Override
     public List<Product> findAll() {
-        return exec(em -> em.createQuery("select p from Customer p", Product.class).getResultList());
+        return exec(em -> em.createQuery("select p from Product p", Product.class).getResultList());
     }
 
     @Override
@@ -57,7 +57,7 @@ public class ProductDaoImpl implements ProductDao {
 
     @Override
     public void delete(long id) {
-        execInTx(em -> em.createQuery("delete from Customer where id = :id")
+        execInTx(em -> em.createQuery("delete from Product where id = :id")
             .setParameter("id", id)
             .executeUpdate()
         );

@@ -1,6 +1,9 @@
 package ru.geekbrains;
 
 import org.hibernate.cfg.Configuration;
+import ru.geekbrains.entity.customer.Customer;
+import ru.geekbrains.entity.customer.CustomerDao;
+import ru.geekbrains.entity.customer.CustomerDaoImpl;
 import ru.geekbrains.entity.product.Product;
 import ru.geekbrains.entity.product.ProductDao;
 import ru.geekbrains.entity.product.ProductDaoImpl;
@@ -13,20 +16,20 @@ public class Main {
         EntityManagerFactory emFactory = new Configuration()
                 .configure("hibernate.cfg.xml").buildSessionFactory();
 
+
         ProductDao productDao = new ProductDaoImpl(emFactory);
+        CustomerDao customerDao = new CustomerDaoImpl(emFactory);
 
-        productDao.save(new Product("Хлеб", new BigDecimal(30)));
-        productDao.save(new Product("Молоко", new BigDecimal(70)));
-        productDao.save(new Product("Торт", "Вкусный торт", new BigDecimal(300)));
+        Product bread = new Product("Хлеб", new BigDecimal(30));
+        Product milk = new Product("Молоко", new BigDecimal(70));
+        Product cake = new Product("Торт", "Вкусный торт", new BigDecimal(300));
+        productDao.save(bread);
+        productDao.save(milk);
+        productDao.save(cake);
 
-        if (productDao.findById(1).isPresent()) {
-            Product product = productDao.findById(1).get();
-            product.setDescription("1st product");
-            productDao.save(product);
-        }
+        Customer me = new Customer("Me");
+        customerDao.save(me);
 
-        productDao.delete(2);
-
-        System.out.println(productDao.findAll());
+        customerDao.savePurchases(me, new Product[]{milk, bread});
     }
 }

@@ -1,5 +1,7 @@
 package ru.geekbrains.entity.customer;
 
+import ru.geekbrains.entity.product.Product;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -12,4 +14,6 @@ public interface CustomerDao {
     void save(Customer product);
 
     void delete(long id);
+
+    void savePurchases(Customer customer, Product[] products);
 }
