@@ -80,7 +80,7 @@ public class MeteorController extends Pool<Meteor> {
             }
         }
 
-        for (int i = 0; i < activeList.size() - 1; i++) {
+        for (int i = 0; i < activeList.size(); i++) {
             Meteor meteor = getActiveElementAt(i);
             if (gc.getHero().getHitBox().overlaps(meteor.getHitArea())) {
                 gc.getHero().takeDamage((int) gc.getHero().getVel().sub(meteor.getVel()).len() / 100);

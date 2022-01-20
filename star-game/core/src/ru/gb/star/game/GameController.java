@@ -20,6 +20,7 @@ public class GameController {
     private BitmapFont font32;
     private StringBuilder sb = new StringBuilder();
     private boolean paused = false;
+    private int level = 1;
 
     private void togglePause() {
         paused = !paused;
@@ -75,7 +76,9 @@ public class GameController {
         hero.render(batch);
         batch.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         sb.setLength(0);
-        sb.append("Score: ").append(hero.getScore()).append("\n")
+        sb
+                .append("Level: ").append(level).append("\n")
+                .append("Score: ").append(hero.getScore()).append("\n")
                 .append("Health: ").append(hero.getHp()).append(" / ").append(Hero.MAX_HP).append("\n")
                 .append("Weapons: ").append(hero.getCurrentWeapon().getCurBullets()).append(" / ").append(hero.getCurrentWeapon().getMaxBullets());
         font32.draw(batch, sb, Constants.scoreMargin, Constants.height - Constants.scoreMargin);
@@ -97,6 +100,10 @@ public class GameController {
             benefitController.update(dt);
             particleController.update(dt);
             hero.update(dt);
+
+            if (meteorController.getActiveElementsCount() == 0) {
+                level++;
+            }
         }
     }
 
