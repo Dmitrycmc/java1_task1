@@ -13,8 +13,11 @@ public class MeteorController extends Pool<Meteor> {
 
     public MeteorController(GameController gc) {
         this.gc = gc;
-        for (int i = 0; i < Constants.meteorsNumber; i++) {
-            spawn();
+    }
+
+    public void init(int meteorNumber) {
+        for (int i = 0; i < meteorNumber; i++) {
+            getInactiveElement().spawn(false);
         }
     }
 
@@ -65,10 +68,6 @@ public class MeteorController extends Pool<Meteor> {
             getActiveElementAt(i).update(dt);
         }
 
-        for (int i = 0; i < inactiveList.size(); i++) {
-            spawn();
-        }
-
         for (int i = 0; i < activeList.size() - 1; i++) {
             Meteor meteor1 = getActiveElementAt(i);
             for (int j = i + 1; j < activeList.size(); j++) {
@@ -110,7 +109,7 @@ public class MeteorController extends Pool<Meteor> {
     }
 
     public void spawnChildren(Meteor meteor) {
-        if (meteor.getRadius() / Meteor.BASE_RADIUS < 0.5f) {
+        if (meteor.getRadius() / Meteor.BASE_RADIUS < 0.5f || Math.random() > 0.1f * gc.getLevel() ) {
             return;
         }
 
@@ -128,19 +127,5 @@ public class MeteorController extends Pool<Meteor> {
                     r / Meteor.BASE_RADIUS
             );
         }
-    }
-
-    public void spawn() {
-        int screenNumber = (int) (Math.random() * 8);
-        if (screenNumber >= 4) {
-            screenNumber++;
-        }
-        int screenRow = screenNumber / 3 - 1;
-        int screenCol = screenNumber % 3 - 1;
-
-        Vector2 pos = new Vector2(MathUtils.random(0, Constants.width - Meteor.BASE_RADIUS) + Constants.width * screenCol, MathUtils.random(0, Constants.height - Meteor.BASE_RADIUS) + Constants.height * screenRow);
-        Vector2 vel = new Vector2(MathUtils.random(-1f * Constants.pixelsPerMeter, 1f * Constants.pixelsPerMeter), MathUtils.random(-1f * Constants.pixelsPerMeter, 1f * Constants.pixelsPerMeter));
-
-        getInactiveElement().activate(pos.x, pos.y, vel.x, vel.y);
     }
 }

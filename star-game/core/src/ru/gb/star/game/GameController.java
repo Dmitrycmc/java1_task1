@@ -6,21 +6,26 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.StringBuilder;
 import ru.gb.star.screen.utils.Assets;
 
 public class GameController {
-    private Background background;
-    private BulletController bulletController;
-    private MeteorController meteorController;
-    private BenefitController benefitController;
-    private ParticleController particleController;
-    private Hero hero;
-    private BitmapFont font32;
-    private StringBuilder sb = new StringBuilder();
+    private final Background background;
+    private final BulletController bulletController;
+    private final MeteorController meteorController;
+    private final BenefitController benefitController;
+    private final ParticleController particleController;
+    private final Hero hero;
+    private final BitmapFont font32;
+    private final BitmapFont font108;
     private boolean paused = false;
-    private int level = 1;
+    private int level = 0;
+
+    public int getLevel() {
+        return level;
+    }
 
     private void togglePause() {
         paused = !paused;
@@ -58,6 +63,7 @@ public class GameController {
         particleController = new ParticleController();
         hero = new Hero(this);
         font32 = Assets.get().getFont(32);
+        font108 = Assets.get().getFont(108);
     }
 
     public void render(SpriteBatch batch) {
@@ -75,17 +81,28 @@ public class GameController {
         particleController.render(batch);
         hero.render(batch);
         batch.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+
+        StringBuilder sb = new StringBuilder();
         sb.setLength(0);
         sb
                 .append("Level: ").append(level).append("\n")
                 .append("Score: ").append(hero.getScore()).append("\n")
                 .append("Health: ").append(hero.getHp()).append(" / ").append(Hero.MAX_HP).append("\n")
-                .append("Weapons: ").append(hero.getCurrentWeapon().getCurBullets()).append(" / ").append(hero.getCurrentWeapon().getMaxBullets());
+                .append("Weapons: ").append(hero.getCurrentWeapon().getCurBullets()).append(" / ").append(hero.getCurrentWeapon().getMaxBullets()).append("\n")
+                .append("Meteors: ").append(meteorController.getActiveElementsCount());
         font32.draw(batch, sb, Constants.scoreMargin, Constants.height - Constants.scoreMargin);
+
+        if (levelCaptionTimer > 0) {
+            sb.setLength(0);
+            sb.append("Level ").append(level);
+            font108.draw(batch, sb, 0, 600, 1280, Align.center, false);
+        }
+
         batch.end();
     }
 
     private float throttlePauseTimer = 0;
+    private float levelCaptionTimer = 0;
     public void update(float dt) {
         throttlePauseTimer += dt;
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE) && throttlePauseTimer > 0.5f) {
@@ -101,10 +118,22 @@ public class GameController {
             particleController.update(dt);
             hero.update(dt);
 
+            if (levelCaptionTimer > 0) {
+                levelCaptionTimer -= dt;
+            }
+
             if (meteorController.getActiveElementsCount() == 0) {
                 level++;
+                levelUp();
             }
         }
+    }
+
+    private void levelUp() {
+        meteorController.init(level * Constants.meteorsNumber);
+        levelCaptionTimer = 2f;
+        hero.getCurrentWeapon().setCurBulletsMax();
+        hero.takeMaxHeal();
     }
 
     public void dispose() {

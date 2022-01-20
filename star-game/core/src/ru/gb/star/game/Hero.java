@@ -54,6 +54,10 @@ public class Hero implements Collidable {
         hp = Math.min(MAX_HP, hp + val);
     }
 
+    public void takeMaxHeal() {
+        hp = MAX_HP;
+    }
+
     public Circle getHitBox() {
         return hitBox;
     }
