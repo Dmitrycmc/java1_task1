@@ -29,7 +29,16 @@ public class CustomerProduct {
     @Column
     private BigDecimal price;
 
-    public BigDecimal getprice() {
+    public CustomerProduct(Customer customer, Product product) {
+        this.customer = customer;
+        this.product = product;
+        this.price = product.getPrice();
+    }
+
+    public CustomerProduct() {
+    }
+
+    public BigDecimal getPrice() {
         return price;
     }
 
@@ -43,15 +52,6 @@ public class CustomerProduct {
 
     public Long getId() {
         return id;
-    }
-
-    public CustomerProduct(Customer customer, Product product) {
-        this.customer = customer;
-        this.product = product;
-        this.price = product.getPrice();
-    }
-
-    public CustomerProduct() {
     }
 
     @Override

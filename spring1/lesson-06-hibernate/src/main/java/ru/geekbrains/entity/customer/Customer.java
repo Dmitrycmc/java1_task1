@@ -22,6 +22,13 @@ public class Customer {
     @OneToMany(mappedBy = "customer")
     private Set<CustomerProduct> customerProducts;
 
+    public Customer(String name) {
+        this.name = name;
+    }
+
+    public Customer() {
+    }
+
     public Long getId() {
         return id;
     }
@@ -32,13 +39,6 @@ public class Customer {
 
     public Set<CustomerProduct> getCustomerProducts() {
         return customerProducts;
-    }
-
-    public Customer(String name) {
-        this.name = name;
-    }
-
-    public Customer() {
     }
 
     @Override
