@@ -78,4 +78,8 @@ public class Weapon {
                 break;
         }
     }
+
+    public void setCurBulletsMax() {
+        this.curBullets = this.maxBullets;
+    }
 }

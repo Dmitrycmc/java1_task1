@@ -68,7 +68,6 @@ public class Meteor extends PoolItem implements Collidable {
     }
 
     public void activate(float x, float y, float vx, float vy, float scale) {
-
         angle = MathUtils.random(0, 360f);
         angleSpeed = MathUtils.random(-360f, 360f);
 
@@ -84,21 +83,39 @@ public class Meteor extends PoolItem implements Collidable {
     public void update(float dt) {
         pos.mulAdd(vel, dt);
 
-        if (pos.x < -Constants.width - getRadius()) {
-            deactivate();
+        if (pos.x < -getRadius() && vel.x < 0) {
+            pos.x += Constants.width + 2 * BASE_RADIUS;
         }
-        if (pos.y < -Constants.height - getRadius()) {
-            deactivate();
+        if (pos.y < -getRadius() && vel.y < 0) {
+            pos.y += Constants.height + 2 * BASE_RADIUS;
         }
-        if (pos.x > 2 * Constants.width + getRadius()) {
-            deactivate();
+        if (pos.x > Constants.width + getRadius() && vel.x > 0) {
+            pos.x -= Constants.width + 2 * BASE_RADIUS;
         }
-        if (pos.y > 2 * Constants.height + getRadius()) {
-            deactivate();
+        if (pos.y > Constants.height + getRadius() && vel.y > 0) {
+            pos.y -= Constants.height + 2 * BASE_RADIUS;
         }
 
         hitArea.setPosition(pos);
 
         angle += angleSpeed * dt;
+    }
+
+    public void spawn(boolean saveScale) {
+        int screenNumber = (int) (Math.random() * 8);
+        if (screenNumber >= 4) {
+            screenNumber++;
+        }
+        int screenRow = screenNumber / 3 - 1;
+        int screenCol = screenNumber % 3 - 1;
+
+        pos = new Vector2(MathUtils.random(0, Constants.width - Meteor.BASE_RADIUS) + Constants.width * screenCol, MathUtils.random(0, Constants.height - Meteor.BASE_RADIUS) + Constants.height * screenRow);
+        vel = new Vector2(MathUtils.random(-1f * Constants.pixelsPerMeter, 1f * Constants.pixelsPerMeter), MathUtils.random(-1f * Constants.pixelsPerMeter, 1f * Constants.pixelsPerMeter));
+
+        if (saveScale) {
+            activate(pos.x, pos.y, vel.x, vel.y, radius / BASE_RADIUS);
+        } else {
+            activate(pos.x, pos.y, vel.x, vel.y);
+        }
     }
 }
