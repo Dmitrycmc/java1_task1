@@ -1,10 +1,8 @@
 use hibernate_lesson_2;
 
-delete from CustomerProduct;
-
-delete from Product;
-
-delete from Customer;
+delete from CustomerProduct where true;
+delete from Product where true;
+delete from Customer where true;
 
 INSERT INTO Customer (name)
 VALUES ('Alex'), ('Petya');
