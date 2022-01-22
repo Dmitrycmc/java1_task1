@@ -1,11 +1,16 @@
-package ru.geekbrains.entity;
+package ru.geekbrains.entity.product;
+
+import ru.geekbrains.entity.customer_product.CustomerProduct;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import java.math.BigDecimal;
+import java.util.Set;
 
 @Entity
 public class Product {
@@ -22,7 +27,11 @@ public class Product {
     @Column(nullable = false)
     private BigDecimal price;
 
-    public Product(String name, String description, BigDecimal price) {
+    @OneToMany(mappedBy = "product")
+    Set<CustomerProduct> customerProducts;
+
+    public Product(Long id, String name, String description, BigDecimal price) {
+        this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;

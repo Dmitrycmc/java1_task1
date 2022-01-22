@@ -1,37 +1,17 @@
-package ru.geekbrains.entity;
+package ru.geekbrains.entity.product;
 
-import javax.persistence.EntityManager;
+import org.springframework.stereotype.Component;
+import ru.geekbrains.entity.Dao;
+import ru.geekbrains.entity.customer.Customer;
+
 import javax.persistence.EntityManagerFactory;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Consumer;
-import java.util.function.Function;
 
-public class ProductDaoImpl implements ProductDao {
-    EntityManagerFactory emFactory;
-
-    private void execInTx(Consumer<EntityManager> i) {
-        EntityManager em = emFactory.createEntityManager();
-        em.getTransaction().begin();
-        try {
-            i.accept(em);
-            em.getTransaction().commit();
-        } catch (Exception e) {
-            em.getTransaction().rollback();
-        } finally {
-            em.close();
-        }
-    }
-
-    private <T> T exec(Function<EntityManager, T> i) {
-        EntityManager em = emFactory.createEntityManager();
-        T result = i.apply(em);
-        em.close();
-        return result;
-    }
-
+@Component
+public class ProductDaoImpl extends Dao implements ProductDao {
     public ProductDaoImpl(EntityManagerFactory emFactory) {
-        this.emFactory = emFactory;
+        super(emFactory);
     }
 
     @Override
@@ -61,5 +41,10 @@ public class ProductDaoImpl implements ProductDao {
             .setParameter("id", id)
             .executeUpdate()
         );
+    }
+
+    @Override
+    public List<Customer> getProductCustomers(Product product) {
+        return exec(em -> em.createQuery("select distinct c from Product p join p.customerProducts cp join cp.customer c where p.id = :id", Customer.class).setParameter("id", product.getId()).getResultList());
     }
 }

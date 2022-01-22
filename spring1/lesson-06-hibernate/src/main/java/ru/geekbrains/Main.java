@@ -1,32 +1,16 @@
 package ru.geekbrains;
 
-import org.hibernate.cfg.Configuration;
-import ru.geekbrains.entity.Product;
-import ru.geekbrains.entity.ProductDao;
-import ru.geekbrains.entity.ProductDaoImpl;
-
-import javax.persistence.EntityManagerFactory;
-import java.math.BigDecimal;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import ru.geekbrains.services.CustomerService;
 
 public class Main {
     public static void main(String[] args) {
-        EntityManagerFactory emFactory = new Configuration()
-                .configure("hibernate.cfg.xml").buildSessionFactory();
 
-        ProductDao productDao = new ProductDaoImpl(emFactory);
+        ApplicationContext context = new AnnotationConfigApplicationContext(SpringConfig.class);
 
-        productDao.save(new Product("Хлеб", new BigDecimal(30)));
-        productDao.save(new Product("Молоко", new BigDecimal(70)));
-        productDao.save(new Product("Торт", "Вкусный торт", new BigDecimal(300)));
+        CustomerService customerService = context.getBean("customerService", CustomerService.class);
 
-        if (productDao.findById(1).isPresent()) {
-            Product product = productDao.findById(1).get();
-            product.setDescription("1st product");
-            productDao.save(product);
-        }
-
-        productDao.delete(2);
-
-        System.out.println(productDao.findAll());
+        customerService.start();
     }
 }
