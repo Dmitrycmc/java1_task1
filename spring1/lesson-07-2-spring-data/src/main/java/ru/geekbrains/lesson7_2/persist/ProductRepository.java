@@ -8,7 +8,6 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public interface ProductRepository extends JpaRepository<Product, Long> {
-
     @Query("select p " +
             "from Product p where (" +
             "(p.name like concat('%', :name, '%') or :name is null) and" +
