@@ -23,6 +23,7 @@ public class Product {
     @Column
     private String description;
 
+    @NotNull(message = "Введите цену")
     @PositiveOrZero(message = "Цена должна быть неотрицательной")
     @Column(nullable = false)
     private BigDecimal price;
