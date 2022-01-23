@@ -16,6 +16,8 @@
         <module>lesson4-spring-boot</module>
         <module>lesson-05-hibernate</module>
         <module>lesson-06-hibernate</module>
+        <module>lesson-07-1-spring-boot-hibernate</module>
+        <module>lesson-07-2-spring-data</module>
     </modules>
 
     <artifactId>spring1</artifactId>
