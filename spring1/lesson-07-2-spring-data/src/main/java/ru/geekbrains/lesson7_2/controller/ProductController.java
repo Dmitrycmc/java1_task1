@@ -10,6 +10,8 @@ import ru.geekbrains.lesson7_2.persist.Product;
 import ru.geekbrains.lesson7_2.persist.ProductRepository;
 
 import javax.validation.Valid;
+import java.math.BigDecimal;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/product")
@@ -23,8 +25,16 @@ public class ProductController {
     }
 
     @GetMapping
-    public String listPage(Model model) {
-        model.addAttribute("products", productRepository.findAll());
+    public String listPage(Model model,
+                           @RequestParam Optional<String> nameFilter,
+                           @RequestParam Optional<BigDecimal> minPriceFilter,
+                           @RequestParam Optional<BigDecimal> maxPriceFilter) {
+
+        model.addAttribute("products", productRepository.findByFilter(
+                nameFilter.orElse(null),
+                minPriceFilter.orElse(null),
+                maxPriceFilter.orElse(null)
+        ));
         return "product";
     }
 
