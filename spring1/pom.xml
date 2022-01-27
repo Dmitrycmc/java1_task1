@@ -18,6 +18,7 @@
         <module>lesson-06-hibernate</module>
         <module>lesson-07-1-spring-boot-hibernate</module>
         <module>lesson-07-2-spring-data</module>
+        <module>lesson-08-thymeleaf</module>
     </modules>
 
     <artifactId>spring1</artifactId>
