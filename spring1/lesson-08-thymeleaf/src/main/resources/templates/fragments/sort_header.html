@@ -4,8 +4,8 @@
 <th
     th:fragment="sort_header(header, column)"
     scope="col"
-    th:with="desc=${(param.sort != null) && (param.sort[0] == column) && (param.desc == null || !param.desc)}">
-    <a th:href="@{/product(nameFilter=${param.nameFilter}, page=${1}, size=${param.size}, sort=${column}, desc=${desc})}">
+    th:with="desc=${(param.sort != null) && (param.sort[0] == column) && (param.desc != null) && (param.desc[0] != 'true')}">
+    <a th:href="@{/product(nameFilter=${param.nameFilter}, minPriceFilter=${param.minPriceFilter}, maxPriceFilter=${param.axnPriceFilter}, page=${1}, size=${param.size}, sort=${column}, desc=${desc})}">
         <span th:text="${header}"/>
         <i th:unless="${desc}" class="fa fa-sort-down"></i>
         <i th:if="${desc}" class="fa fa-sort-up"></i>
