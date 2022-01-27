@@ -15,6 +15,8 @@ import ru.geekbrains.lesson7_2.persist.ProductRepository;
 
 import javax.validation.Valid;
 import java.math.BigDecimal;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 
 @Controller
@@ -76,9 +78,29 @@ public class ProductController {
     }
 
     @DeleteMapping("/{id}")
-    public String delete(@PathVariable("id") Long id, Model model) {
+    public String delete(
+        @PathVariable("id") Long id,
+        @RequestParam Optional<String> nameFilter,
+        @RequestParam Optional<BigDecimal> minPriceFilter,
+        @RequestParam Optional<BigDecimal> maxPriceFilter,
+        @RequestParam Optional<Integer> page,
+        @RequestParam Optional<Integer> size,
+        @RequestParam Optional<String> sort,
+        @RequestParam Optional<Boolean> desc
+    ) {
         productRepository.deleteById(id);
-        return "redirect:/product";
+        StringBuilder sb = new StringBuilder();
+        sb.append("redirect:/product?");
+        System.out.println(nameFilter);
+        nameFilter.ifPresent(s -> sb.append("&nameFilter=").append(URLEncoder.encode(s)));
+        minPriceFilter.ifPresent(bigDecimal -> sb.append("&minPriceFilter=").append(bigDecimal));
+        maxPriceFilter.ifPresent(bigDecimal -> sb.append("&maxPriceFilter=").append(bigDecimal));
+        page.ifPresent(integer -> sb.append("&page=").append(integer));
+        size.ifPresent(integer -> sb.append("&size=").append(integer));
+        sort.ifPresent(s -> sb.append("&sort=").append(s));
+        desc.ifPresent(aBoolean -> sb.append("&desc=").append(aBoolean));
+        System.out.println(sb.toString());
+        return sb.toString();
     }
 
     @GetMapping("/new")

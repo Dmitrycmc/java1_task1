@@ -56,14 +56,10 @@
             </div>
             <button type="submit" class="btn btn-primary mb-2">Apply</button>
 
-            <input th:value="${param.sort}" type="text" class="form-control invisible"
-                   name="sort" id="sort">
-            <input th:value="${param.desc}" type="text" class="form-control invisible"
-                   name="desc" id="desc">
-            <input th:value="${param.page}" type="text" class="form-control invisible"
-                   name="page" id="page">
-            <input th:value="${param.size}" type="text" class="form-control invisible"
-                   name="size" id="size">
+            <input th:value="${param.sort}" type="text" class="form-control" style="display: none" name="sort">
+            <input th:value="${param.desc}" type="text" class="form-control" style="display: none" name="desc">
+            <input th:value="${param.page}" type="text" class="form-control" style="display: none" name="page">
+            <input th:value="${param.size}" type="text" class="form-control" style="display: none" name="size">
         </form>
 
         <div class="col-12">
@@ -88,6 +84,14 @@
                         <a class="btn btn-success" th:href="@{/product/{id}(id = ${product.id})}"><i class="fas fa-edit"></i></a>
                         <form class="d-inline" th:method="delete" th:action="@{/product/{id}(id = ${product.id})}">
                             <button type="submit" class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
+
+                            <input th:value="${param.nameFilter}" type="text" class="form-control" style="display: none" name="nameFilter">
+                            <input th:value="${param.minPriceFilter}" type="text" class="form-control" style="display: none" name="minPriceFilter">
+                            <input th:value="${param.maxPriceFilter}" type="text" class="form-control" style="display: none" name="maxPriceFilter">
+                            <input th:value="${param.sort}" type="text" class="form-control" style="display: none" name="sort">
+                            <input th:value="${param.desc}" type="text" class="form-control" style="display: none" name="desc">
+                            <input th:value="${param.page}" type="text" class="form-control" style="display: none" name="page">
+                            <input th:value="${param.size}" type="text" class="form-control" style="display: none" name="size">
                         </form>
                     </td>
                 </tr>
@@ -105,21 +109,21 @@
                     <li class="page-item" th:classappend="${products.first} ? 'disabled'">
                         <a
                             class="page-link"
-                            th:href="@{/product(nameFilter=${param.nameFilter}, minPriceFilter=${param.minPriceFilter}, maxPriceFilter=${param.axnPriceFilter}, page=${products.number}, size=${param.size}, sort=${param.sort})}" tabindex="-1"
+                            th:href="@{/product(nameFilter=${param.nameFilter}, minPriceFilter=${param.minPriceFilter}, maxPriceFilter=${param.maxPriceFilter}, page=${products.number}, size=${param.size}, sort=${param.sort})}" tabindex="-1"
                         >Previous</a>
                     </li>
 
                     <li th:each="num : ${#numbers.sequence(1, products.totalPages)}"
                         th:classappend="${num == products.number + 1} ? 'active'" class="page-item">
                         <a class="page-link"
-                           th:href="@{/product(nameFilter=${param.nameFilter}, minPriceFilter=${param.minPriceFilter}, maxPriceFilter=${param.axnPriceFilter}, page=${num}, size=${param.size}, sort=${param.sort})}"
+                           th:href="@{/product(nameFilter=${param.nameFilter}, minPriceFilter=${param.minPriceFilter}, maxPriceFilter=${param.maxPriceFilter}, page=${num}, size=${param.size}, sort=${param.sort})}"
                            th:text="${num}">1</a>
                     </li>
 
                     <li class="page-item" th:classappend="${products.last} ? 'disabled'">
                         <a
                                 class="page-link"
-                                th:href="@{/product(nameFilter=${param.nameFilter}, minPriceFilter=${param.minPriceFilter}, maxPriceFilter=${param.axnPriceFilter}, page=${products.number + 2}, size=${param.size}, sort=${param.sort})}"
+                                th:href="@{/product(nameFilter=${param.nameFilter}, minPriceFilter=${param.minPriceFilter}, maxPriceFilter=${param.maxPriceFilter}, page=${products.number + 2}, size=${param.size}, sort=${param.sort})}"
                         >Next</a>
                     </li>
                 </ul>
