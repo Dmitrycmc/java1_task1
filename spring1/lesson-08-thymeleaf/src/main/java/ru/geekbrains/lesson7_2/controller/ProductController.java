@@ -1,6 +1,9 @@
 package ru.geekbrains.lesson7_2.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -12,7 +15,6 @@ import ru.geekbrains.lesson7_2.persist.ProductRepository;
 
 import javax.validation.Valid;
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -27,10 +29,15 @@ public class ProductController {
     }
 
     @GetMapping
-    public String listPage(Model model,
-                           @RequestParam Optional<String> nameFilter,
-                           @RequestParam Optional<BigDecimal> minPriceFilter,
-                           @RequestParam Optional<BigDecimal> maxPriceFilter) {
+    public String listPage(
+        Model model,
+        @RequestParam Optional<String> nameFilter,
+        @RequestParam Optional<BigDecimal> minPriceFilter,
+        @RequestParam Optional<BigDecimal> maxPriceFilter,
+        @RequestParam Optional<Integer> page,
+        @RequestParam Optional<Integer> size,
+        @RequestParam Optional<String> sort
+    ) {
 
         // Первый способ
 
@@ -42,13 +49,11 @@ public class ProductController {
 
         // Второй способ
 
-        Specification<Product> spec = Specification.where(null);
-
-        List<Product> products = productRepository.findAll(spec
+        Page<Product> products = productRepository.findAll(Specification.<Product>where(null)
                 .and(nameFilter.<Specification<Product>>map(s -> (root, query, cb) -> cb.like(root.get("name"), "%" + s + "%")).orElse(null))
                 .and(minPriceFilter.<Specification<Product>>map(s -> (root, query, cb) -> cb.ge(root.get("price"), s)).orElse(null))
-                .and(maxPriceFilter.<Specification<Product>>map(s -> (root, query, cb) -> cb.le(root.get("price"), s)).orElse(null))
-        );
+                .and(maxPriceFilter.<Specification<Product>>map(s -> (root, query, cb) -> cb.le(root.get("price"), s)).orElse(null)),
+                PageRequest.of(page.orElse(1) - 1, size.orElse(5), Sort.by(sort.orElse("id"))));
 
         model.addAttribute("products", products);
         return "product";
