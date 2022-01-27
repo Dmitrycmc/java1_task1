@@ -1,9 +1,9 @@
-package ru.geekbrains.lesson7_2;
+package ru.geekbrains.lesson9;
 
 import org.junit.jupiter.api.Test;
 
 //@SpringBootTest
-class Lesson7Tests {
+class Lesson9Tests {
 
     @Test
     void contextLoads() {

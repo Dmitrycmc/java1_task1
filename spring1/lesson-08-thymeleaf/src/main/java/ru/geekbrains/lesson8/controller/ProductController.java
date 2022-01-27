@@ -1,4 +1,4 @@
-package ru.geekbrains.lesson7_2.controller;
+package ru.geekbrains.lesson8.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -10,13 +10,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import ru.geekbrains.lesson7_2.persist.Product;
-import ru.geekbrains.lesson7_2.persist.ProductRepository;
+import ru.geekbrains.lesson8.persist.Product;
+import ru.geekbrains.lesson8.persist.ProductRepository;
 
 import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 
 @Controller

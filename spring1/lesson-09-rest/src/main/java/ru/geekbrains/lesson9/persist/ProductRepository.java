@@ -1,4 +1,4 @@
-package ru.geekbrains.lesson7_2.persist;
+package ru.geekbrains.lesson9.persist;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;

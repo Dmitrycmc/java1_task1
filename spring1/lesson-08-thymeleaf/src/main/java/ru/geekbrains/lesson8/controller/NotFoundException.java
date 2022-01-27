@@ -1,4 +1,4 @@
-package ru.geekbrains.lesson7_2.controller;
+package ru.geekbrains.lesson8.controller;
 
 public class NotFoundException extends RuntimeException {
     public NotFoundException(String message) {

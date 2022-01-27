@@ -1,4 +1,4 @@
-package ru.geekbrains.lesson7_2.persist;
+package ru.geekbrains.lesson8.persist;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
