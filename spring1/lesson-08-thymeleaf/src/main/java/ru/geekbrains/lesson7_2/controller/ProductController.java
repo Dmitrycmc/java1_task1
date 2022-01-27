@@ -57,7 +57,11 @@ public class ProductController {
                 PageRequest.of(
                         page.orElse(1) - 1,
                         size.orElse(5),
-                        Sort.by(desc.orElse(false) ? Sort.Direction.DESC : Sort.Direction.ASC, sort.orElse("id")))
+                        Sort.by(
+                                desc.orElse(false) ? Sort.Direction.DESC : Sort.Direction.ASC,
+                                sort.filter(s -> !s.isEmpty()).orElse("id")
+                        )
+                )
         );
 
         model.addAttribute("products", products);
