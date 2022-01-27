@@ -36,7 +36,8 @@ public class ProductController {
         @RequestParam Optional<BigDecimal> maxPriceFilter,
         @RequestParam Optional<Integer> page,
         @RequestParam Optional<Integer> size,
-        @RequestParam Optional<String> sort
+        @RequestParam Optional<String> sort,
+        @RequestParam Optional<Boolean> desc
     ) {
 
         // Первый способ
@@ -53,7 +54,11 @@ public class ProductController {
                 .and(nameFilter.<Specification<Product>>map(s -> (root, query, cb) -> cb.like(root.get("name"), "%" + s + "%")).orElse(null))
                 .and(minPriceFilter.<Specification<Product>>map(s -> (root, query, cb) -> cb.ge(root.get("price"), s)).orElse(null))
                 .and(maxPriceFilter.<Specification<Product>>map(s -> (root, query, cb) -> cb.le(root.get("price"), s)).orElse(null)),
-                PageRequest.of(page.orElse(1) - 1, size.orElse(5), Sort.by(sort.orElse("id"))));
+                PageRequest.of(
+                        page.orElse(1) - 1,
+                        size.orElse(5),
+                        Sort.by(desc.orElse(false) ? Sort.Direction.DESC : Sort.Direction.ASC, sort.orElse("id")))
+        );
 
         model.addAttribute("products", products);
         return "product";
