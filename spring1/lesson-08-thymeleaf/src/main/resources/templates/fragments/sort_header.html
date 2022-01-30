@@ -1,10 +1,24 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<th th:fragment="sort_header(header, column)" scope="col">[[${header}]]
-    <a th:href="@{/product(nameFilter=${param.nameFilter}, page=${num}, size=${param.size}, sort=${column})}">
-        <i class="fa fa-sort-down"></i>
+<th
+    th:fragment="sort_header(header, column)"
+    scope="col"
+    th:with="desc=${(param.sort != null) && (param.sort[0] == column) && (param.desc != null) && (param.desc[0] != 'true')}">
+    <a th:href="@{/product(
+        nameFilter=${param.nameFilter},
+        minPriceFilter=${param.minPriceFilter},
+        maxPriceFilter=${param.maxPriceFilter},
+        page=${1}, size=${param.size},
+        sort=${column},
+        desc=${desc}
+    )}">
+        <span th:text="${header}"/>
     </a>
+    <span th:if="${(param.sort != null) && (param.sort[0] == column)}">
+        <i th:unless="${desc}" class="fa fa-sort-down"></i>
+        <i th:if="${desc}" class="fa fa-sort-up"></i>
+    </span>
 </th>
 
 </html>
