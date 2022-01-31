@@ -6,3 +6,5 @@ generated_files
 meta-inf
 chat-history.txt
 logs
+
+node_modules
