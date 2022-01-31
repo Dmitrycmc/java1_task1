@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -22,13 +20,13 @@ import java.math.BigDecimal;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/v1/product")
-public class RestProductController {
+@RequestMapping("/api/v1/cart")
+public class RestCartController {
 
     private final ProductService productService;
 
     @Autowired
-    public RestProductController(ProductService productService) {
+    public RestCartController(ProductService productService) {
         this.productService = productService;
     }
 
@@ -50,40 +48,46 @@ public class RestProductController {
                 size,
                 sort,
                 desc,
-                Optional.empty()
+                Optional.of(true)
         );
 
     }
 
-    @GetMapping("/{id}")
-    public Product get(@PathVariable Long id) {
-        return productService.get(id).orElseThrow(() -> new NotFoundException("Product with id = " + id + " not fount"));
+    @PostMapping("add/{id}")
+    public Product inc(@PathVariable Long id, @RequestParam(defaultValue = "1") int count) {
+        Product product = productService.get(id)
+                .orElseThrow(() -> new NotFoundException("Product with id = " + id + " not fount"));
+
+        product.setSelected(product.getSelected() + count);
+        productService.save(product);
+
+        return product;
+    }
+
+    @PostMapping("sub/{id}")
+    public Product dec(@PathVariable Long id, @RequestParam(defaultValue = "1") int count) {
+        Product product = productService.get(id)
+                .orElseThrow(() -> new NotFoundException("Product with id = " + id + " not fount"));
+
+        if (product.getSelected() < count) {
+            throw new IllegalArgumentException("Count = " + count + " more than items in cart = " + product.getSelected());
+        }
+
+        product.setSelected(product.getSelected() - count);
+        productService.save(product);
+
+        return product;
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
-        if (!productService.delete(id)) {
-            throw new NotFoundException("Product with id = " + id + " not fount");
-        }
-    }
+    public Product delete(@PathVariable Long id) {
+        Product product = productService.get(id)
+                .orElseThrow(() -> new NotFoundException("Product with id = " + id + " not fount"));
 
-    @PostMapping
-    public Product create(@RequestBody Product product) {
-        if (product.getId() != null) {
-            throw new IllegalArgumentException("Id must be null");
-        }
-        return productService.save(product);
-    }
+        product.setSelected(0);
+        productService.save(product);
 
-    @PutMapping
-    public Product update(@RequestBody Product product) {
-        if (product.getId() == null) {
-            throw new IllegalArgumentException("Id must not be null");
-        }
-        productService.get(product.getId())
-                .orElseThrow(() -> new NotFoundException("Product with id = " + product.getId() + " not fount"));
-
-        return productService.save(product);
+        return product;
     }
 
     @ExceptionHandler
@@ -100,7 +104,7 @@ public class RestProductController {
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ErrorDto illegalArgumentExceptionHandler(RuntimeException e) {
+    public ErrorDto RuntimeExceptionHandler(RuntimeException e) {
         return new ErrorDto(e.getMessage());
     }
 }
