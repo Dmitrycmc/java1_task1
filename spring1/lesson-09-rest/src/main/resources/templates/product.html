@@ -81,7 +81,18 @@
                     <td th:text="${product.description}">Alex</td>
                     <td th:text="${product.price}">Alex</td>
                     <td>
-                        <a class="btn btn-success" th:href="@{/product/{id}(id = ${product.id})}"><i class="fas fa-edit"></i></a>
+                        <a class="btn btn-success"
+                           th:href="@{/product/{id}/(
+                               id=${product.id},
+                               nameFilter=${param.nameFilter},
+                               minPriceFilter=${param.minPriceFilter},
+                               maxPriceFilter=${param.maxPriceFilter},
+                               page=${param.page},
+                               size=${param.size},
+                               sort=${param.sort},
+                               desc=${param.desc}
+                           )}"
+                        ><i class="fas fa-edit"></i></a>
                         <form class="d-inline" th:method="delete" th:action="@{/product/{id}(id = ${product.id})}">
                             <button type="submit" class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
 
@@ -103,7 +114,7 @@
             </table>
         </div>
 
-        <div class="col-12" th:if="${products.totalPages > 1}">
+        <div class="col-12" th:if="${!products.empty}">
             <nav aria-label="...">
                 <ul class="pagination">
                     <li class="page-item" th:classappend="${products.first} ? 'disabled'">

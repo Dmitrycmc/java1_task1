@@ -35,7 +35,17 @@
 <div class="container">
     <div class="row py-2">
         <div class="col-12">
-            <form th:action="@{/product}" method="post" th:object="${product}">
+            <form method="post"
+                  th:action="@{/product/(
+                               nameFilter=${param.nameFilter},
+                               minPriceFilter=${param.minPriceFilter},
+                               maxPriceFilter=${param.maxPriceFilter},
+                               page=${param.page},
+                               size=${param.size},
+                               sort=${param.sort},
+                               desc=${param.desc}
+                           )}"
+                  th:object="${product}">
                 <input type="hidden" id="id" name="id" th:field="*{id}">
                 <div class="form-group">
                     <label>Name</label>
