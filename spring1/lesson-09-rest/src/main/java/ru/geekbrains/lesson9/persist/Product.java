@@ -28,6 +28,9 @@ public class Product {
     @Column(nullable = false)
     private BigDecimal price;
 
+    @Column(nullable = false)
+    private int selected;
+
     public Product() {
     }
 
@@ -72,5 +75,13 @@ public class Product {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public int getSelected() {
+        return selected;
+    }
+
+    public void setSelected(int selected) {
+        this.selected = selected;
     }
 }

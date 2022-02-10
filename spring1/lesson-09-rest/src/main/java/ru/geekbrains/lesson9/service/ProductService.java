@@ -1,13 +1,11 @@
 package ru.geekbrains.lesson9.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-import ru.geekbrains.lesson9.controller.NotFoundException;
 import ru.geekbrains.lesson9.persist.Product;
 import ru.geekbrains.lesson9.persist.ProductRepository;
 
@@ -31,7 +29,8 @@ public class ProductService {
             Optional<Integer> page,
             Optional<Integer> size,
             Optional<String> sort,
-            Optional<Boolean> desc
+            Optional<Boolean> desc,
+            Optional<Boolean> isInCart
     ) {
 
         // Первый способ
@@ -47,7 +46,8 @@ public class ProductService {
         return productRepository.findAll(Specification.<Product>where(null)
                         .and(nameFilter.<Specification<Product>>map(s -> (root, query, cb) -> cb.like(root.get("name"), "%" + s + "%")).orElse(null))
                         .and(minPriceFilter.<Specification<Product>>map(s -> (root, query, cb) -> cb.ge(root.get("price"), s)).orElse(null))
-                        .and(maxPriceFilter.<Specification<Product>>map(s -> (root, query, cb) -> cb.le(root.get("price"), s)).orElse(null)),
+                        .and(maxPriceFilter.<Specification<Product>>map(s -> (root, query, cb) -> cb.le(root.get("price"), s)).orElse(null))
+                        .and(isInCart.<Specification<Product>>map(s -> (root, query, cb) -> cb.gt(root.get("selected"), 0)).orElse(null)),
                 PageRequest.of(
                         page.orElse(1) - 1,
                         size.orElse(5),

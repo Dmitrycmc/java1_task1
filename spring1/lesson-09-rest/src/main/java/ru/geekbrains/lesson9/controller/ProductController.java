@@ -2,16 +2,12 @@ package ru.geekbrains.lesson9.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.geekbrains.lesson9.persist.Product;
-import ru.geekbrains.lesson9.persist.ProductRepository;
 import ru.geekbrains.lesson9.service.ProductService;
 
 import javax.validation.Valid;
@@ -74,7 +70,16 @@ public class ProductController {
 
         // Второй способ
 
-        Page<Product> products = productService.search(nameFilter, minPriceFilter, maxPriceFilter, page, size, sort, desc);
+        Page<Product> products = productService.search(
+                nameFilter,
+                minPriceFilter,
+                maxPriceFilter,
+                page,
+                size,
+                sort,
+                desc,
+                Optional.empty()
+        );
 
         model.addAttribute("products", products);
         return "product";

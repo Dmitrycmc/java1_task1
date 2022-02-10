@@ -28,3 +28,18 @@ Content-Type: application/json
 ### Delete product by id
 DELETE localhost:8085/spring-boot/api/v1/product/102
 
+### Get products in cart by filters
+GET localhost:8085/spring-boot/api/v1/cart/search
+
+### Increment product number in cart
+
+POST localhost:8085/spring-boot/api/v1/cart/add/104
+
+### Decrement product number in cart
+
+POST localhost:8085/spring-boot/api/v1/cart/sub/104
+
+### Remove product from cart
+
+DELETE localhost:8085/spring-boot/api/v1/cart/104
+
