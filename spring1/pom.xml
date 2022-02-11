@@ -10,16 +10,16 @@
     <modelVersion>4.0.0</modelVersion>
     <packaging>pom</packaging>
     <modules>
-        <module>lesson1</module>
-        <module>lesson2</module>
-        <module>lesson3</module>
-        <module>lesson4-spring-boot</module>
+        <module>lesson-01-java-servlet</module>
+        <module>lesson-02-spring-context</module>
+        <module>lesson-03-spring-mvc</module>
+        <module>lesson-04-spring-boot</module>
         <module>lesson-05-hibernate</module>
         <module>lesson-06-hibernate</module>
         <module>lesson-07-1-spring-boot-hibernate</module>
         <module>lesson-07-2-spring-data</module>
         <module>lesson-08-thymeleaf</module>
-        <module>lesson-09-rest</module>
+        <module>lesson-09-spring-rest</module>
         <module>lesson-10-spring-security</module>
     </modules>
 
