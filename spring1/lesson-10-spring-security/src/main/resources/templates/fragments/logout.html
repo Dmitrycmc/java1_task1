@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+
+<form th:fragment="logout()"
+      sec:authorize="isAuthenticated()" th:action="@{/logout}" th:method="post">
+    <button class="btn btn-outline-danger">
+        Logout <span sec:authentication="principal.username"></span>
+    </button>
+</form>
+
+</html>
