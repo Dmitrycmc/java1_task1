@@ -20,6 +20,7 @@
         <module>lesson-07-2-spring-data</module>
         <module>lesson-08-thymeleaf</module>
         <module>lesson-09-rest</module>
+        <module>lesson-10-spring-security</module>
     </modules>
 
     <artifactId>spring1</artifactId>

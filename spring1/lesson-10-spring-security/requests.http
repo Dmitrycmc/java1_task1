@@ -1,0 +1,45 @@
+### Get products by filters
+GET localhost:8085/spring-boot/api/v1/product/search
+
+### Get product by id
+GET localhost:8085/spring-boot/api/v1/product/102
+
+### Create product
+POST localhost:8085/spring-boot/api/v1/product
+Content-Type: application/json
+
+{
+  "name": "Яйца",
+  "description": "Хорошие яйцв",
+  "price": 80.00
+}
+
+### Update product product
+PUT localhost:8085/spring-boot/api/v1/product
+Content-Type: application/json
+
+{
+  "id": 102,
+  "name": "Морожка",
+  "description": "Вкусная",
+  "price": "120"
+}
+
+### Delete product by id
+DELETE localhost:8085/spring-boot/api/v1/product/102
+
+### Get products in cart by filters
+GET localhost:8085/spring-boot/api/v1/cart/search
+
+### Increment product number in cart
+
+POST localhost:8085/spring-boot/api/v1/cart/add/104
+
+### Decrement product number in cart
+
+POST localhost:8085/spring-boot/api/v1/cart/sub/104
+
+### Remove product from cart
+
+DELETE localhost:8085/spring-boot/api/v1/cart/104
+
