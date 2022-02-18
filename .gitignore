@@ -7,4 +7,6 @@ meta-inf
 chat-history.txt
 logs
 
+*.iml
+
 node_modules
