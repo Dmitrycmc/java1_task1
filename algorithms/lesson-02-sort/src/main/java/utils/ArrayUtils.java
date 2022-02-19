@@ -5,7 +5,7 @@ public class ArrayUtils {
         int[] arr = new int[n];;
 
         for (int i = 0; i < n; i++) {
-            arr[i] = (int) (Math.random() * max);
+            arr[i] = MathUtils.randomInt(max);
         }
         return arr;
     }
