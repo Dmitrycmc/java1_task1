@@ -1,3 +1,4 @@
+import entity.Notebook;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -9,6 +10,8 @@ import sort.SelectionSort;
 import sort.ShakerSort;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import static utils.ArrayUtils.generateArray;
 import static utils.ArrayUtils.isSorted;
@@ -44,5 +47,19 @@ public class SortTest {
     @Test
     void selectionSort() {
         Assertions.assertTrue(isSorted(SelectionSort.sort(Arrays.copyOf(array, array.length))));
+    }
+
+    @Test
+    void notebooksSort() {
+        Notebook[] notebooks = new Notebook[1000];
+
+        for (int i = 0; i < 1000; i++) {
+            notebooks[i] = Notebook.generateRandom();
+        }
+
+        List<Notebook> list = Arrays.asList(notebooks);
+        Collections.sort(list);
+
+        Assertions.assertTrue(Notebook.isSorted(list.toArray(new Notebook[0])));
     }
 }

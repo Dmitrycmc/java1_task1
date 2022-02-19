@@ -2,10 +2,36 @@ package entity;
 
 import utils.MathUtils;
 
-public class Notebook {
+public class Notebook implements Comparable {
     private int price;
     private int ram;
     private Brand brand;
+
+    public static boolean isSorted(Notebook[] notebooks) {
+        for (int i = 0; i < notebooks.length - 1; i++) {
+            if (notebooks[i].compareTo(notebooks[i + 1]) > 0) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        Notebook notebook = (Notebook) o;
+        if (price != notebook.price) {
+            return price - notebook.price;
+        }
+        if (ram != notebook.ram) {
+            return ram - notebook.ram;
+        }
+        if (brand != notebook.brand) {
+            return Brand.valueOf(notebook.brand.toString()).ordinal()
+                    - Brand.valueOf(brand.toString()).ordinal();
+        }
+        return 0;
+    }
 
     public enum Brand {
         Lenuvo,
