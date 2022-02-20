@@ -4,7 +4,7 @@ import static utils.ArrayUtils.swap;
 
 public class SelectionSort {
 
-    public static int[] sort(int[] array) {
+    public static <T extends Comparable<T>> T[] sort(T[] array) {
         int left = 0;
         int right = array.length - 1;
 
@@ -12,9 +12,9 @@ public class SelectionSort {
             int minIndex = left, maxIndex = left;
 
             for (int i = left; i <= right; i++) {
-                if (array[i] < array[minIndex]) {
+                if (array[i].compareTo(array[minIndex]) < 0) {
                     minIndex = i;
-                } else if (array[i] > array[maxIndex]) {
+                } else if (array[i].compareTo(array[maxIndex]) > 0) {
                     maxIndex = i;
                 }
             }

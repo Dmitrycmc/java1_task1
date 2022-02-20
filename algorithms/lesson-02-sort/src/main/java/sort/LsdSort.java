@@ -23,8 +23,8 @@ public class LsdSort {
         return str.length();
     }
 
-    public static int[] sort(int[] array) {
-        List<List<Integer>> groups = new ArrayList<>();
+    public static <T> T[] sort(T[] array) {
+        List<List<T>> groups = new ArrayList<>();
 
         for (int i = 0; i < 10; i++) {
             groups.add(new ArrayList<>());
@@ -33,7 +33,7 @@ public class LsdSort {
         int maxDigitsNumber = 0;
 
         for (int i = 0; i < array.length; i++) {
-            int digitsNumber = getDigitsNumber(array[i]);
+            int digitsNumber = getDigitsNumber(array[i].hashCode());
             if (digitsNumber > maxDigitsNumber) {
                 maxDigitsNumber = digitsNumber;
             }
@@ -44,14 +44,14 @@ public class LsdSort {
                 groups.get(i).clear();
             }
 
-            for (int value: array) {
-                groups.get(getDigitWithEnd(value, digitNumber)).add(value);
+            for (T value: array) {
+                groups.get(getDigitWithEnd(value.hashCode(), digitNumber)).add(value);
             }
 
             int k = 0;
             for (int i = 0; i < 10; i++) {
-                List<Integer> group = groups.get(i);
-                for (Integer value : group) {
+                List<T> group = groups.get(i);
+                for (T value : group) {
                     array[k++] = value;
                 }
             }

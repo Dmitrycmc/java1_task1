@@ -2,7 +2,6 @@ import entity.Notebook;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-
 import sort.BubbleSort;
 import sort.CountingSort;
 import sort.LsdSort;
@@ -13,53 +12,98 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static utils.ArrayUtils.generateArray;
-import static utils.ArrayUtils.isSorted;
-
 public class SortTest {
-    private static int[] array;
+    static Notebook[] array;
+    static Notebook[] sortedArray;
+
+    static Notebook[] getArrayCopy() {
+        return Arrays.copyOf(array, array.length);
+    }
 
     @BeforeAll
     static void prepareArray() {
-        array = generateArray(100000, 10000000);
+        array = Notebook.generateRandomArray(100000);
+        List<Notebook> list = Arrays.asList(getArrayCopy());
+        Collections.sort(list);
+        sortedArray = list.toArray(new Notebook[0]);
+    }
+
+    static boolean isSorted(Notebook[] array) {
+        if (sortedArray.length != array.length) {
+            return false;
+        }
+
+        for (int i = 0; i < array.length; i++) {
+            if (!array[i].equals(sortedArray[i])) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     @Test
     void bubbleSort() {
-        Assertions.assertTrue(isSorted(BubbleSort.sort(Arrays.copyOf(array, array.length))));
+        long t0 = System.currentTimeMillis();
+        Notebook[] sortedArray = BubbleSort.sort(getArrayCopy());
+        long t1 = System.currentTimeMillis();
+
+        long time = t1 - t0;
+
+        System.out.println("BubbleSort: " + time / 1000 + " sec " + time % 1000 + " ms");
+
+        Assertions.assertTrue(isSorted(sortedArray));
     }
 
     @Test
     void shakerSort() {
-        Assertions.assertTrue(isSorted(ShakerSort.sort(Arrays.copyOf(array, array.length))));
-    }
+        long t0 = System.currentTimeMillis();
+        Notebook[] sortedArray = ShakerSort.sort(getArrayCopy());
+        long t1 = System.currentTimeMillis();
 
-    @Test
-    void countingSort() {
-        Assertions.assertTrue(isSorted(CountingSort.sort(Arrays.copyOf(array, array.length))));
-    }
+        long time = t1 - t0;
 
-    @Test
-    void lsdSort() {
-        Assertions.assertTrue(isSorted(LsdSort.sort(Arrays.copyOf(array, array.length))));
+        System.out.println("ShakerSort: " + time / 1000 + " sec " + time % 1000 + " ms");
+
+        Assertions.assertTrue(isSorted(sortedArray));
     }
 
     @Test
     void selectionSort() {
-        Assertions.assertTrue(isSorted(SelectionSort.sort(Arrays.copyOf(array, array.length))));
+        long t0 = System.currentTimeMillis();
+        Notebook[] sortedArray = SelectionSort.sort(getArrayCopy());
+        long t1 = System.currentTimeMillis();
+
+        long time = t1 - t0;
+
+        System.out.println("SelectionSort: " + time / 1000 + " sec " + time % 1000 + " ms");
+
+        Assertions.assertTrue(isSorted(sortedArray));
     }
 
     @Test
-    void notebooksSort() {
-        Notebook[] notebooks = new Notebook[1000];
+    void countingSort() {
+        long t0 = System.currentTimeMillis();
+        Notebook[] sortedArray = CountingSort.sort(getArrayCopy());
+        long t1 = System.currentTimeMillis();
 
-        for (int i = 0; i < 1000; i++) {
-            notebooks[i] = Notebook.generateRandom();
-        }
+        long time = t1 - t0;
 
-        List<Notebook> list = Arrays.asList(notebooks);
-        Collections.sort(list);
+        System.out.println("CountingSort: " + time / 1000 + " sec " + time % 1000 + " ms");
 
-        Assertions.assertTrue(Notebook.isSorted(list.toArray(new Notebook[0])));
+        Assertions.assertTrue(isSorted(sortedArray));
+    }
+
+    @Test
+    void lsdSort() {
+        long t0 = System.currentTimeMillis();
+        Notebook[] sortedArray = LsdSort.sort(getArrayCopy());
+        long t1 = System.currentTimeMillis();
+
+        long time = t1 - t0;
+
+        System.out.println("LsdSort: " + time / 1000 + " sec " + time % 1000 + " ms");
+
+        Assertions.assertTrue(isSorted(sortedArray));
     }
 }

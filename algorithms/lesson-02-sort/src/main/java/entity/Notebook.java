@@ -2,36 +2,10 @@ package entity;
 
 import utils.MathUtils;
 
-public class Notebook implements Comparable {
+public class Notebook implements Comparable<Notebook> {
     private int price;
     private int ram;
     private Brand brand;
-
-    public static boolean isSorted(Notebook[] notebooks) {
-        for (int i = 0; i < notebooks.length - 1; i++) {
-            if (notebooks[i].compareTo(notebooks[i + 1]) > 0) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    @Override
-    public int compareTo(Object o) {
-        Notebook notebook = (Notebook) o;
-        if (price != notebook.price) {
-            return price - notebook.price;
-        }
-        if (ram != notebook.ram) {
-            return ram - notebook.ram;
-        }
-        if (brand != notebook.brand) {
-            return Brand.valueOf(notebook.brand.toString()).ordinal()
-                    - Brand.valueOf(brand.toString()).ordinal();
-        }
-        return 0;
-    }
 
     public enum Brand {
         Lenuvo,
@@ -39,6 +13,11 @@ public class Notebook implements Comparable {
         MacNote,
         Eser,
         Xamiou
+    }
+
+    @Override
+    public int compareTo(Notebook notebook) {
+        return hashCode() - notebook.hashCode();
     }
 
     public Notebook(int price, int ram, Brand brand) {
@@ -54,6 +33,16 @@ public class Notebook implements Comparable {
         int ram = MathUtils.randomInt(4, 24, 4);
 
         return new Notebook(price, ram, brand);
+    }
+
+    public static Notebook[] generateRandomArray(int n) {
+        Notebook[] array = new Notebook[n];
+
+        for (int i = 0; i < n; i++) {
+            array[i] = Notebook.generateRandom();
+        }
+
+        return array;
     }
 
     public int getPrice() {
@@ -86,6 +75,20 @@ public class Notebook implements Comparable {
                 "price=" + price +
                 ", ram=" + ram +
                 ", brand='" + brand + '\'' +
+                ", hashCode=" + hashCode() +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Notebook notebook = (Notebook) o;
+        return price == notebook.price && ram == notebook.ram && brand == notebook.brand;
+    }
+
+    @Override
+    public int hashCode() {
+        return (price - 500) / 50 * 6 * 5 + (ram - 4) / 4 * 5 + Brand.valueOf(brand.toString()).ordinal();
     }
 }
