@@ -1,4 +1,4 @@
-package search;
+package gu.geekbrains.search;
 
 import java.util.function.Function;
 

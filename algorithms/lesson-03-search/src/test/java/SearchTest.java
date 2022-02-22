@@ -2,10 +2,10 @@ import ru.geekbrains.entity.Notebook;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import search.BinarySearch;
+import gu.geekbrains.search.BinarySearch;
 import ru.geekbrains.utils.MathUtils;
-import search.ExponentialSearch;
-import search.InterpolationSearch;
+import gu.geekbrains.search.ExponentialSearch;
+import gu.geekbrains.search.InterpolationSearch;
 
 import java.util.ArrayList;
 import java.util.Arrays;

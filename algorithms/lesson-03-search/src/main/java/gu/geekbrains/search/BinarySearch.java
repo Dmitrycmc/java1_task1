@@ -1,9 +1,9 @@
-package search;
+package gu.geekbrains.search;
 
 import java.util.List;
 import java.util.function.Function;
 
-public class InterpolationSearch {
+public class BinarySearch {
     public static <T extends Comparable<T>> int findIndex(List<T> list, T element) {
         return findIndex(list::get, list.size() - 1, element);
     }
@@ -14,10 +14,7 @@ public class InterpolationSearch {
 
     public static <T extends Comparable<T>> int findIndex(Function<Integer, T> calculate, int start, int end, T element) {
         while (start <= end) {
-            int startHashCode = calculate.apply(start).hashCode();
-            int endHashCode = calculate.apply(end).hashCode();
-            double k = (double) (element.hashCode() - startHashCode) / (endHashCode - startHashCode);
-            int i = (int) ((end - start) * k + start);
+            int i = (start + end) / 2;
 
             if (element.compareTo(calculate.apply(i)) == 0) {
                 return i;
