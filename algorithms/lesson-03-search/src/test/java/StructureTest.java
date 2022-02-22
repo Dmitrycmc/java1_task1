@@ -11,53 +11,41 @@ public class StructureTest {
     void stack() {
         Stack<Integer> stack = new Stack<>();
 
-        List<Integer> results = new LinkedList<>();
-
-        results.add(stack.pop());
+        Assertions.assertNull(stack.pop());
 
         stack.push(1);
         stack.push(2);
         stack.push(3);
 
 
-        results.add(stack.pop());
-        results.add(stack.pop());
+        Assertions.assertEquals(stack.pop(), 3);
+        Assertions.assertEquals(stack.pop(), 2);
 
         stack.push(4);
 
-        results.add(stack.pop());
-        results.add(stack.pop());
-        results.add(stack.pop());
-
-        Assertions.assertEquals(results.toString(), "[null, 3, 2, 4, 1, null]");
+        Assertions.assertEquals(stack.pop(), 4);
+        Assertions.assertEquals(stack.pop(), 1);
+        Assertions.assertNull(stack.pop());
     }
 
     @Test
     void queue() {
         Queue<Integer> stack = new Queue<>();
 
-        List<Integer> results = new LinkedList<>();
-
-        results.add(stack.shift());
+        Assertions.assertNull(stack.shift());
 
         stack.push(1);
         stack.push(2);
         stack.push(3);
 
 
-        results.add(stack.shift());
-        results.add(stack.shift());
+        Assertions.assertEquals(stack.shift(), 1);
+        Assertions.assertEquals(stack.shift(), 2);
 
         stack.push(4);
 
-        results.add(stack.shift());
-        results.add(stack.shift());
-        results.add(stack.shift());
-
-        Assertions.assertEquals(results.toString(), "[null, 1, 2, 3, 4, null]");
-    }
-
-    @Test
-    void deck() {
+        Assertions.assertEquals(stack.shift(), 3);
+        Assertions.assertEquals(stack.shift(), 4);
+        Assertions.assertNull(stack.shift());
     }
 }
