@@ -1,4 +1,4 @@
-package utils;
+package ru.geekbrains.utils;
 
 public class MathUtils {
     public static int randomInt(int max) {

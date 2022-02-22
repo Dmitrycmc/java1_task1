@@ -1,6 +1,6 @@
-package entity;
+package ru.geekbrains.entity;
 
-import utils.MathUtils;
+import ru.geekbrains.utils.MathUtils;
 
 public class Notebook implements Comparable<Notebook> {
     private int price;

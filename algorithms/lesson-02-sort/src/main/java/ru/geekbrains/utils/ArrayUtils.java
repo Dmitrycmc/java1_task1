@@ -1,4 +1,4 @@
-package utils;
+package ru.geekbrains.utils;
 
 public class ArrayUtils {
     public static <T> void swap(T[] arr, int i, int j) {

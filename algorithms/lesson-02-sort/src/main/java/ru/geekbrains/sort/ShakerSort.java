@@ -1,6 +1,6 @@
-package sort;
+package ru.geekbrains.sort;
 
-import static utils.ArrayUtils.swap;
+import static ru.geekbrains.utils.ArrayUtils.swap;
 
 public class ShakerSort {
 

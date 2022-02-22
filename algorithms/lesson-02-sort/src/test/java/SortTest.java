@@ -1,12 +1,13 @@
-import entity.Notebook;
+import ru.geekbrains.entity.Notebook;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import sort.BubbleSort;
-import sort.CountingSort;
-import sort.LsdSort;
-import sort.SelectionSort;
-import sort.ShakerSort;
+import ru.geekbrains.sort.BubbleSort;
+import ru.geekbrains.sort.CountingSort;
+import ru.geekbrains.sort.LsdSort;
+import ru.geekbrains.sort.SelectionSort;
+import ru.geekbrains.sort.ShakerSort;
+import ru.geekbrains.utils.TimeUtils;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -16,13 +17,15 @@ public class SortTest {
     static Notebook[] array;
     static Notebook[] sortedArray;
 
+    static final int N = 10000;
+
     static Notebook[] getArrayCopy() {
         return Arrays.copyOf(array, array.length);
     }
 
     @BeforeAll
     static void prepareArray() {
-        array = Notebook.generateRandomArray(100000);
+        array = Notebook.generateRandomArray(N);
         List<Notebook> list = Arrays.asList(getArrayCopy());
         Collections.sort(list);
         sortedArray = list.toArray(new Notebook[0]);
@@ -50,7 +53,7 @@ public class SortTest {
 
         long time = t1 - t0;
 
-        System.out.println("BubbleSort: " + time / 1000 + " sec " + time % 1000 + " ms");
+        System.out.println("BubbleSort: " + TimeUtils.format(time));
 
         Assertions.assertTrue(isSorted(sortedArray));
     }
@@ -63,7 +66,7 @@ public class SortTest {
 
         long time = t1 - t0;
 
-        System.out.println("ShakerSort: " + time / 1000 + " sec " + time % 1000 + " ms");
+        System.out.println("ShakerSort: " + TimeUtils.format(time));
 
         Assertions.assertTrue(isSorted(sortedArray));
     }
@@ -76,7 +79,7 @@ public class SortTest {
 
         long time = t1 - t0;
 
-        System.out.println("SelectionSort: " + time / 1000 + " sec " + time % 1000 + " ms");
+        System.out.println("SelectionSort: " + TimeUtils.format(time));
 
         Assertions.assertTrue(isSorted(sortedArray));
     }
@@ -89,7 +92,7 @@ public class SortTest {
 
         long time = t1 - t0;
 
-        System.out.println("CountingSort: " + time / 1000 + " sec " + time % 1000 + " ms");
+        System.out.println("CountingSort: " + TimeUtils.format(time));
 
         Assertions.assertTrue(isSorted(sortedArray));
     }
@@ -102,7 +105,7 @@ public class SortTest {
 
         long time = t1 - t0;
 
-        System.out.println("LsdSort: " + time / 1000 + " sec " + time % 1000 + " ms");
+        System.out.println("LsdSort: " + TimeUtils.format(time));
 
         Assertions.assertTrue(isSorted(sortedArray));
     }

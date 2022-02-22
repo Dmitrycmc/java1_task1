@@ -1,4 +1,4 @@
-package sort;
+package ru.geekbrains.sort;
 
 import java.util.HashMap;
 
