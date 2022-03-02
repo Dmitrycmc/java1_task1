@@ -33,8 +33,6 @@ public class DequeImpl<T> implements Deque<T> {
     private Node start = null;
     private Node end = null;
 
-    public DequeImpl() {}
-
     public void push(T value) {
         Node node = new Node();
         node.value = value;
@@ -93,6 +91,16 @@ public class DequeImpl<T> implements Deque<T> {
         return node.value;
     }
 
+    private Node find(T el) {
+        Node node = start;
+
+        while (node != null && !node.value.equals(el)) {
+            node = node.next;
+        }
+
+        return node;
+    }
+
     private void remove(Node node) {
         if (node.prev == null) {
             start = node.next;
@@ -110,19 +118,13 @@ public class DequeImpl<T> implements Deque<T> {
     }
 
     public boolean remove(T el) {
-        Node node = start;
+        Node node = find(el);
 
-        while (true) {
-            if (node == null) {
-                return false;
-            }
-
-            if (node.value.equals(el)) {
-                remove(node);
-                return true;
-            }
-
-            node = node.next;
+        if (node != null) {
+            remove(node);
+            return true;
+        } else {
+            return false;
         }
     }
 
@@ -148,21 +150,14 @@ public class DequeImpl<T> implements Deque<T> {
     }
 
     public boolean insertAfter(T after, T el) {
-        Node node = start;
+        Node node = find(after);
 
-        while (true) {
-            if (node == null) {
-                return false;
-            }
-
-            if (node.value.equals(after)) {
-                insertAfter(node, el);
-                return true;
-            }
-
-            node = node.next;
+        if (node != null) {
+            insertAfter(node, el);
+            return true;
+        } else {
+            return false;
         }
-
     }
 
     private void insertBefore(Node before, T el) {
@@ -179,21 +174,14 @@ public class DequeImpl<T> implements Deque<T> {
     }
 
     public boolean insertBefore(T before, T el) {
-        Node node = start;
+        Node node = find(before);
 
-        while (true) {
-            if (node == null) {
-                return false;
-            }
-
-            if (node.value.equals(before)) {
-                insertBefore(node, el);
-                return true;
-            }
-
-            node = node.next;
+        if (node != null) {
+            insertBefore(node, el);
+            return true;
+        } else {
+            return false;
         }
-
     }
 
     @Override
