@@ -1,6 +1,29 @@
 package ru.geekbrains.structure;
 
+import java.util.Iterator;
+
 public class DequeImpl<T> implements Deque<T> {
+    public class DequeIterator implements Iterator<T> {
+        private Node node = start;
+
+        @Override
+        public boolean hasNext() {
+            return node != null;
+        }
+
+        @Override
+        public T next() {
+            T val = node.value;
+            node = node.next;
+            return val;
+        }
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return new DequeIterator();
+    }
+
     private class Node {
         T value;
         Node next = null;
@@ -180,13 +203,13 @@ public class DequeImpl<T> implements Deque<T> {
         }
 
         StringBuilder sb = new StringBuilder();
-        Node i = start;
+
+        Iterator<T> it = iterator();
 
         while (true) {
-            sb.append(i.value);
-            i = i.next;
+            sb.append(it.next());
 
-            if (i == null) {
+            if (!it.hasNext()) {
                 return sb.toString();
             }
 

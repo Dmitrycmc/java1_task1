@@ -5,6 +5,8 @@ import ru.geekbrains.structure.DequeImpl;
 import ru.geekbrains.structure.Queue;
 import ru.geekbrains.structure.Stack;
 
+import java.util.Iterator;
+
 public class StructureTest {
     @Test
     void stack() {
