@@ -1,15 +1,14 @@
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import ru.geekbrains.structure.Deck;
+import ru.geekbrains.structure.Deque;
+import ru.geekbrains.structure.DequeImpl;
 import ru.geekbrains.structure.Queue;
 import ru.geekbrains.structure.Stack;
-
-import java.util.Deque;
 
 public class StructureTest {
     @Test
     void stack() {
-        Stack<Integer> stack = new Deck<>();
+        Stack<Integer> stack = new DequeImpl<>();
 
         Assertions.assertNull(stack.pop());
 
@@ -29,7 +28,7 @@ public class StructureTest {
 
     @Test
     void queue() {
-        Queue<Integer> stack = new Deck<>();
+        Queue<Integer> stack = new DequeImpl<>();
 
         Assertions.assertNull(stack.shift());
 
@@ -50,7 +49,7 @@ public class StructureTest {
 
     @Test
     void dequeRemove() {
-        Deck<Integer> deque = new Deck<>();
+        Deque<Integer> deque = new DequeImpl<>();
 
         Assertions.assertEquals(deque.toString(), "");
 
@@ -75,7 +74,7 @@ public class StructureTest {
 
     @Test
     void dequeInsert() {
-        Deck<Integer> deque = new Deck<>();
+        Deque<Integer> deque = new DequeImpl<>();
 
         Assertions.assertEquals(deque.toString(), "");
 

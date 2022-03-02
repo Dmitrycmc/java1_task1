@@ -1,6 +1,6 @@
 package ru.geekbrains.structure;
 
-public class Deck<T> implements Queue<T>, Stack<T> {
+public class DequeImpl<T> implements Deque<T> {
     private class Node {
         T value;
         Node next = null;
@@ -10,7 +10,7 @@ public class Deck<T> implements Queue<T>, Stack<T> {
     private Node start = null;
     private Node end = null;
 
-    public Deck() {}
+    public DequeImpl() {}
 
     public void push(T value) {
         Node node = new Node();
@@ -111,7 +111,7 @@ public class Deck<T> implements Queue<T>, Stack<T> {
         return counter;
     }
 
-    public void insertAfter(Node after, T el) {
+    private void insertAfter(Node after, T el) {
         if (after.next == null) {
             push(el);
         } else {
@@ -142,7 +142,7 @@ public class Deck<T> implements Queue<T>, Stack<T> {
 
     }
 
-    public void insertBefore(Node before, T el) {
+    private void insertBefore(Node before, T el) {
         if (before.prev == null) {
             unshift(el);
         } else {

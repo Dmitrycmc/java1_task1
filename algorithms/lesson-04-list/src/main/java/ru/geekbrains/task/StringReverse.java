@@ -1,11 +1,11 @@
 package ru.geekbrains.task;
 
-import ru.geekbrains.structure.Deck;
+import ru.geekbrains.structure.DequeImpl;
 import ru.geekbrains.structure.Stack;
 
 public class StringReverse {
     public static String resolve(String input) {
-        Stack<String> stack = new Deck<>();
+        Stack<String> stack = new DequeImpl<>();
 
         for (int i = 0; i < input.length(); i++) {
             stack.push(input.substring(i, i + 1));
