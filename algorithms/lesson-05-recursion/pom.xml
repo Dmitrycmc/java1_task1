@@ -9,5 +9,13 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
+    <dependencies>
+        <dependency>
+            <groupId>ru.geekbrains.java_gb</groupId>
+            <artifactId>lesson-02-sort</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+
     <artifactId>lesson-05-recursion</artifactId>
 </project>
