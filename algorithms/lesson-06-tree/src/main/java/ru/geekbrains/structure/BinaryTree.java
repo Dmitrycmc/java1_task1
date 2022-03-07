@@ -72,6 +72,20 @@ public class BinaryTree<T extends Comparable<T>> {
         add(start, item);
     }
 
+    private int checkLayer(Node<T> node, T item) {
+        if (node == null) {
+            return 1;
+        }
+        if (item.compareTo(node.value) < 0) {
+            return 1 + checkLayer(node.left, item);
+        }
+        return 1 + checkLayer(node.right, item);
+    }
+
+    public int checkLayer(T item) {
+        return checkLayer(start, item);
+    }
+
     public static <T extends Comparable<T>> BinaryTree<T> buildTree(List<T> items) {
         BinaryTree<T> tree = new BinaryTree<>();
 
