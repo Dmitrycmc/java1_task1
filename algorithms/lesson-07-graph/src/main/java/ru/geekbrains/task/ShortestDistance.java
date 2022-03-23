@@ -3,12 +3,13 @@ package ru.geekbrains.task;
 import ru.geekbrains.structure.TwoDirectionalSymmetricGraph;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 public class ShortestDistance {
     public static <T> Float Dijkstra(TwoDirectionalSymmetricGraph<T, Float> graph, T from, T to) {
-        List<Float> shortestDistance = new ArrayList<>(Collections.nCopies(graph.getNodes().size(), null));
+        Float[] shortestDistance = new Float[graph.getNodes().size()];
 
         // Init unvisitedIndices
         List<Integer> unvisitedIndices = new ArrayList<>();
@@ -18,19 +19,19 @@ public class ShortestDistance {
 
         // Init currentIndex
         int currentIndex = graph.indexOfNode(from);
-        shortestDistance.set(currentIndex, 0f);
+        shortestDistance[currentIndex] = 0f;
 
         while (true) {
-            Float currentDistance = shortestDistance.get(currentIndex);
+            Float currentDistance = shortestDistance[currentIndex];
 
             for (int j: graph.getNeighbours(currentIndex)) {
                 if (unvisitedIndices.contains(j)) {
                     float newDistance = currentDistance + graph.getEdge(currentIndex, j);
                     if (
-                            shortestDistance.get(j) == null ||
-                            shortestDistance.get(j) > newDistance
+                            shortestDistance[j] == null ||
+                            shortestDistance[j] > newDistance
                     ) {
-                        shortestDistance.set(j, newDistance);
+                        shortestDistance[j] = newDistance;
                     }
                 }
             }
@@ -44,7 +45,7 @@ public class ShortestDistance {
 
             Float minDistance = null;
             for (int i: unvisitedIndices) {
-                Float distance = shortestDistance.get(i);
+                Float distance = shortestDistance[i];
                 if (minDistance == null || (distance != null && minDistance > distance)) {
                     minDistance = distance;
                     currentIndex = i;
@@ -57,6 +58,6 @@ public class ShortestDistance {
             }
         }
 
-        return shortestDistance.get(graph.indexOfNode(to));
+        return shortestDistance[graph.indexOfNode(to)];
     }
 }
