@@ -76,17 +76,19 @@ public class TaskTest {
 
         //graph.setEdge("Владивосток","Екатеринбург",530f);
 
-        System.out.println(ShortestDistance.Dijkstra(graph, "Москва", "Сочи"));
-        System.out.println(ShortestDistance.Dijkstra(graph, "Москва", "Нижний Новгород"));
-        System.out.println(ShortestDistance.Dijkstra(graph, "Москва", "Санкт Петербург"));
-        System.out.println(ShortestDistance.Dijkstra(graph, "Москва", "Красноярск"));
-        System.out.println(ShortestDistance.Dijkstra(graph, "Москва", "Казань"));
-        System.out.println(ShortestDistance.Dijkstra(graph, "Москва", "Уфа"));
-        System.out.println(ShortestDistance.Dijkstra(graph, "Москва", "Владивосток"));
-        System.out.println(ShortestDistance.Dijkstra(graph, "Москва", "Екатеринбург"));
-        System.out.println(ShortestDistance.Dijkstra(graph, "Москва", "Омск"));
+        System.out.println("Москва - Сочи: " + ShortestDistance.Dijkstra(graph, "Москва", "Сочи"));
+        System.out.println("Москва - Нижний Новгород: " + ShortestDistance.Dijkstra(graph, "Москва", "Нижний Новгород"));
+        System.out.println("Москва - Санкт Петербург: " + ShortestDistance.Dijkstra(graph, "Москва", "Санкт Петербург"));
+        System.out.println("Москва - Красноярск: " + ShortestDistance.Dijkstra(graph, "Москва", "Красноярск"));
+        System.out.println("Москва - Казань: " + ShortestDistance.Dijkstra(graph, "Москва", "Казань"));
+        System.out.println("Москва - Уфа: " + ShortestDistance.Dijkstra(graph, "Москва", "Уфа"));
+        System.out.println("Москва - Владивосток: " + ShortestDistance.Dijkstra(graph, "Москва", "Владивосток"));
+        System.out.println("Москва - Екатеринбург: " + ShortestDistance.Dijkstra(graph, "Москва", "Екатеринбург"));
+        System.out.println("Москва - Омск: " + ShortestDistance.Dijkstra(graph, "Москва", "Омск"));
 
-        System.out.println(ShortestDistance.Dijkstra(graph, "Москва", "Некоторый несвязный город"));
+        System.out.println("Москва - Некоторый недостижымий город: " + ShortestDistance.Dijkstra(graph, "Москва", "Некоторый недостижимый город"));
+
+        Assertions.assertNull(ShortestDistance.Dijkstra(graph, "Москва", "Некоторый несвязный город"));
     }
 
     @Test

@@ -9,28 +9,27 @@ public class StructureTest {
     void graph() {
         TwoDirectionalSymmetricGraph<String, Float> graph = new TwoDirectionalSymmetricGraph<>();
 
+        graph.addNode("Moscow");
+        graph.addNode("Piter");
+
         // This node not found: Piters
-        // System.out.println(graph.getEdge("Moscow", "Piters"));
+        Assertions.assertThrows(RuntimeException.class, () -> {
+            graph.setEdge("Moscow", "Piters", 12f);
+        });
+        Assertions.assertThrows(RuntimeException.class, () -> {
+            graph.getEdge("Moscow", "Piters");
+        });
         // Values must be different: Piter, Piter
-        // System.out.println(graph.getEdge("Piter", "Piter"));
-        graph.addNode("1");
-        graph.addNode("2");
-        graph.addNode("3");
-        graph.addNode("4");
-        graph.addNode("5");
-        graph.addNode("6");
+        Assertions.assertThrows(RuntimeException.class, () -> {
+            graph.setEdge("Piter", "Piter", 12f);
+        });
+        // Values must be different: Piter, Piter
+        Assertions.assertThrows(RuntimeException.class, () -> {
+            graph.getEdge("Piter", "Piter");
+        });
 
-
-        graph.setEdge("1", "2", 7f);
-        graph.setEdge("1", "3", 9f);
-        graph.setEdge("1", "6", 14f);
-        graph.setEdge("2", "3", 10f);
-        graph.setEdge("2", "4", 15f);
-        graph.setEdge("3", "6", 2f);
-        graph.setEdge("3", "4", 11f);
-        graph.setEdge("5", "6", 9f);
-        graph.setEdge("5", "4", 6f);
-
-        Assertions.assertEquals(20, ShortestDistance.Dijkstra(graph, "1", "5"));
+        Assertions.assertNull(graph.getEdge("Moscow", "Piter"));
+        graph.setEdge("Moscow", "Piter", 12f);
+        Assertions.assertEquals(12f, graph.getEdge("Moscow", "Piter"));
     }
 }
