@@ -16,6 +16,7 @@
         <module>lesson-04-list</module>
         <module>lesson-05-recursion</module>
         <module>lesson-06-tree</module>
+        <module>lesson-07-graph</module>
     </modules>
 
     <properties>
