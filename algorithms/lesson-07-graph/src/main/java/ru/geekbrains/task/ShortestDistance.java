@@ -53,7 +53,7 @@ public class ShortestDistance {
             }
 
             if (minDistance == null) {
-                // There is unreachable nodes
+                // There are unreachable nodes
                 break;
             }
         }
