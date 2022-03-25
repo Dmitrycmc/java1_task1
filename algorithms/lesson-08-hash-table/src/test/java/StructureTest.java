@@ -40,25 +40,25 @@ public class StructureTest {
 
     @Test
     void hashTableChaining() {
-        HashTableСhaining table = new HashTableСhaining<>();
-        System.out.println(table.size());
-        test(table);
-        System.out.println(table.size());
-        System.out.println(table.getMaxDepth());
+        test(new HashTableСhaining<>());
+        // 1.865s
     }
 
     @Test
     void hashTableOpenAddressing() {
         test(new HashTableOpenAddressing<>());
+        // 0.490s
     }
 
     @Test
     void javaTable() {
         test(new JavaTable<>());
+        // 0.557s
     }
 
-    //@Test
+    @Test
     void listTable() {
         test(new ListTable<>(n));
+        // 11.758s
     }
 }
