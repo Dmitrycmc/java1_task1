@@ -19,5 +19,6 @@
         <module>java3</module>
         <module>spring1</module>
         <module>algorithms</module>
+        <module>javaInterview</module>
     </modules>
 </project>
