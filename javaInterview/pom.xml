@@ -12,6 +12,7 @@
     <artifactId>javaInterview</artifactId>
     <modules>
         <module>lesson-01-oop</module>
+        <module>lesson-02-dsa</module>
     </modules>
 
     <properties>
