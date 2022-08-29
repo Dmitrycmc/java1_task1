@@ -13,6 +13,7 @@
     <modules>
         <module>lesson-01-oop</module>
         <module>lesson-02-dsa</module>
+        <module>lesson-03-threads</module>
     </modules>
 
     <properties>
